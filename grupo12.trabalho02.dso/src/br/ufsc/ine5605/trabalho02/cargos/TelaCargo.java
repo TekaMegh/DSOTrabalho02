@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -38,7 +39,7 @@ public class TelaCargo extends JFrame{
         Container container = getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints construtor = new GridBagConstraints();
-        construtor.fill = GridBagConstraints.NONE;
+        construtor.fill = GridBagConstraints.BOTH;
                 
         //Configuracao JLabel
         construtor.gridheight = 1;
@@ -61,21 +62,21 @@ public class TelaCargo extends JFrame{
         construtor.gridx = 4;
         construtor.gridy = 3;
         btAlterar = new JButton("Alterar Cargo");               
-        btNovo.addActionListener(gerenciadorTelaCargo);
+        btAlterar.addActionListener(gerenciadorTelaCargo);
         container.add(btAlterar, construtor);
         
         //Configuracao JButton Remover
         construtor.gridx = 7;
         construtor.gridy = 3;
         btRemover = new JButton("Remover Cargo");               
-        btNovo.addActionListener(gerenciadorTelaCargo);
+        btRemover.addActionListener(gerenciadorTelaCargo);
         container.add(btRemover, construtor);
         
         //Configuracao JButton Voltar
         construtor.gridx = 4;
         construtor.gridy = 4;
         btVoltar = new JButton("Voltar");               
-        btNovo.addActionListener(gerenciadorTelaCargo);
+        btVoltar.addActionListener(gerenciadorTelaCargo);
         container.add(btVoltar, construtor);
         
         setSize(450, 350);
@@ -89,13 +90,13 @@ public class TelaCargo extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource().equals(btNovo)) {
-               ControladorCargo.getInstance().iniciaCadastro();
+               ControladorCargo.getInstance().iniciaTelaCadastroCargo();
             } else if(e.getSource().equals(btAlterar)) {
-                
+               ControladorCargo.getInstance().iniciaTelaCadastroCargo();
             } else if(e.getSource().equals(btRemover)) {
-                
+               JOptionPane.showMessageDialog(null, "O cargo foi removido", "Cargo", 1);
             } else if(e.getSource().equals(btVoltar)) {
-                
+                ControladorCargo.getInstance().iniciaTelaPrincipal();
             }
         }
     }

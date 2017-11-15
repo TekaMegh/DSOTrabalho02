@@ -11,8 +11,10 @@ package br.ufsc.ine5605.trabalho02.cargos;
  */
 public interface IControladorCargo {
 
-    public void inicia();
+    public void iniciaTelaCadastroCargo();
 
-    public void iniciaCadastro();
-    
+    public void iniciaTelaCargo();
+
+    public void iniciaTelaPrincipal();
+       
 }

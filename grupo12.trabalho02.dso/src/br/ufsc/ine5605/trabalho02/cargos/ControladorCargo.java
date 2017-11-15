@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5605.trabalho02.cargos;
 
+import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+
 /**
  *
  * @author rak_w
@@ -31,15 +33,25 @@ public class ControladorCargo implements IControladorCargo{
         }
         return controladorCargo;
     }
-
+    
     @Override
-    public void inicia() {
+    public void iniciaTelaCargo() {
+        this.telaCadastroCargo.setVisible(false);
         this.telaCargo.setVisible(true);
     }
 
     @Override
-    public void iniciaCadastro() {
+    public void iniciaTelaCadastroCargo() {
         this.telaCargo.setVisible(false);
         this.telaCadastroCargo.setVisible(true);
     }
+
+    @Override
+    public void iniciaTelaPrincipal() {
+        this.telaCargo.setVisible(false);
+        this.telaCadastroCargo.setVisible(false);
+        ControladorPrincipal.getInstance().inicia();
+    }
+    
+    
 }

@@ -33,7 +33,7 @@ public class MapeadorCargo {
     }
     
     public Collection<Cargo> getList() {
-        return null;
+        return cacheCargos.values();
     }
     
     public void persist() {

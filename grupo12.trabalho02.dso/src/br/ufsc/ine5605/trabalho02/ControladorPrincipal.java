@@ -43,12 +43,12 @@ public class ControladorPrincipal {
         return controladorPrincipal;
     }
 
-    void inicia() {
+    public void inicia() {
         this.telaPrincipal.setVisible(true);    
     }
 
-    void iniciaCargo() {
+    public void iniciaCargo() {
         this.telaPrincipal.setVisible(false);
-        ControladorCargo.getInstance().inicia();
+        ControladorCargo.getInstance().iniciaTelaCargo();
     }
 }
