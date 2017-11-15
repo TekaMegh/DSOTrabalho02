@@ -66,9 +66,9 @@ public class TelaPrincipal extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource().equals(btEntrar)) {
-                
+            	ControladorPrincipal.getInstance().iniciaEntrada();
             } else if(e.getSource().equals(btAcesso)) {
-                
+            	ControladorPrincipal.getInstance().iniciaAcesso();
             } else if(e.getSource().equals(btCargo)) {
                 ControladorPrincipal.getInstance().iniciaCargo();
             } else if(e.getSource().equals(btFunc)) {

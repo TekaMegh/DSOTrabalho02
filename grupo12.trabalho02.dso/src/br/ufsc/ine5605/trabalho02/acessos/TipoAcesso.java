@@ -5,11 +5,13 @@
  */
 package br.ufsc.ine5605.trabalho02.acessos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author rak_w
  */
-public enum TipoAcesso {
+public enum TipoAcesso implements Serializable {
     
     SEMMATRICULA("Não existe funcionário com essa matrícula."),
     NAOPOSSUIACESSO("Esse funcionario nao possui acesso."),

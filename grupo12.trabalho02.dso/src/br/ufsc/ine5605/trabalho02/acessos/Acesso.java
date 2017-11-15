@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  *
- * @author rak_w
+ * @author levycosta
  */
 public class Acesso implements Serializable{
 

@@ -51,4 +51,14 @@ public class ControladorPrincipal {
         this.telaPrincipal.setVisible(false);
         ControladorCargo.getInstance().iniciaTelaCargo();
     }
+
+	public void iniciaAcesso() {
+		this.telaPrincipal.setVisible(false);
+		ControladorAcesso.getInstance().iniciaTelaAcesso();
+	}
+
+	public void iniciaEntrada() {
+		this.telaPrincipal.setVisible(false);
+		ControladorAcesso.getInstance().iniciaTelaEntrada();
+	}
 }

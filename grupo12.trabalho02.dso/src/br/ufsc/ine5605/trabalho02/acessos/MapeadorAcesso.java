@@ -14,66 +14,65 @@ import java.util.HashMap;
 
 /**
  *
- * @author rak_w
+ * @author levycosta
  */
 public class MapeadorAcesso {
-    private HashMap<Integer, Acesso> cacheAcessos = new HashMap<>();
-    private final String fileName = "Acessos.BATATA";
-     
-    
-    public MapeadorAcesso() {
-        load();
-    }
-    public void put(Acesso acesso){
-        acesso.setIdAcesso(cacheAcessos.size()+1);
-        cacheAcessos.put(acesso.getIdAcesso(), acesso);
-        persist();
-    }
-    
-    public Acesso get(Integer idAcesso){
-        return cacheAcessos.get(idAcesso);
-    }
-    
-    public Collection<Acesso> getList(){
-        return cacheAcessos.values();
-    }
-    
-    public void remove(Acesso acesso){
-        cacheAcessos.remove(acesso.getIdAcesso());
-        persist();
-    }
-    
-    private void persist(){
-        try{
-            FileOutputStream fOS = new FileOutputStream(fileName);
-            ObjectOutputStream oOS = new ObjectOutputStream(fOS);
-            
-            oOS.writeObject(cacheAcessos);
-            
-            oOS.flush();
-            fOS.flush();
-            
-            oOS.close();
-            fOS.close();
-            
-        } catch (Exception e){
-            persist();
-        }
-    }
-    
+	private HashMap<Integer, Acesso> cacheAcessos = new HashMap<>();
+	private final String fileName = "Acessos.BATATA";
 
-    private void load() {
-        try {
-            FileInputStream fIS = new FileInputStream(fileName);
-            ObjectInputStream oIS = new ObjectInputStream(fIS);
+	public MapeadorAcesso() {
+		load();
+	}
 
-            cacheAcessos = (HashMap< Integer, Acesso>) oIS.readObject();
+	public void put(Acesso acesso) {
+		acesso.setIdAcesso(cacheAcessos.size() + 1);
+		cacheAcessos.put(acesso.getIdAcesso(), acesso);
+		persist();
+	}
 
-            oIS.close();
-            fIS.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+	public Acesso get(Integer idAcesso) {
+		return cacheAcessos.get(idAcesso);
+	}
 
-    }
+	public Collection<Acesso> getList() {
+		return cacheAcessos.values();
+	}
+
+	public void remove(Acesso acesso) {
+		cacheAcessos.remove(acesso.getIdAcesso());
+		persist();
+	}
+
+	private void persist() {
+		try {
+			FileOutputStream fOS = new FileOutputStream(fileName);
+			ObjectOutputStream oOS = new ObjectOutputStream(fOS);
+
+			oOS.writeObject(cacheAcessos);
+
+			oOS.flush();
+			fOS.flush();
+
+			oOS.close();
+			fOS.close();
+
+		} catch (Exception e) {
+			persist();
+		}
+	}
+
+	private void load() {
+		try {
+			FileInputStream fIS = new FileInputStream(fileName);
+			ObjectInputStream oIS = new ObjectInputStream(fIS);
+
+			cacheAcessos = (HashMap<Integer, Acesso>) oIS.readObject();
+
+			oIS.close();
+			fIS.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+	}
 }

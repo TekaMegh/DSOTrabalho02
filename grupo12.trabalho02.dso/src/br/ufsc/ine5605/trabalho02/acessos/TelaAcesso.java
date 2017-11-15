@@ -11,6 +11,6 @@ import javax.swing.JFrame;
  *
  * @author rak_w
  */
-public class TelaAcesso extends JFrame{
-    
+public class TelaAcesso extends JFrame {
+
 }
