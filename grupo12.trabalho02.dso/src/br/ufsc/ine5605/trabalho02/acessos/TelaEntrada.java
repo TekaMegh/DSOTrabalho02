@@ -10,15 +10,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
-import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+	import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
 
 /**
  *
@@ -30,18 +31,26 @@ public class TelaEntrada extends JFrame {
 	private JLabel lbHoraDeAcesso;
 	private JButton btEntrar;
 	private JButton btCancelar;
-	private JTextField tfMatricula;
-	private JTextField tfHoraDeAcesso;
+	private JFormattedTextField tfMatricula;
+	private JFormattedTextField tfHoraDeAcesso;
+	
+	private NumberFormat ftmMatricula;//Atributo formatador para matricula
+	private DateFormat ftmHoraDeAcesso;//Atributo formatador para hora de acesso
 
 	private GerenciadorBotoes gerenciadorBotoes;
 
-	public TelaEntrada() {
+	public TelaEntrada()  {
 		super("Entrada");
 		this.gerenciadorBotoes = new GerenciadorBotoes();
-		this.configuraTelaEntrada();
+		try {
+			this.configuraTelaEntrada();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void configuraTelaEntrada() {
+	private void configuraTelaEntrada() throws ParseException {
 
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
@@ -53,25 +62,29 @@ public class TelaEntrada extends JFrame {
 		construtor.gridwidth = 3;
 		construtor.gridx = 1;
 		construtor.gridy = 1;
-		lbMatricula = new JLabel("Matricula:");
+		lbMatricula = new JLabel("Matricula: ");
 		container.add(lbMatricula, construtor);
 
 		// Configuracao JLabel HoraDeAcesso
 		construtor.gridx = 1;
 		construtor.gridy = 2;
-		lbHoraDeAcesso = new JLabel("Hora de Acesso:");
+		lbHoraDeAcesso = new JLabel("Hora de Acesso (HH:mm): ");
 		container.add(lbHoraDeAcesso, construtor);
 
-		// Configuracao JTextField Matricula
+		// Configuracao JFormattedTextField Matricula
+		ftmMatricula = NumberFormat.getNumberInstance();
+		tfMatricula = new JFormattedTextField(ftmMatricula);
 		construtor.gridx = 4;
 		construtor.gridy = 1;
-		tfMatricula = new JTextField(10);
+		
 		container.add(tfMatricula, construtor);
 
-		// Configuracao JTextField HoraDeAcesso
+		// Configuracao JFormattedTextField HoraDeAcesso
+		ftmHoraDeAcesso = new SimpleDateFormat("HH:mm");	
+		tfHoraDeAcesso = new JFormattedTextField(ftmHoraDeAcesso);
 		construtor.gridx = 4;
 		construtor.gridy = 2;
-		tfHoraDeAcesso = new JTextField(10);
+		
 		container.add(tfHoraDeAcesso, construtor);
 
 		// Configuracao JButton Entrar
@@ -87,6 +100,7 @@ public class TelaEntrada extends JFrame {
 		btCancelar = new JButton("Cancelar");
 		btCancelar.addActionListener(gerenciadorBotoes);
 		container.add(btCancelar, construtor);
+		
 		setSize(300, 150);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
