@@ -6,6 +6,7 @@
 package br.ufsc.ine5605.trabalho02.acessos;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -70,8 +71,11 @@ public class MapeadorAcesso {
 
 			oIS.close();
 			fIS.close();
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
+			persist();
 			System.out.println(e);
+		} catch (Exception  e) {
+			persist();
 		}
 
 	}
