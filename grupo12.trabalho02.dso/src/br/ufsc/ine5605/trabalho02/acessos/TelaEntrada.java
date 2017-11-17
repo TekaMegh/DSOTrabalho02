@@ -5,6 +5,7 @@
  */
 package br.ufsc.ine5605.trabalho02.acessos;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,12 +15,15 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-	import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+import javax.swing.JOptionPane;
+
+import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
 
 /**
  *
@@ -74,6 +78,7 @@ public class TelaEntrada extends JFrame {
 		// Configuracao JFormattedTextField Matricula
 		ftmMatricula = NumberFormat.getNumberInstance();
 		tfMatricula = new JFormattedTextField(ftmMatricula);
+		tfMatricula.setValue(new Integer("123456"));
 		construtor.gridx = 4;
 		construtor.gridy = 1;
 		
@@ -82,6 +87,8 @@ public class TelaEntrada extends JFrame {
 		// Configuracao JFormattedTextField HoraDeAcesso
 		ftmHoraDeAcesso = new SimpleDateFormat("HH:mm");	
 		tfHoraDeAcesso = new JFormattedTextField(ftmHoraDeAcesso);
+		tfHoraDeAcesso.setValue(new Date());
+		
 		construtor.gridx = 4;
 		construtor.gridy = 2;
 		
@@ -112,9 +119,8 @@ public class TelaEntrada extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btEntrar)) {
-				String matricula = tfMatricula.getText();
-				String horaDeAcesso = tfHoraDeAcesso.getText();
-				ControladorAcesso.getInstance().validaAcesso(matricula, horaDeAcesso);
+				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Erro", JOptionPane.ERROR_MESSAGE); 
+				
 			} else if (e.getSource().equals(btCancelar)) {
 				setVisible(false);
 				ControladorPrincipal.getInstance().inicia();

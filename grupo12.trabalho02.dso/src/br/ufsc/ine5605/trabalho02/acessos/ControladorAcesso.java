@@ -6,13 +6,16 @@
 package br.ufsc.ine5605.trabalho02.acessos;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+
 import br.ufsc.ine5605.trabalho02.cargos.IntervaloDeAcesso;
 import br.ufsc.ine5605.trabalho02.funcionarios.Funcionario;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +28,7 @@ public class ControladorAcesso implements IControladorAcesso {
 	private TelaEntrada telaEntrada;
 	private TelaAcesso telaAcesso;
 
-	private static ControladorAcesso controladorAcesso;
+	private static IControladorAcesso controladorAcesso;
 
 	public ControladorAcesso() {
 		telaEntrada = new TelaEntrada();
@@ -49,48 +52,60 @@ public class ControladorAcesso implements IControladorAcesso {
 	 * 
 	 * @param matricula
 	 * @param horaDeAcesso
-	 * @return
+	 * @return 
+	 * @throws ParseException 
 	 */
 	@Override
-	public String validaAcesso(String mat, String time) {
+	public String validaAcesso(Object matriculaParam, Object tempoParam) {
 
-		int matricula = this.parseInt(mat);
-		Date horaDeAcesso = this.parseDate(time);
+			try {
+				int matricula = this.parseInt(matriculaParam);
+				Date horaDeAcesso = this.parseDate(tempoParam);
+				Funcionario funcionario = null;
 
-		Funcionario funcionario = null;
+				if (ControladorPrincipal.getInstance().hasFuncionarioByMatricula(matricula)) {
+					funcionario = ControladorPrincipal.getInstance().getFuncionarioByMatricula(matricula);
+				} else {
+					return TipoAcesso.SEMMATRICULA.descricao();
+				}
 
-		if (ControladorPrincipal.getInstance().hasFuncionarioByMatricula(matricula)) {
-			funcionario = ControladorPrincipal.getInstance().getFuncionarioByMatricula(matricula);
-		} else {
-			return TipoAcesso.SEMMATRICULA.descricao();
-		}
+				if (funcionario.isBlocked()) {
+					mapAcessos.put(new Acesso(TipoAcesso.ACESSOBLOQUEADO, matricula, horaDeAcesso));
+					return TipoAcesso.ACESSOBLOQUEADO.descricao();
 
-		if (funcionario.isBlocked()) {
-			mapAcessos.put(new Acesso(TipoAcesso.ACESSOBLOQUEADO, matricula, horaDeAcesso));
-			return TipoAcesso.ACESSOBLOQUEADO.descricao();
+				} else if (!funcionario.getCargo().mayEnter()) {
+					if (getAcessosByMatricula(funcionario.getMatricula()).size() == 2) {
+						funcionario.setBlocked(true);
+					}
+					mapAcessos.put(new Acesso(TipoAcesso.NAOPOSSUIACESSO, matricula, horaDeAcesso));
+					return TipoAcesso.NAOPOSSUIACESSO.descricao();
 
-		} else if (!funcionario.getCargo().mayEnter()) {
-			if (getAcessosByMatricula(funcionario.getMatricula()).size() == 2) {
-				funcionario.setBlocked(true);
+				} else if (funcionario.getCargo().isGerencial()) {
+
+					return TipoAcesso.AUTORIZADO.descricao();
+
+				} else if (validaHorario(funcionario, horaDeAcesso)) {
+
+					return TipoAcesso.AUTORIZADO.descricao();
+
+				} else {
+					if (getAcessosByMatricula(funcionario.getMatricula()).size() == 2) {
+						funcionario.setBlocked(true);
+					}
+					mapAcessos.put(new Acesso(TipoAcesso.HORARIONAOPERMITIDO, matricula, horaDeAcesso));
+					return TipoAcesso.HORARIONAOPERMITIDO.descricao();
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				return "Matricula inválida";
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+				return "Hora inválida";
 			}
-			mapAcessos.put(new Acesso(TipoAcesso.NAOPOSSUIACESSO, matricula, horaDeAcesso));
-			return TipoAcesso.NAOPOSSUIACESSO.descricao();
+		
 
-		} else if (funcionario.getCargo().isGerencial()) {
-
-			return TipoAcesso.AUTORIZADO.descricao();
-
-		} else if (validaHorario(funcionario, horaDeAcesso)) {
-
-			return TipoAcesso.AUTORIZADO.descricao();
-
-		} else {
-			if (getAcessosByMatricula(funcionario.getMatricula()).size() == 2) {
-				funcionario.setBlocked(true);
-			}
-			mapAcessos.put(new Acesso(TipoAcesso.HORARIONAOPERMITIDO, matricula, horaDeAcesso));
-			return TipoAcesso.HORARIONAOPERMITIDO.descricao();
-		}
+		
 	}
 
 	/**
@@ -100,9 +115,9 @@ public class ControladorAcesso implements IControladorAcesso {
 	 * @return
 	 * @throws NumberFormatException
 	 */
-	public int parseInt(String entrada) throws NumberFormatException {
+	public int parseInt(Object entrada) throws NumberFormatException {
 
-		return Integer.parseInt(entrada);
+		return Integer.parseInt(entrada.toString());
 
 	}
 
@@ -115,9 +130,14 @@ public class ControladorAcesso implements IControladorAcesso {
 	 * @throws java.text.ParseException
 	 *             case a String não esteja no formato "HH:mm"
 	 */
-	public Date parseDate(String string) throws ParseException {
-
-		return formatadorHora.parse(string);
+	public Date parseDate(Object object) throws ParseException {
+		
+		String data = object.toString();
+	    DateFormat df = new SimpleDateFormat("HH:mm");
+	    System.out.println(data.substring(11,16));
+	    Date date = df.parse(data.substring(11,16));
+	    return date;
+		
 
 	}
 

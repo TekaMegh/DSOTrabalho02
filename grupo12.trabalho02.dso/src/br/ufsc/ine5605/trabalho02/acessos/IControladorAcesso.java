@@ -6,7 +6,6 @@
 package br.ufsc.ine5605.trabalho02.acessos;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -18,7 +17,7 @@ public interface IControladorAcesso {
 
 	public void iniciaTelaEntrada();
 
-	public String validaAcesso(String mat, String time);
+	public String validaAcesso(Object matriculaParam, Object tempoParam);
 
 	public ArrayList<Acesso> getAcessosByTipo(TipoAcesso tipo);
 

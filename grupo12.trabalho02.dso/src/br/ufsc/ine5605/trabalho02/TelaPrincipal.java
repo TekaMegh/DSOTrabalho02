@@ -72,6 +72,7 @@ public class TelaPrincipal extends JFrame{
             } else if(e.getSource().equals(btCargo)) {
                 ControladorPrincipal.getInstance().iniciaCargo();
             } else if(e.getSource().equals(btFunc)) {
+            	ControladorPrincipal.getInstance().iniciaFuncionario();
                 
             }
         }
