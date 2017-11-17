@@ -5,13 +5,6 @@
  */
 package br.ufsc.ine5605.trabalho02;
 
-import java.sql.Date;
-
-import br.ufsc.ine5605.trabalho02.cargos.Cargo;
-import br.ufsc.ine5605.trabalho02.funcionarios.ControladorFuncionario;
-import br.ufsc.ine5605.trabalho02.funcionarios.Funcionario;
-import br.ufsc.ine5605.trabalho02.funcionarios.TelaFuncionario;
-
 /**
  *
  * @author rak_w
@@ -23,19 +16,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    	Cargo cargo1 = new Cargo(1, "badeco", true);
-    	cargo1.setGerencial(false);
-    	
-    	
-    	
-    	
-    	try {
-			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000, cargo1);
-		} catch (Exception e) {
-			TelaFuncionario.printExceptionMessage(e);
-		}
-    	
-    	
         ControladorPrincipal.getInstance().inicia();
     }
     
