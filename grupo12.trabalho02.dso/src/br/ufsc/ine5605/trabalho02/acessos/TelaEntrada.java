@@ -116,6 +116,7 @@ public class TelaEntrada extends JFrame {
 				String horaDeAcesso = tfHoraDeAcesso.getText();
 				ControladorAcesso.getInstance().validaAcesso(matricula, horaDeAcesso);
 			} else if (e.getSource().equals(btCancelar)) {
+				setVisible(false);
 				ControladorPrincipal.getInstance().inicia();
 			}
 		}
