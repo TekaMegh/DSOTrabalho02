@@ -104,7 +104,7 @@ public class TelaFuncionario {
     *
     * @param e (Exceção)
     */
-   public void printExceptionMessage(Exception e) {
+   public static void printExceptionMessage(Exception e) {
        System.out.println(e.getMessage());
    }
 

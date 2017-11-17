@@ -27,7 +27,7 @@ import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
 
 /**
  *
- * @author rak_w
+ * @author levycosta
  */
 public class TelaEntrada extends JFrame {
 
@@ -119,7 +119,7 @@ public class TelaEntrada extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btEntrar)) {
-				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Erro", JOptionPane.ERROR_MESSAGE); 
+				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Erro", JOptionPane.INFORMATION_MESSAGE); 
 				
 			} else if (e.getSource().equals(btCancelar)) {
 				setVisible(false);

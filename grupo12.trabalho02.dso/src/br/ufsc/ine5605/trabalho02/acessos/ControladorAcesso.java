@@ -96,10 +96,9 @@ public class ControladorAcesso implements IControladorAcesso {
 					return TipoAcesso.HORARIONAOPERMITIDO.descricao();
 				}
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
+				System.out.println(e);
 				return "Matricula inválida";
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 				return "Hora inválida";
 			}
