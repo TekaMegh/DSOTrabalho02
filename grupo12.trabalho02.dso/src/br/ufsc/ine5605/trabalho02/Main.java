@@ -8,6 +8,7 @@ package br.ufsc.ine5605.trabalho02;
 import java.sql.Date;
 
 import br.ufsc.ine5605.trabalho02.cargos.Cargo;
+import br.ufsc.ine5605.trabalho02.cargos.IntervaloDeAcesso;
 import br.ufsc.ine5605.trabalho02.funcionarios.ControladorFuncionario;
 import br.ufsc.ine5605.trabalho02.funcionarios.Funcionario;
 import br.ufsc.ine5605.trabalho02.funcionarios.TelaFuncionario;
@@ -26,7 +27,8 @@ public class Main {
     	Cargo cargo1 = new Cargo(1, "badeco", true);
     	cargo1.setGerencial(false);
     	
-    	
+    	cargo1.addIntervalo("08:00", "12:00");
+    	cargo1.addIntervalo("14:00", "18:00");
     	
     	
     	try {
