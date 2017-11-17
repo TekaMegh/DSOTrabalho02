@@ -13,4 +13,14 @@ import javax.swing.JFrame;
  */
 public class TelaAcesso extends JFrame {
 
+	String[] columnNames = { "Matricula do Funcionario", "tipo", "Hora do Acesso", "Data da tentativa" };
+
+	public TelaAcesso() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void update() {
+
+	}
+
 }

@@ -5,7 +5,6 @@
  */
 package br.ufsc.ine5605.trabalho02.acessos;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -119,8 +118,8 @@ public class TelaEntrada extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btEntrar)) {
-				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Erro", JOptionPane.INFORMATION_MESSAGE); 
-				
+				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Mensagem", JOptionPane.INFORMATION_MESSAGE); 
+				ControladorAcesso.getInstance().printListaAcessoByMatricula();
 			} else if (e.getSource().equals(btCancelar)) {
 				setVisible(false);
 				ControladorPrincipal.getInstance().inicia();

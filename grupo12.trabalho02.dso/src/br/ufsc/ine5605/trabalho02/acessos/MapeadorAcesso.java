@@ -8,6 +8,7 @@ package br.ufsc.ine5605.trabalho02.acessos;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
@@ -31,20 +32,45 @@ public class MapeadorAcesso {
 		persist();
 	}
 
+	/**
+	 * Pega um acesso específico baseado no id passado.
+	 * 
+	 * @param idAcesso
+	 * @return
+	 */
 	public Acesso get(Integer idAcesso) {
 		return cacheAcessos.get(idAcesso);
 	}
 
+	/**
+	 * 
+	 * @return Coleção dos acessos.
+	 */
 	public Collection<Acesso> getList() {
+		load();
 		return cacheAcessos.values();
 	}
 
+	/**
+	 * 
+	 * @return Hash inteiro.
+	 */
+
+	public HashMap<Integer, Acesso> getHash() {
+		return cacheAcessos;
+	}
+
+	/**
+	 * Remove um acesso.
+	 * 
+	 * @param acesso
+	 */
 	public void remove(Acesso acesso) {
 		cacheAcessos.remove(acesso.getIdAcesso());
 		persist();
 	}
 
-	private void persist() {
+	public void persist() {
 		try {
 			FileOutputStream fOS = new FileOutputStream(fileName);
 			ObjectOutputStream oOS = new ObjectOutputStream(fOS);
@@ -58,23 +84,29 @@ public class MapeadorAcesso {
 			fOS.close();
 
 		} catch (Exception e) {
+			System.out.println(e);
 			persist();
 		}
 	}
 
-	private void load() {
+	public void load() {
 		try {
 			FileInputStream fIS = new FileInputStream(fileName);
 			ObjectInputStream oIS = new ObjectInputStream(fIS);
 
-			cacheAcessos = (HashMap<Integer, Acesso>) oIS.readObject();
+			this.cacheAcessos = (HashMap<Integer, Acesso>) oIS.readObject();
 
 			oIS.close();
 			fIS.close();
-		} catch (FileNotFoundException e) {
-			persist();
+		} catch (ClassNotFoundException e) {
 			System.out.println(e);
-		} catch (Exception  e) {
+
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+			persist();
+
+		} catch (IOException e) {
+			System.out.println(e);
 			persist();
 		}
 

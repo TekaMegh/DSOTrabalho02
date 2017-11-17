@@ -13,46 +13,46 @@ import java.util.Date;
  *
  * @author levycosta
  */
-public class Acesso implements Serializable{
+public class Acesso implements Serializable {
 
-    private int idAcesso;
-    private TipoAcesso tipo;
-    private int matricula;
-    private Date horadeacesso;
-    private Date dataDaTentativa;
+	private int idAcesso;
+	private TipoAcesso tipo;
+	private int matricula;
+	private Date horadeacesso;
+	private Date dataDaTentativa;
 
-    public Acesso(TipoAcesso tipo, int matricula, Date horadeacesso) {
-        this.tipo = tipo;
-        this.matricula = matricula;
-        this.horadeacesso = horadeacesso;
-        this.dataDaTentativa = Calendar.getInstance().getTime();
-    }
+	public Acesso(TipoAcesso tipo, int matricula, Date horadeacesso) {
+		this.tipo = tipo;
+		this.matricula = matricula;
+		this.horadeacesso = horadeacesso;
+		this.dataDaTentativa = Calendar.getInstance().getTime();
+	}
 
-    public TipoAcesso getTipo() {
-        return tipo;
-    }
+	public TipoAcesso getTipo() {
+		return tipo;
+	}
 
-    public void setTipo(TipoAcesso tipo) {
-        this.tipo = tipo;
-    }
+	public void setTipo(TipoAcesso tipo) {
+		this.tipo = tipo;
+	}
 
-    public int getMatricula() {
-        return matricula;
-    }
+	public int getMatricula() {
+		return matricula;
+	}
 
-    public Date getHoraDeAcesso() {
-        return horadeacesso;
-    }
+	public Date getHoraDeAcesso() {
+		return horadeacesso;
+	}
 
-    public Date getDataDaTentativa() {
-        return dataDaTentativa;
-    }
+	public Date getDataDaTentativa() {
+		return dataDaTentativa;
+	}
 
-    public int getIdAcesso() {
-        return idAcesso;
-    }
+	public int getIdAcesso() {
+		return idAcesso;
+	}
 
-    public void setIdAcesso(int idAcesso) {
-        this.idAcesso = idAcesso;
-    }    
+	public void setIdAcesso(int idAcesso) {
+		this.idAcesso = idAcesso;
+	}
 }
