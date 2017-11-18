@@ -207,7 +207,7 @@ public class ControladorAcesso implements IControladorAcesso {
 	@Override
 	public void iniciaTelaAcesso() {
 		this.telaEntrada.setVisible(false);
-		this.telaAcesso.setVisible(true);
+		this.telaAcesso.mostraTela();
 	}
 
 	@Override
@@ -239,6 +239,11 @@ public class ControladorAcesso implements IControladorAcesso {
 
 		}
 
+	}
+
+	@Override
+	public ArrayList<Acesso> getAcessos() {
+		return (ArrayList<Acesso>) mapAcessos.getList();
 	}
 
 }

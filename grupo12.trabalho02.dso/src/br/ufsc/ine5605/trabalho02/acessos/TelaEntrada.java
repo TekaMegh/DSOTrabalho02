@@ -113,7 +113,7 @@ public class TelaEntrada extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	private class GerenciadorBotoes implements ActionListener {
+	public class GerenciadorBotoes implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

@@ -24,4 +24,6 @@ public interface IControladorAcesso {
 	public ArrayList<Acesso> getAcessosByMatricula(int matricula);
 
 	public void printListaAcessoByMatricula();
+
+	public ArrayList<Acesso> getAcessos();
 }
