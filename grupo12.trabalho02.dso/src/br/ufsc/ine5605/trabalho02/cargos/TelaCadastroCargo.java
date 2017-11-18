@@ -25,12 +25,13 @@ public class TelaCadastroCargo extends JFrame{
     
     private JLabel lbNome;
     private JLabel lbCodigo;
-    private JLabel lbTipo;
+    private JLabel lbAcesso;
     private JButton btSalvar;
     private JButton btCancelar;
     private JTextField tfNome;
     private JTextField tfCodigo;
-    private JComboBox cbTipo;
+    private JComboBox cbAcesso;
+    private String[] Acesso = {"Sem acesso", "Comercial", "Gerencial", "Especial"};
     
     private JLabel lbIntervalo;
     private JTable tbIntervalo;
@@ -71,11 +72,11 @@ public class TelaCadastroCargo extends JFrame{
         lbCodigo = new JLabel("Codigo:");               
         container.add(lbCodigo, construtor);
         
-        //Configuracao JLabel Tipo
+        //Configuracao JLabel Acesso
         construtor.gridx = 1;
         construtor.gridy = 3;
-        lbTipo = new JLabel("Tipo:");               
-        container.add(lbTipo, construtor);
+        lbAcesso = new JLabel("Acesso:");               
+        container.add(lbAcesso, construtor);
         
         //Configuracao JTextField Nome
         construtor.gridx = 4;
@@ -88,6 +89,13 @@ public class TelaCadastroCargo extends JFrame{
         construtor.gridy = 2;
         tfCodigo = new JTextField(10);               
         container.add(tfCodigo, construtor);
+        
+        //Configuracao JComoboBox Acesso
+        construtor.gridx = 4;
+        construtor.gridy = 3;
+        cbAcesso = new JComboBox(Acesso);
+        container.add(cbAcesso, construtor);
+        
         
         setSize(450, 350);
         

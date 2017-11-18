@@ -6,6 +6,7 @@
 package br.ufsc.ine5605.trabalho02.cargos;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+import java.util.Collection;
 
 /**
  *
@@ -16,10 +17,12 @@ public class ControladorCargo implements IControladorCargo{
     private static ControladorCargo controladorCargo;
     private TelaCargo telaCargo;
     private TelaCadastroCargo telaCadastroCargo;
+    private MapeadorCargo mapCargo;
         
     public ControladorCargo() {
         this.telaCargo = new TelaCargo();
         this.telaCadastroCargo = new TelaCadastroCargo();
+        this.mapCargo = new MapeadorCargo();
     }
     
     /**
@@ -36,6 +39,7 @@ public class ControladorCargo implements IControladorCargo{
     
     @Override
     public void iniciaTelaCargo() {
+        this.telaCargo.updateDate();
         this.telaCadastroCargo.setVisible(false);
         this.telaCargo.setVisible(true);
     }
@@ -51,6 +55,11 @@ public class ControladorCargo implements IControladorCargo{
         this.telaCargo.setVisible(false);
         this.telaCadastroCargo.setVisible(false);
         ControladorPrincipal.getInstance().inicia();
+    }
+
+    @Override
+    public Collection<Cargo> getListaCargos() {
+        return this.mapCargo.getList();
     }
     
     

@@ -89,7 +89,7 @@ public class ControladorPrincipal {
 	}
 
 	public ArrayList<Funcionario> getListaFuncionarios() {
-		return ctrlFuncionario.getListaFuncionario();
+		return ControladorFuncionario.getInstance().getListaFuncionario();
 	}
 
 	/**

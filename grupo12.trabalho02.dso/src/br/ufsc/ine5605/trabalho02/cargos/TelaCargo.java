@@ -6,15 +6,19 @@
 package br.ufsc.ine5605.trabalho02.cargos;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,6 +31,7 @@ public class TelaCargo extends JFrame{
     private JButton btAlterar;
     private JButton btRemover;
     private JButton btVoltar;
+    private JScrollPane spCargos;
     private GerenciadorTelaCargo gerenciadorTelaCargo;
     
     public TelaCargo() {
@@ -38,51 +43,77 @@ public class TelaCargo extends JFrame{
     private void configuraTelaCargo() {
         Container container = getContentPane();
         container.setLayout(new GridBagLayout());
-        GridBagConstraints construtor = new GridBagConstraints();
-        construtor.fill = GridBagConstraints.BOTH;
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.fill = GridBagConstraints.BOTH;
+        constraint.insets = new Insets(5,5,5,5);
                 
         //Configuracao JLabel
-        construtor.gridheight = 1;
-        construtor.gridwidth = 3;
-        construtor.gridx = 1;
-        construtor.gridy = 1;
+        constraint.gridheight = 1;
+        constraint.gridwidth = 3;
+        constraint.gridx = 1;
+        constraint.gridy = 1;
         lbTexto = new JLabel("Cargos cadastrados:");               
-        container.add(lbTexto, construtor);
+        container.add(lbTexto, constraint);
         
         //Configuracao JTable de Cargos
+        tbCargos = new JTable();
+        tbCargos.setPreferredScrollableViewportSize(new Dimension(200, 100));
+        tbCargos.setFillsViewportHeight(true);
+        constraint.gridheight = 4;
+        constraint.gridwidth = 9;
+        constraint.gridx = 1;
+        constraint.gridy = 2;
+        spCargos = new JScrollPane(tbCargos);
+        container.add(spCargos, constraint);
         
         //Configuracao JButton Novo
-        construtor.gridx = 1;
-        construtor.gridy = 3;
+        constraint.gridheight = 1;
+        constraint.gridwidth = 3;
+        constraint.gridx = 1;
+        constraint.gridy = 6;
         btNovo = new JButton("Novo Cargo");               
         btNovo.addActionListener(gerenciadorTelaCargo);
-        container.add(btNovo, construtor);
+        container.add(btNovo, constraint);
         
         //Configuracao JButton Alterar
-        construtor.gridx = 4;
-        construtor.gridy = 3;
+        constraint.gridx = 4;
+        constraint.gridy = 6;
         btAlterar = new JButton("Alterar Cargo");               
         btAlterar.addActionListener(gerenciadorTelaCargo);
-        container.add(btAlterar, construtor);
+        container.add(btAlterar, constraint);
         
         //Configuracao JButton Remover
-        construtor.gridx = 7;
-        construtor.gridy = 3;
+        constraint.gridx = 7;
+        constraint.gridy = 6;
         btRemover = new JButton("Remover Cargo");               
         btRemover.addActionListener(gerenciadorTelaCargo);
-        container.add(btRemover, construtor);
+        container.add(btRemover, constraint);
         
         //Configuracao JButton Voltar
-        construtor.gridx = 4;
-        construtor.gridy = 4;
+        constraint.gridx = 4;
+        constraint.gridy = 7;
         btVoltar = new JButton("Voltar");               
         btVoltar.addActionListener(gerenciadorTelaCargo);
-        container.add(btVoltar, construtor);
+        container.add(btVoltar, constraint);
         
+        //constraint.insets = new Insets(5,5,5,5);
         setSize(450, 350);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+    
+    public void updateDate(){
+        DefaultTableModel modelTbCargos = new DefaultTableModel();
+        modelTbCargos.addColumn("Codigo");
+        modelTbCargos.addColumn("Nome");
+        modelTbCargos.addColumn("Intervalos de Acesso");
+        
+        for(Cargo cargo : ControladorCargo.getInstance().getListaCargos()) {
+            modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(), cargo.getIntervalos()});
+        }
+         tbCargos.setModel(modelTbCargos);
+         this.repaint();
     }
 
     private class GerenciadorTelaCargo implements ActionListener {

@@ -16,5 +16,7 @@ public interface IControladorCargo {
     public void iniciaTelaCargo();
 
     public void iniciaTelaPrincipal();
+
+    public Iterable<Cargo> getListaCargos();
        
 }
