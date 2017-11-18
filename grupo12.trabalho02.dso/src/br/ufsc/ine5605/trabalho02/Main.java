@@ -38,6 +38,7 @@ public class Main {
 			TelaFuncionario.printExceptionMessage(e);
 		}
 
+		ControladorPrincipal.getInstance().inicia();
 	}
 
 }

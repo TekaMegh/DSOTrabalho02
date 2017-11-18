@@ -14,9 +14,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-
-import com.sun.javafx.collections.MappingChange.Map;
 
 /**
  *
@@ -25,7 +24,7 @@ import com.sun.javafx.collections.MappingChange.Map;
 public class ControladorAcesso implements IControladorAcesso {
 
 	private MapeadorAcesso mapAcessos = new MapeadorAcesso();
-	SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
+	private SimpleDateFormat formatadorHora;
 	private TelaEntrada telaEntrada;
 	private TelaAcesso telaAcesso;
 
@@ -34,7 +33,7 @@ public class ControladorAcesso implements IControladorAcesso {
 	public ControladorAcesso() {
 		telaEntrada = new TelaEntrada();
 		telaAcesso = new TelaAcesso();
-
+		formatadorHora = new SimpleDateFormat("HH:mm");
 	}
 
 	/**
@@ -111,10 +110,10 @@ public class ControladorAcesso implements IControladorAcesso {
 	}
 
 	/**
-	 * Realiza um comando "parse" na String recebida, a transformando em "int".
+	 * Realiza um comando "parse" no Objeto recebido, o transformando em "int".
 	 *
-	 * @param entrada
-	 * @return
+	 * @param Object
+	 * @return int
 	 * @throws NumberFormatException
 	 */
 	public int parseInt(Object entrada) throws NumberFormatException {
@@ -124,19 +123,17 @@ public class ControladorAcesso implements IControladorAcesso {
 	}
 
 	/**
-	 * Realiza um comando "parse" na String recebida, a transformando em um "Date".
+	 * Realiza um comando "parse" no objeto recebido, o transformando em um "Date".
 	 *
-	 * @param string
-	 * @return Date da String recebida
+	 * @param Object
+	 * @return Date do Object recebido
 	 * @throws java.text.ParseException
-	 *             case a String não esteja no formato "HH:mm"
 	 */
 	public Date parseDate(Object object) throws ParseException {
 
 		String data = object.toString();
-		DateFormat df = new SimpleDateFormat("HH:mm");
 		System.out.println(data.substring(11, 16));
-		Date date = df.parse(data.substring(11, 16));
+		Date date = formatadorHora.parse(data.substring(11, 16));
 		return date;
 
 	}
@@ -213,10 +210,11 @@ public class ControladorAcesso implements IControladorAcesso {
 	@Override
 	public void iniciaTelaEntrada() {
 		this.telaAcesso.setVisible(false);
-		this.telaEntrada.setVisible(true);
+		this.telaEntrada.mostrarTela();
 	}
 
-	// APENAS PARA TESTES
+	//////////////////////////////////
+	/// APENAS PARA TESTES DE ENTRADA
 	public void printListaAcessoByMatricula() {
 
 		int matricula = 1;
@@ -241,9 +239,33 @@ public class ControladorAcesso implements IControladorAcesso {
 
 	}
 
+	//////////////////////////////////////////
 	@Override
-	public ArrayList<Acesso> getAcessos() {
-		return (ArrayList<Acesso>) mapAcessos.getList();
+	public Collection<Acesso> getAcessos() {
+		return mapAcessos.getList();
+	}
+
+	@Override
+	public String formatToHour(Date horaDeAcesso) {
+		return formatadorHora.format(horaDeAcesso);
+
+	}
+
+	@Override
+	public String formatToDate(Date dataDaTentativa) {
+		DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+		return formatadorData.format(dataDaTentativa);
+	}
+
+	@Override
+	public ArrayList<Integer> getMatriculasFuncionarios() {
+		ArrayList<Integer> lista = new ArrayList<>();
+		for (Funcionario funcionario : ControladorPrincipal.getInstance().getListaFuncionarios()) {
+
+			lista.add(funcionario.getMatricula());
+
+		}
+		return lista;
 	}
 
 }

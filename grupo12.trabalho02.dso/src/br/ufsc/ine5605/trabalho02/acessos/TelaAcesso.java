@@ -11,17 +11,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.util.Date;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
-import br.ufsc.ine5605.trabalho02.acessos.TelaEntrada.GerenciadorBotoes;
 
 /**
  *
@@ -32,62 +31,132 @@ public class TelaAcesso extends JFrame {
 	private GerenciadorBotoes gerenciadorBotoes;
 	private JTable tbItens;
 	private JScrollPane spBaseTabela;
+	private JButton btVoltar;
+	private JComboBox<Integer> cbFiltroMatricula;
+	private JComboBox<Object> cbFiltroTipo;
+	private JLabel lbFiltroMatricula;
+	private JLabel lbFiltroTipo;
+	private String[] patternFiltroTipo = { "Qualquer tipo", "Acesso bloqueado", "Horario não permitido",
+			"Não possui Acesso" };
 
 	public TelaAcesso() {
 
 		super("Entrada");
 		this.gerenciadorBotoes = new GerenciadorBotoes();
-		this.configuraTelaEntrada();
+		this.configuraTelaAcesso();
 
 	}
 
-	private void configuraTelaEntrada() {
-		
+	private void configuraTelaAcesso() {
+
+		////////// configuracao da JTable
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraint = new GridBagConstraints();
 		tbItens = new JTable();
-		tbItens.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		tbItens.setPreferredScrollableViewportSize(new Dimension(700, 100));
 		tbItens.setFillsViewportHeight(true);
-		constraint.fill = GridBagConstraints.CENTER;
-		constraint.gridwidth = 5;
+		constraint.fill = GridBagConstraints.BOTH;
+		// constraint.weightx = 0.5;
+		// constraint.gridwidth = 5;
+		// constraint.gridx = 0;
+		// constraint.gridy = 1;
 		constraint.gridheight = 4;
+		constraint.gridwidth = 9;
+		constraint.gridx = 0;
+		constraint.gridy = 2;
 		spBaseTabela = new JScrollPane(tbItens);
-	
+		spBaseTabela.setMinimumSize(new Dimension(700, 100));
 		container.add(spBaseTabela, constraint);
-		
-		setSize(600, 400);
+
+		/// ----------------------- configuracao botões
+		/// ------------------------------///
+
+		//////////// Configuracap dos filtros
+		///// filtroMatricula e seu Label
+		lbFiltroMatricula = new JLabel("Filtro por Matrícula: ");
+		constraint.gridheight = 1;
+		constraint.gridwidth = 1;
+		constraint.gridx = 1;
+		constraint.gridy = 6;
+		constraint.fill = GridBagConstraints.NONE;
+		container.add(lbFiltroMatricula, constraint);
+
+		cbFiltroMatricula = new JComboBox<Integer>();
+		cbFiltroMatricula.addActionListener(gerenciadorBotoes);
+		constraint.gridwidth = 2;
+		constraint.gridwidth = 1;
+		constraint.gridx = 2;
+		constraint.gridy = 6;
+		constraint.fill = GridBagConstraints.NONE;
+		container.add(cbFiltroMatricula, constraint);
+
+		//////// filtroTipo e seu label
+		lbFiltroTipo = new JLabel("Filtro por Tipo: ");
+		constraint.gridwidth = 1;
+		constraint.gridx = 4;
+		constraint.gridy = 6;
+		constraint.fill = GridBagConstraints.NONE;
+		container.add(lbFiltroTipo, constraint);
+
+		cbFiltroTipo = new JComboBox<Object>(patternFiltroTipo);
+		cbFiltroTipo.addActionListener(gerenciadorBotoes);
+		constraint.gridwidth = 2;
+		constraint.gridx = 5;
+		constraint.gridy = 6;
+		constraint.fill = GridBagConstraints.NONE;
+		container.add(cbFiltroTipo, constraint);
+
+		// Configuracao JButton Voltar
+		btVoltar = new JButton("Voltar");
+		btVoltar.addActionListener(gerenciadorBotoes);
+		constraint.weightx = 0.5;
+		constraint.gridheight = 1;
+		constraint.gridwidth = 4;
+		constraint.gridx = 2;
+		constraint.gridy = 7;
+		constraint.fill = GridBagConstraints.BOTH;
+		container.add(btVoltar, constraint);
+
+		setSize(750, 300);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+
+	/**
+	 * Atualiza a ComboBox de filtro por matrícula.
+	 */
+	private void updateJComboBoxes() {
+		for (Integer matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
+			cbFiltroMatricula.addItem(matricula);
+		}
 
 	}
 
 	private class GerenciadorBotoes implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		/*
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(btEntrar)) {
-				JOptionPane.showMessageDialog(null,
-						ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()),
-						"Mensagem", JOptionPane.INFORMATION_MESSAGE);
-				ControladorAcesso.getInstance().printListaAcessoByMatricula();
-			} else if (e.getSource().equals(btCancelar)) {
+
+			if (e.getSource().equals(btVoltar)) {
 				setVisible(false);
 				ControladorPrincipal.getInstance().inicia();
 			}
+			if (e.getSource().equals(cbFiltroMatricula)) {
+				updateJTableByMatricula(cbFiltroMatricula.getSelectedItem());
+			}
+
+			if (e.getSource().equals(cbFiltroTipo)) {
+
+				updateJTableByTipo(cbFiltroTipo.getSelectedItem());
+
+			}
 		}
-		
-		*/
+
 	}
 
-	public void update() {
+	public void updateDefault() {
 
 		/*
 		 * private int idAcesso; private TipoAcesso tipo; private int matricula; private
@@ -101,12 +170,136 @@ public class TelaAcesso extends JFrame {
 		modelTbItens.addColumn("Data da Tentativa");
 
 		for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
-			modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), acesso.getTipo(), acesso.getMatricula(),
-					acesso.getHoraDeAcesso(), acesso.getDataDaTentativa() });
+			String tipo;
+			switch (acesso.getTipo()) {
+			case ACESSOBLOQUEADO:
+				tipo = "Acesso Bloqueado";
+				break;
+			case AUTORIZADO:
+				tipo = "Autorizado";
+				break;
+			case HORARIONAOPERMITIDO:
+				tipo = "Horário não permitido";
+				break;
+			case NAOPOSSUIACESSO:
+				tipo = "Não possui acesso";
+				break;
+			default:
+				tipo = "Sem tipo";
+				break;
+			}
+
+			modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
+					ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+					ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+		}
+		tbItens.setModel(modelTbItens);
+		updateJComboBoxes();
+		this.repaint();
+	}
+
+	/**
+	 * refaz a JTable usando o tipo selecionado na ComboBox
+	 * 
+	 * @param selectedItem
+	 */
+	public void updateJTableByTipo(Object selectedItem) {
+		String selectedTipo = selectedItem.toString();
+		TipoAcesso tipo = null;
+		DefaultTableModel modelTbItens = new DefaultTableModel();
+		modelTbItens.addColumn("ID");
+		modelTbItens.addColumn("Tipo");
+		modelTbItens.addColumn("matricula");
+		modelTbItens.addColumn("Hora De Acesso");
+		modelTbItens.addColumn("Data da Tentativa");
+
+		switch (selectedTipo) {
+		case "Qualquer tipo":
+			for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
+						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+			}
+		case "Acesso Bloqueado":
+			tipo = TipoAcesso.ACESSOBLOQUEADO;
+			break;
+		case "Autorizado":
+			tipo = TipoAcesso.AUTORIZADO;
+			break;
+		case "Horário não permitido":
+			tipo = TipoAcesso.HORARIONAOPERMITIDO;
+			break;
+		case "Não possui acesso":
+			tipo = TipoAcesso.NAOPOSSUIACESSO;
+			break;
+		default:
+			break;
+		}
+		for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+			if (tipo.equals(acesso.getTipo())) {
+				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), acesso.getTipo(), acesso.getMatricula(),
+						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+			}
+		}
+		tbItens.setModel(modelTbItens);
+		updateJComboBoxes();
+		this.repaint();
+
+	}
+
+	/**
+	 * Refaz a JTable usando a matricula selecionada na ComboBox
+	 * 
+	 * @param selectedItem
+	 */
+	public void updateJTableByMatricula(Object selectedItem) {
+
+		int selectedMatricula = ControladorAcesso.getInstance().parseInt(selectedItem);
+
+		DefaultTableModel modelTbItens = new DefaultTableModel();
+		modelTbItens.addColumn("ID");
+		modelTbItens.addColumn("Tipo");
+		modelTbItens.addColumn("matricula");
+		modelTbItens.addColumn("Hora De Acesso");
+		modelTbItens.addColumn("Data da Tentativa");
+
+		for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+			String tipo;
+			switch (acesso.getTipo()) {
+			case ACESSOBLOQUEADO:
+				tipo = "Acesso Bloqueado";
+				break;
+			case AUTORIZADO:
+				tipo = "Autorizado";
+				break;
+			case HORARIONAOPERMITIDO:
+				tipo = "Horário não permitido";
+				break;
+			case NAOPOSSUIACESSO:
+				tipo = "Não possui acesso";
+				break;
+			default:
+				tipo = "Sem tipo";
+				break;
+			}
+			if (acesso.getMatricula() == selectedMatricula) {
+				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
+						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+			}
+
 		}
 		tbItens.setModel(modelTbItens);
 		this.repaint();
+
 	}
-	
-	//mostra tela faendo setvisible true dentre deke
+
+	public void mostraTela() {
+
+		updateDefault();
+		setVisible(true);
+
+	}
+
 }

@@ -5,7 +5,10 @@
  */
 package br.ufsc.ine5605.trabalho02.acessos;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -25,5 +28,16 @@ public interface IControladorAcesso {
 
 	public void printListaAcessoByMatricula();
 
-	public ArrayList<Acesso> getAcessos();
+	public Collection<Acesso> getAcessos();
+	
+	public Date parseDate(Object object) throws ParseException;
+
+	public String formatToHour(Date horaDeAcesso);
+
+	public String formatToDate(Date dataDaTentativa);
+
+	public ArrayList<Integer> getMatriculasFuncionarios();
+
+	public int parseInt(Object selectedItem);
+
 }

@@ -48,7 +48,6 @@ public class TelaEntrada extends JFrame {
 		try {
 			this.configuraTelaEntrada();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -80,17 +79,14 @@ public class TelaEntrada extends JFrame {
 		tfMatricula.setValue(new Integer("123456"));
 		construtor.gridx = 4;
 		construtor.gridy = 1;
-		
 		container.add(tfMatricula, construtor);
 
 		// Configuracao JFormattedTextField HoraDeAcesso
 		ftmHoraDeAcesso = new SimpleDateFormat("HH:mm");	
 		tfHoraDeAcesso = new JFormattedTextField(ftmHoraDeAcesso);
 		tfHoraDeAcesso.setValue(new Date());
-		
 		construtor.gridx = 4;
 		construtor.gridy = 2;
-		
 		container.add(tfHoraDeAcesso, construtor);
 
 		// Configuracao JButton Entrar
@@ -100,7 +96,7 @@ public class TelaEntrada extends JFrame {
 		btEntrar.addActionListener(gerenciadorBotoes);
 		container.add(btEntrar, construtor);
 
-		// Configuracao JButton Alterar
+		// Configuracao JButton Cancelar
 		construtor.gridx = 4;
 		construtor.gridy = 3;
 		btCancelar = new JButton("Cancelar");
@@ -125,6 +121,11 @@ public class TelaEntrada extends JFrame {
 				ControladorPrincipal.getInstance().inicia();
 			}
 		}
+	}
+
+	public void mostrarTela() {
+		setVisible(true);
+		
 	}
 
 }
