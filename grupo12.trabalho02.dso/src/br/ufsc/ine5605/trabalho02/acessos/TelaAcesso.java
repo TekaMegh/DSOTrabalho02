@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -101,6 +102,7 @@ public class TelaAcesso extends JFrame {
 
 		cbFiltroTipo = new JComboBox<Object>(patternFiltroTipo);
 		cbFiltroTipo.addActionListener(gerenciadorBotoes);
+		cbFiltroTipo.addItem("Todos");
 		constraint.gridwidth = 2;
 		constraint.gridx = 5;
 		constraint.gridy = 6;
@@ -128,8 +130,18 @@ public class TelaAcesso extends JFrame {
 	 * Atualiza a ComboBox de filtro por matrícula.
 	 */
 	private void updateJComboBoxes() {
-		for (Integer matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
-			cbFiltroMatricula.addItem(matricula);
+		for (int matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
+			
+			boolean exists = false;
+			 for (int index = 0; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
+			   if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
+			     exists = true;
+			   }
+			 }
+			 if (!exists) {
+				 cbFiltroMatricula.addItem(matricula);
+			 }
+
 		}
 
 	}
@@ -194,7 +206,6 @@ public class TelaAcesso extends JFrame {
 					ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
 		}
 		tbItens.setModel(modelTbItens);
-		updateJComboBoxes();
 		this.repaint();
 	}
 
@@ -243,7 +254,6 @@ public class TelaAcesso extends JFrame {
 			}
 		}
 		tbItens.setModel(modelTbItens);
-		updateJComboBoxes();
 		this.repaint();
 
 	}
@@ -298,6 +308,7 @@ public class TelaAcesso extends JFrame {
 	public void mostraTela() {
 
 		updateDefault();
+		updateJComboBoxes();
 		setVisible(true);
 
 	}
