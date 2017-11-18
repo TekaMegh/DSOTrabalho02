@@ -29,11 +29,11 @@ public class Main {
 		cargo1.addIntervalo("08:00", "12:00");
 		cargo1.addIntervalo("14:00", "18:00");
 
-		MapeadorAcesso map = new MapeadorAcesso();
-		map.getHash().clear();
 
 		try {
 			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000, cargo1);
+			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000, cargo1);
+			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000, cargo1);
 		} catch (Exception e) {
 			TelaFuncionario.printExceptionMessage(e);
 		}
