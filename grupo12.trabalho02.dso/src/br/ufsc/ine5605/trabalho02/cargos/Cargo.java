@@ -26,16 +26,17 @@ public class Cargo implements Serializable {
      * 
      * @param codigo
      * @param nome
-     * @param mayEnter
+     * @param mayEnter     * 
+     * @param gerencial
      * Método construtor da classe
      * Inicializa todos os atributos da classe
      */
-    public Cargo(int codigo, String nome, boolean mayEnter) {
+    public Cargo(int codigo, String nome, boolean mayEnter, boolean gerencial) {
         this.codigo = codigo;
         this.nome = nome;
         this.mayEnter = mayEnter;
         this.intervalos = new ArrayList<>();
-        this.gerencial = false;
+        this.gerencial = gerencial;
     }
 
     public int getCodigo() {

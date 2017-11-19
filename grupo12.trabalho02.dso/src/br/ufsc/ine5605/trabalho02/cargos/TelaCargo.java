@@ -65,7 +65,7 @@ public class TelaCargo extends JFrame{
         constraint.gridy = 2;
         spCargos = new JScrollPane(tbCargos);
         container.add(spCargos, constraint);
-        
+                
         //Configuracao JButton Novo
         constraint.gridheight = 1;
         constraint.gridwidth = 3;
@@ -95,8 +95,7 @@ public class TelaCargo extends JFrame{
         btVoltar = new JButton("Voltar");               
         btVoltar.addActionListener(gerenciadorTelaCargo);
         container.add(btVoltar, constraint);
-        
-        //constraint.insets = new Insets(5,5,5,5);
+                
         setSize(450, 350);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,12 +107,18 @@ public class TelaCargo extends JFrame{
         modelTbCargos.addColumn("Codigo");
         modelTbCargos.addColumn("Nome");
         modelTbCargos.addColumn("Intervalos de Acesso");
-        
+          
         for(Cargo cargo : ControladorCargo.getInstance().getListaCargos()) {
             modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(), cargo.getIntervalos()});
         }
-         tbCargos.setModel(modelTbCargos);
-         this.repaint();
+        
+        tbCargos.setModel(modelTbCargos);
+        
+        tbCargos.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tbCargos.getColumnModel().getColumn(1).setPreferredWidth(60);
+        tbCargos.getColumnModel().getColumn(2).setPreferredWidth(110);
+        
+        this.repaint();
     }
 
     private class GerenciadorTelaCargo implements ActionListener {

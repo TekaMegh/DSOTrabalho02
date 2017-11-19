@@ -18,11 +18,17 @@ public class ControladorCargo implements IControladorCargo{
     private TelaCargo telaCargo;
     private TelaCadastroCargo telaCadastroCargo;
     private MapeadorCargo mapCargo;
-        
+    private int numCodigo;
+    
+    /**
+     * Método construtor da classe
+     * Inicializa os atributos da classe
+     */    
     public ControladorCargo() {
         this.telaCargo = new TelaCargo();
         this.telaCadastroCargo = new TelaCadastroCargo();
         this.mapCargo = new MapeadorCargo();
+        this.numCodigo = this.mapCargo.getList().size();
     }
     
     /**
@@ -62,5 +68,41 @@ public class ControladorCargo implements IControladorCargo{
         return this.mapCargo.getList();
     }
     
+    /**
+     *
+     * @param nome
+     * @param mayEnter
+     * @return Cargo
+     * Instancia um Cargo com codigo unico
+     * Adiciona o Cargo e retorna o Cargo
+     */
+    @Override
+    public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
+        boolean codigoExiste;
+        do {
+            codigoExiste = this.hasCodigo(numCodigo);
+            if (codigoExiste) {
+                this.numCodigo += 1;
+            }
+        } while (codigoExiste);
+        Cargo cargo = new Cargo(this.numCodigo, nome, mayEnter, gerencial);
+        this.numCodigo += 1;
+        this.mapCargo.putCargo(cargo);
+        return cargo;
+    }
+    
+    /**
+     * 
+     * @param codigo
+     * @return boolean
+     * Verifica a existencia de um cargo com o codigo recebido
+     * Retorna uma booleana indicando a existencia ou não do cargo
+     */
+    public boolean hasCodigo(int codigo) {
+        //if (this.mapCargo.getCargo(codigo)) {
+              
+        
+        return false;
+    }
     
 }

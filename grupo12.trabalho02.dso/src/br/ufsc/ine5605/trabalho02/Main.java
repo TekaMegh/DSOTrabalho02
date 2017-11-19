@@ -23,9 +23,8 @@ public class Main {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		Cargo cargo1 = new Cargo(123, "badeco", true);
-		cargo1.setGerencial(false);
-
+		Cargo cargo1 = new Cargo(123, "badeco", true, false);
+		
 		cargo1.addIntervalo("08:00", "12:00");
 		cargo1.addIntervalo("14:00", "18:00");
 
