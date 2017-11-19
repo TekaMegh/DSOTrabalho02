@@ -15,6 +15,7 @@ import br.ufsc.ine5605.trabalho02.cargos.IControladorCargo;
 import br.ufsc.ine5605.trabalho02.funcionarios.ControladorFuncionario;
 import br.ufsc.ine5605.trabalho02.funcionarios.Funcionario;
 import br.ufsc.ine5605.trabalho02.funcionarios.IControladorFuncionario;
+import java.util.ArrayList;
 
 /**
  *
@@ -87,6 +88,14 @@ public class ControladorPrincipal {
 		ControladorFuncionario.getInstance().inicia();
 
 	}
+        
+        public ArrayList<String> getNomeCargos() {
+            return ControladorCargo.getInstance().getNomeCargos();
+        }
+        
+        public Cargo getCargo(int identificador) {
+            return ControladorCargo.getInstance().getCargo(identificador);
+        }
 
 	public Collection<Funcionario> getListaFuncionarios() {
 		return ControladorFuncionario.getInstance().getListaFuncionario();

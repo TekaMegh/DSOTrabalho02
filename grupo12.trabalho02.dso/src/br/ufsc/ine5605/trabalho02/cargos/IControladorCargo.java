@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5605.trabalho02.cargos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rak_w
@@ -18,6 +20,10 @@ public interface IControladorCargo {
     public void iniciaTelaPrincipal();
 
     public Iterable<Cargo> getListaCargos();
+    
+    public ArrayList<String> getNomeCargos();
+    
+    public Cargo getCargo(int identificador);
 
     public void removeCargoByIdentifier(Object valueAt);
        
