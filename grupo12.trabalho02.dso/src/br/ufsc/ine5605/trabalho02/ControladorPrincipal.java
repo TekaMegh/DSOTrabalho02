@@ -140,4 +140,11 @@ public class ControladorPrincipal {
 			return true;
 		}
 	}
+	
+	public void removeAcessoByMatricula(int matricula) {
+		ControladorAcesso.getInstance().removeAcessoByMatricula(matricula);
+	}
+	
+	
+	
 }
