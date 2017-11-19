@@ -33,7 +33,7 @@ public class TelaAcesso extends JFrame {
 	private JTable tbItens;
 	private JScrollPane spBaseTabela;
 	private JButton btVoltar;
-	private JComboBox<Integer> cbFiltroMatricula;
+	private JComboBox<Object> cbFiltroMatricula;
 	private JComboBox<Object> cbFiltroTipo;
 	private JLabel lbFiltroMatricula;
 	private JLabel lbFiltroTipo;
@@ -83,10 +83,9 @@ public class TelaAcesso extends JFrame {
 		constraint.fill = GridBagConstraints.NONE;
 		container.add(lbFiltroMatricula, constraint);
 
-		cbFiltroMatricula = new JComboBox<Integer>();
+		cbFiltroMatricula = new JComboBox<Object>();
 		cbFiltroMatricula.addActionListener(gerenciadorBotoes);
 		constraint.gridwidth = 2;
-		constraint.gridwidth = 1;
 		constraint.gridx = 2;
 		constraint.gridy = 6;
 		constraint.fill = GridBagConstraints.NONE;
@@ -94,7 +93,7 @@ public class TelaAcesso extends JFrame {
 
 		//////// filtroTipo e seu label
 		lbFiltroTipo = new JLabel("Filtro por Tipo: ");
-		constraint.gridwidth = 1;
+		constraint.gridwidth = 0;
 		constraint.gridx = 4;
 		constraint.gridy = 6;
 		constraint.fill = GridBagConstraints.NONE;
@@ -102,8 +101,7 @@ public class TelaAcesso extends JFrame {
 
 		cbFiltroTipo = new JComboBox<Object>(patternFiltroTipo);
 		cbFiltroTipo.addActionListener(gerenciadorBotoes);
-		cbFiltroTipo.addItem("Todos");
-		constraint.gridwidth = 2;
+		constraint.gridwidth = 1;
 		constraint.gridx = 5;
 		constraint.gridy = 6;
 		constraint.fill = GridBagConstraints.NONE;
@@ -114,7 +112,7 @@ public class TelaAcesso extends JFrame {
 		btVoltar.addActionListener(gerenciadorBotoes);
 		constraint.weightx = 0.5;
 		constraint.gridheight = 1;
-		constraint.gridwidth = 4;
+		constraint.gridwidth = 3;
 		constraint.gridx = 2;
 		constraint.gridy = 7;
 		constraint.fill = GridBagConstraints.BOTH;
@@ -130,17 +128,23 @@ public class TelaAcesso extends JFrame {
 	 * Atualiza a ComboBox de filtro por matrícula.
 	 */
 	private void updateJComboBoxes() {
+
+		cbFiltroMatricula.addItem("Todos");
 		for (int matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
-			
+
 			boolean exists = false;
-			 for (int index = 0; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
-			   if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
-			     exists = true;
-			   }
-			 }
-			 if (!exists) {
-				 cbFiltroMatricula.addItem(matricula);
-			 }
+			for (int index = 0; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
+
+				if (cbFiltroMatricula.getItemAt(index).equals("Todos"))
+					continue;
+
+				if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
+					exists = true;
+				}
+			}
+			if (!exists) {
+				cbFiltroMatricula.addItem(matricula);
+			}
 
 		}
 
@@ -170,10 +174,6 @@ public class TelaAcesso extends JFrame {
 
 	public void updateDefault() {
 
-		/*
-		 * private int idAcesso; private TipoAcesso tipo; private int matricula; private
-		 * Date horadeacesso; private Date dataDaTentativa;
-		 */
 		DefaultTableModel modelTbItens = new DefaultTableModel();
 		modelTbItens.addColumn("ID");
 		modelTbItens.addColumn("Tipo");
@@ -216,46 +216,69 @@ public class TelaAcesso extends JFrame {
 	 */
 	public void updateJTableByTipo(Object selectedItem) {
 		String selectedTipo = selectedItem.toString();
-		TipoAcesso tipo = null;
-		DefaultTableModel modelTbItens = new DefaultTableModel();
-		modelTbItens.addColumn("ID");
-		modelTbItens.addColumn("Tipo");
-		modelTbItens.addColumn("matricula");
-		modelTbItens.addColumn("Hora De Acesso");
-		modelTbItens.addColumn("Data da Tentativa");
 
-		switch (selectedTipo) {
-		case "Qualquer tipo":
-			for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
-				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
-						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
-						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
-			}
-		case "Acesso Bloqueado":
-			tipo = TipoAcesso.ACESSOBLOQUEADO;
-			break;
-		case "Autorizado":
-			tipo = TipoAcesso.AUTORIZADO;
-			break;
-		case "Horário não permitido":
-			tipo = TipoAcesso.HORARIONAOPERMITIDO;
-			break;
-		case "Não possui acesso":
-			tipo = TipoAcesso.NAOPOSSUIACESSO;
-			break;
-		default:
-			break;
-		}
-		for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
-			if (tipo.equals(acesso.getTipo())) {
-				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), acesso.getTipo(), acesso.getMatricula(),
-						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
-						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
-			}
-		}
-		tbItens.setModel(modelTbItens);
-		this.repaint();
+		if (selectedItem.equals("Qualquer tipo")) {
+			updateDefault();
+		} else {
+			TipoAcesso tipo = null;
+			DefaultTableModel modelTbItens = new DefaultTableModel();
+			modelTbItens.addColumn("ID");
+			modelTbItens.addColumn("Tipo");
+			modelTbItens.addColumn("matricula");
+			modelTbItens.addColumn("Hora De Acesso");
+			modelTbItens.addColumn("Data da Tentativa");
 
+			switch (selectedTipo) {
+			case "Acesso bloqueado":
+				tipo = TipoAcesso.ACESSOBLOQUEADO;
+				for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+					if (tipo.equals(acesso.getTipo())) {
+						modelTbItens.addRow(
+								new Object[] { acesso.getIdAcesso(), acesso.getTipo().toString(), acesso.getMatricula(),
+										ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+										ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+					}
+				}
+				break;
+			case "Autorizado":
+				tipo = TipoAcesso.AUTORIZADO;
+				for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+					if (tipo.equals(acesso.getTipo())) {
+						modelTbItens.addRow(
+								new Object[] { acesso.getIdAcesso(), acesso.getTipo().toString(), acesso.getMatricula(),
+										ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+										ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+					}
+				}
+				break;
+			case "Horario não permitido":
+				tipo = TipoAcesso.HORARIONAOPERMITIDO;
+				for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+					if (tipo.equals(acesso.getTipo())) {
+						modelTbItens.addRow(
+								new Object[] { acesso.getIdAcesso(), acesso.getTipo().toString(), acesso.getMatricula(),
+										ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+										ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+					}
+				}
+				break;
+			case "Não possui Acesso":
+				tipo = TipoAcesso.NAOPOSSUIACESSO;
+				for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+					if (tipo.equals(acesso.getTipo())) {
+						modelTbItens.addRow(
+								new Object[] { acesso.getIdAcesso(), acesso.getTipo().toString(), acesso.getMatricula(),
+										ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+										ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+					}
+				}
+				break;
+			default:
+				break;
+			}
+			tbItens.setModel(modelTbItens);
+			this.repaint();
+		}
 	}
 
 	/**
@@ -265,44 +288,47 @@ public class TelaAcesso extends JFrame {
 	 */
 	public void updateJTableByMatricula(Object selectedItem) {
 
-		int selectedMatricula = ControladorAcesso.getInstance().parseInt(selectedItem);
+		if (selectedItem.equals("Todos")) {
+			updateDefault();
+		} else {
+			int selectedMatricula = ControladorAcesso.getInstance().parseInt(selectedItem);
 
-		DefaultTableModel modelTbItens = new DefaultTableModel();
-		modelTbItens.addColumn("ID");
-		modelTbItens.addColumn("Tipo");
-		modelTbItens.addColumn("matricula");
-		modelTbItens.addColumn("Hora De Acesso");
-		modelTbItens.addColumn("Data da Tentativa");
+			DefaultTableModel modelTbItens = new DefaultTableModel();
+			modelTbItens.addColumn("ID");
+			modelTbItens.addColumn("Tipo");
+			modelTbItens.addColumn("matricula");
+			modelTbItens.addColumn("Hora De Acesso");
+			modelTbItens.addColumn("Data da Tentativa");
 
-		for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
-			String tipo;
-			switch (acesso.getTipo()) {
-			case ACESSOBLOQUEADO:
-				tipo = "Acesso Bloqueado";
-				break;
-			case AUTORIZADO:
-				tipo = "Autorizado";
-				break;
-			case HORARIONAOPERMITIDO:
-				tipo = "Horário não permitido";
-				break;
-			case NAOPOSSUIACESSO:
-				tipo = "Não possui acesso";
-				break;
-			default:
-				tipo = "Sem tipo";
-				break;
+			for (Acesso acesso : ControladorAcesso.getInstance().getAcessos()) {
+				String tipo;
+				switch (acesso.getTipo()) {
+				case ACESSOBLOQUEADO:
+					tipo = "Acesso Bloqueado";
+					break;
+				case AUTORIZADO:
+					tipo = "Autorizado";
+					break;
+				case HORARIONAOPERMITIDO:
+					tipo = "Horário não permitido";
+					break;
+				case NAOPOSSUIACESSO:
+					tipo = "Não possui acesso";
+					break;
+				default:
+					tipo = "Sem tipo";
+					break;
+				}
+				if (acesso.getMatricula() == selectedMatricula) {
+					modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
+							ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
+							ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
+				}
+
 			}
-			if (acesso.getMatricula() == selectedMatricula) {
-				modelTbItens.addRow(new Object[] { acesso.getIdAcesso(), tipo, acesso.getMatricula(),
-						ControladorAcesso.getInstance().formatToHour(acesso.getHoraDeAcesso()),
-						ControladorAcesso.getInstance().formatToDate(acesso.getDataDaTentativa()) });
-			}
-
+			tbItens.setModel(modelTbItens);
+			this.repaint();
 		}
-		tbItens.setModel(modelTbItens);
-		this.repaint();
-
 	}
 
 	public void mostraTela() {

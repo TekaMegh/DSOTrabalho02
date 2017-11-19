@@ -13,19 +13,30 @@ import java.io.Serializable;
  */
 public enum TipoAcesso implements Serializable {
     
-    SEMMATRICULA("Não existe funcionário com essa matrícula."),
-    NAOPOSSUIACESSO("Esse funcionario nao possui acesso."),
-    HORARIONAOPERMITIDO("Funcionario fora do horario autorizado para acesso."),
-    ACESSOBLOQUEADO("Acesso bloqueado."),
-    AUTORIZADO("Acesso autorizado.");
+    SEMMATRICULA("Nao existe funcionario com essa matricula.", "Sem Matricula"),
+    NAOPOSSUIACESSO("Esse funcionario nao possui acesso.", "Nao possui acesso"),
+    HORARIONAOPERMITIDO("Funcionario fora do horario autorizado para acesso.", "Horario nao permitido"),
+    ACESSOBLOQUEADO("Acesso bloqueado.", "Acesso bloqueado"),
+    AUTORIZADO("Acesso autorizado.", "Acesso Autorizado");
 
     private String descricao;
+    private String toString;
 
     TipoAcesso(String descricaoTipo) {
         descricao = descricaoTipo;
     }
+    
+    TipoAcesso(String descricaoTipo, String toString){
+    	this.descricao = descricaoTipo;
+    	this.toString = toString;
+    }
 
     public String descricao() {
         return descricao;
+    }
+    
+    @Override
+    public String toString() {
+    	return toString;
     }
 }
