@@ -5,7 +5,7 @@
  */
 package br.ufsc.ine5605.trabalho02;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import br.ufsc.ine5605.trabalho02.acessos.ControladorAcesso;
 import br.ufsc.ine5605.trabalho02.acessos.IControladorAcesso;
@@ -88,7 +88,7 @@ public class ControladorPrincipal {
 
 	}
 
-	public ArrayList<Funcionario> getListaFuncionarios() {
+	public Collection<Funcionario> getListaFuncionarios() {
 		return ControladorFuncionario.getInstance().getListaFuncionario();
 	}
 
@@ -101,22 +101,19 @@ public class ControladorPrincipal {
 	 * @return funcionario encontrado caso a matrícula exista;
 	 * @return null caso não haja funcionario com a mesma matricula;
 	 */
-	public Funcionario getFuncionarioByMatricula(int matricula) {
-		ArrayList<Funcionario> listaFuncionarios = ctrlFuncionario.getListaFuncionario();
-
-		for (Funcionario funcionario : listaFuncionarios) {
-			if (funcionario.getMatricula() == matricula) {
-				return funcionario;
-			}
+	public Funcionario getFuncionarioByMatricula(Integer matricula) {
+		Funcionario funcionario = null;
+		try{
+			funcionario = ctrlFuncionario.findFuncionarioByMatricula(matricula);
+		} catch (Exception e) {
+			
 		}
-
-		return null;
-
+		return funcionario;
 	}
 
-	public Cargo chooseCargo() throws Exception {
+	public void chooseCargo(){
 
-		return ctrlCargo.chooseCargo();
+		ctrlCargo.iniciaTelaCargo();
 
 	}
 
@@ -135,15 +132,12 @@ public class ControladorPrincipal {
 		return hasFuncionario;
 	}
 
-	/**
-	 * Percorre lista de funcionario e verifica a existência de algum que possua a
-	 * matrícula passada como parâmetro.
-	 * 
-	 * @param matricula
-	 * @return
-	 */
 	public boolean hasFuncionarioByMatricula(int matricula) {
-		return ctrlFuncionario.hasFuncionarioByMatricula(matricula);
+		Funcionario funcionario = this.getFuncionarioByMatricula(matricula);
+		if(funcionario == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
-
 }

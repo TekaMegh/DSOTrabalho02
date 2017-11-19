@@ -42,160 +42,160 @@ public class ControladorFuncionario implements IControladorFuncionario {
      *
      * @param opcao
      */
-    public void opcaoSwitch(int opcao) {
-        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
-        switch (opcao) {
-            case 1:
-                //Parte 1 - nome;
-                String nome = null;
-                boolean hasFuncionarioByNome = false;
-                do {
-
-                    nome = telaFuncionario.printGetNome();
-                    mapeadorFuncionario.get(1);
-                    if (hasFuncionarioByNome) {
-                        telaFuncionario.printNameAlreadyExistsError();
-                    }
-                } while (hasFuncionarioByNome);
-
-                //Parte 2 - DataNascimento;
-                boolean dateParseSucess = false;
-                Date dataNascimento = null;
-                do {
-
-                    String data = telaFuncionario.printGetDataNascimento();;
-                    try {
-                        dataNascimento = formataData.parse(data);
-                        dateParseSucess = true;
-                    } catch (Exception e) {
-                        telaFuncionario.printExceptionMessage(e);
-                        telaFuncionario.printDataInputError(data);
-                    }
-                } while (!dateParseSucess);
-
-                //Parte 3 - Telefone;
-                String telefone = telaFuncionario.printGetTelefone();
-
-                //Parte 4 - Salario;
-                int salario = telaFuncionario.printGetSalario();
-
-                //Parte 5 - Cargo;
-                Cargo cargo = null;
-                try {
-                    cargo = ControladorPrincipal.getInstance().chooseCargo();
-                } catch (Exception e) {
-                    telaFuncionario.printExceptionMessage(e);
-                }
-                if (cargo == null){
-                    telaFuncionario.printChooseCargoError();
-                    this.inicia();
-                }
-                //Parte 6 - Chamada de método para instanciar/adicionar funcionário.       
-                try {
-                    ControladorFuncionario.getInstance().incluiFuncionario(nome, dataNascimento, telefone, salario, cargo);
-                } catch (Exception e) {
-                    telaFuncionario.printExceptionMessage(e);
-                }
-                break;
-            case 2:
-
-                //Checagem da lista
-                if(mapeadorFuncionario.getList().isEmpty()){
-                    telaFuncionario.printFuncionarioListEmptyError();
-                    ControladorFuncionario.getInstance().inicia();
-                }
-
-                //Parte 1 - Matricula
-                Integer matricula = telaFuncionario.printGetMatricula();
-
-                while (mapeadorFuncionario.get(matricula) == null) {
-                    telaFuncionario.printMatriculaInvalida();
-                    matricula = telaFuncionario.printGetMatricula();
-                }
-
-                //Parte 2 - Nome
-                nome = telaFuncionario.printGetNome();
-
-                //Parte 3 - Data de nascimento
-                boolean sucess = false;
-                dataNascimento = null;
-                do {
-                    String data = telaFuncionario.printGetDataNascimento();
-                    try {
-                        dataNascimento = formataData.parse(data);
-                        sucess = true;
-                    } catch (Exception e) {
-                        telaFuncionario.printExceptionMessage(e);
-                    }
-                } while (!sucess);
-
-                //Parte 4 - telefone
-                telefone = telaFuncionario.printGetTelefone();
-
-                //Parte 5 - Salário
-                salario = telaFuncionario.printGetSalario();
-
-                //Parte 6 - Cargo
-                cargo = null;
-                try {
-                    cargo = ControladorPrincipal.getInstance().chooseCargo();
-                } catch (Exception e) {
-                    telaFuncionario.printExceptionMessage(e);
-                }
-                if (cargo == null){
-                    telaFuncionario.printChooseCargoError();
-                    this.inicia();
-                }
-                //Parte 7 - Chamada de método para mudança dos dados do funcionário.
-                try {
-                    ControladorFuncionario.getInstance().modificaFuncionario(matricula, nome, dataNascimento, telefone, salario, cargo);
-                } catch (Exception e) {
-                    telaFuncionario.printExceptionMessage(e);
-                    ControladorPrincipal.getInstance().inicia();
-                }
-                break;
-
-            case 3:
-                //Checagem da lista
-                if (mapeadorFuncionario.getList().isEmpty()) {
-                    telaFuncionario.printFuncionarioListEmptyError();
-                    ControladorFuncionario.getInstance().inicia();
-                }
-                //Parte 1 - Matricula
-                matricula = telaFuncionario.printGetMatricula();
-
-                while (mapeadorFuncionario.get(matricula) == null) {
-                    telaFuncionario.printMatriculaInvalida();
-                    matricula = telaFuncionario.printGetMatricula();
-                }
-
-                try {
-                    ControladorFuncionario.getInstance().removeFuncionario(matricula);
-                } catch (Exception e) {
-                    telaFuncionario.printExceptionMessage(e);
-                    ControladorPrincipal.getInstance().inicia();
-                }
-                break;
-            case 4:
-                //Checagem da lista
-                if (mapeadorFuncionario.getList().isEmpty()) {
-                    telaFuncionario.printFuncionarioListEmptyError();
-                }
-                //Impressao dos dados dos funcionario da lista na tela
-                telaFuncionario.printLista(mapeadorFuncionario.getList());
-                ControladorFuncionario.getInstance().inicia();
-                break;
-            case 0:
-                //Volta para o menu principal
-                telaFuncionario.printReturnMainMenu();
-                ControladorPrincipal.getInstance().inicia();
-                break;
-            default:
-                telaFuncionario.printInvalidOptionError();
-                ControladorFuncionario.getInstance().inicia();
-                break;
-        }
-    }
+//    public void opcaoSwitch(int opcao) {
+//        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+//        switch (opcao) {
+//            case 1:
+//                //Parte 1 - nome;
+//                String nome = null;
+//                boolean hasFuncionarioByNome = false;
+//                do {
+//
+//                    nome = telaFuncionario.printGetNome();
+//                    mapeadorFuncionario.get(1);
+//                    if (hasFuncionarioByNome) {
+//                        telaFuncionario.printNameAlreadyExistsError();
+//                    }
+//                } while (hasFuncionarioByNome);
+//
+//                //Parte 2 - DataNascimento;
+//                boolean dateParseSucess = false;
+//                Date dataNascimento = null;
+//                do {
+//
+//                    String data = telaFuncionario.printGetDataNascimento();;
+//                    try {
+//                        dataNascimento = formataData.parse(data);
+//                        dateParseSucess = true;
+//                    } catch (Exception e) {
+//                        telaFuncionario.printExceptionMessage(e);
+//                        telaFuncionario.printDataInputError(data);
+//                    }
+//                } while (!dateParseSucess);
+//
+//                //Parte 3 - Telefone;
+//                String telefone = telaFuncionario.printGetTelefone();
+//
+//                //Parte 4 - Salario;
+//                int salario = telaFuncionario.printGetSalario();
+//
+//                //Parte 5 - Cargo;
+//                Cargo cargo = null;
+//                try {
+//                    cargo = ControladorPrincipal.getInstance().chooseCargo();
+//                } catch (Exception e) {
+//                    telaFuncionario.printExceptionMessage(e);
+//                }
+//                if (cargo == null){
+//                    telaFuncionario.printChooseCargoError();
+//                    this.inicia();
+//                }
+//                //Parte 6 - Chamada de método para instanciar/adicionar funcionário.       
+//                try {
+//                    ControladorFuncionario.getInstance().incluiFuncionario(nome, dataNascimento, telefone, salario, cargo);
+//                } catch (Exception e) {
+//                    telaFuncionario.printExceptionMessage(e);
+//                }
+//                break;
+//            case 2:
+//
+//                //Checagem da lista
+//                if(mapeadorFuncionario.getList().isEmpty()){
+//                    telaFuncionario.printFuncionarioListEmptyError();
+//                    ControladorFuncionario.getInstance().inicia();
+//                }
+//
+//                //Parte 1 - Matricula
+//                Integer matricula = telaFuncionario.printGetMatricula();
+//
+//                while (mapeadorFuncionario.get(matricula) == null) {
+//                    telaFuncionario.printMatriculaInvalida();
+//                    matricula = telaFuncionario.printGetMatricula();
+//                }
+//
+//                //Parte 2 - Nome
+//                nome = telaFuncionario.printGetNome();
+//
+//                //Parte 3 - Data de nascimento
+//                boolean sucess = false;
+//                dataNascimento = null;
+//                do {
+//                    String data = telaFuncionario.printGetDataNascimento();
+//                    try {
+//                        dataNascimento = formataData.parse(data);
+//                        sucess = true;
+//                    } catch (Exception e) {
+//                        telaFuncionario.printExceptionMessage(e);
+//                    }
+//                } while (!sucess);
+//
+//                //Parte 4 - telefone
+//                telefone = telaFuncionario.printGetTelefone();
+//
+//                //Parte 5 - Salário
+//                salario = telaFuncionario.printGetSalario();
+//
+//                //Parte 6 - Cargo
+//                cargo = null;
+//                try {
+//                    cargo = ControladorPrincipal.getInstance().chooseCargo();
+//                } catch (Exception e) {
+//                    telaFuncionario.printExceptionMessage(e);
+//                }
+//                if (cargo == null){
+//                    telaFuncionario.printChooseCargoError();
+//                    this.inicia();
+//                }
+//                //Parte 7 - Chamada de método para mudança dos dados do funcionário.
+//                try {
+//                    ControladorFuncionario.getInstance().modificaFuncionario(matricula, nome, dataNascimento, telefone, salario, cargo);
+//                } catch (Exception e) {
+//                    telaFuncionario.printExceptionMessage(e);
+//                    ControladorPrincipal.getInstance().inicia();
+//                }
+//                break;
+//
+//            case 3:
+//                //Checagem da lista
+//                if (mapeadorFuncionario.getList().isEmpty()) {
+//                    telaFuncionario.printFuncionarioListEmptyError();
+//                    ControladorFuncionario.getInstance().inicia();
+//                }
+//                //Parte 1 - Matricula
+//                matricula = telaFuncionario.printGetMatricula();
+//
+//                while (mapeadorFuncionario.get(matricula) == null) {
+//                    telaFuncionario.printMatriculaInvalida();
+//                    matricula = telaFuncionario.printGetMatricula();
+//                }
+//
+//                try {
+//                    ControladorFuncionario.getInstance().removeFuncionario(matricula);
+//                } catch (Exception e) {
+//                    telaFuncionario.printExceptionMessage(e);
+//                    ControladorPrincipal.getInstance().inicia();
+//                }
+//                break;
+//            case 4:
+//                //Checagem da lista
+//                if (mapeadorFuncionario.getList().isEmpty()) {
+//                    telaFuncionario.printFuncionarioListEmptyError();
+//                }
+//                //Impressao dos dados dos funcionario da lista na tela
+//                telaFuncionario.printLista(mapeadorFuncionario.getList());
+//                ControladorFuncionario.getInstance().inicia();
+//                break;
+//            case 0:
+//                //Volta para o menu principal
+//                telaFuncionario.printReturnMainMenu();
+//                ControladorPrincipal.getInstance().inicia();
+//                break;
+//            default:
+//                telaFuncionario.printInvalidOptionError();
+//                ControladorFuncionario.getInstance().inicia();
+//                break;
+//        }
+//    }
 
     /**
      * O método inclui o novo funcionário na lista(arraylist) de funcionarios.
@@ -224,7 +224,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
         Funcionario funcionario1 = new Funcionario(numMatricula, nome, nascimento, telefone, salario, cargo);
         mapeadorFuncionario.put(funcionario1);
         numMatricula += 1;
-        telaFuncionario.printCadastroSucesso();
+//        telaFuncionario.printCadastroSucesso();
         ControladorFuncionario.getInstance().inicia();
     }
 
@@ -239,12 +239,12 @@ public class ControladorFuncionario implements IControladorFuncionario {
         if (matricula <= 0) {
             throw new IllegalArgumentException("Matrícula não pode ter valor inferior a zero!");
         }
-        try {
-            mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
-            telaFuncionario.printRemoveSucess();
-        } catch (Exception e) {
-            telaFuncionario.printExceptionMessage(e);
-        }
+//        try {
+//            mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
+//            telaFuncionario.printRemoveSucess();
+//        } catch (Exception e) {
+//            telaFuncionario.printExceptionMessage(e);
+//        }
         ControladorFuncionario.getInstance().inicia();
     }
 
@@ -277,17 +277,17 @@ public class ControladorFuncionario implements IControladorFuncionario {
             throw new NullPointerException("Cargo não pode ter valor nulo!");
         }
 
-        try {
-            Funcionario funcionario = findFuncionarioByMatricula(matricula);
-            funcionario.setNascimento(nascimento);
-            funcionario.setCargo(cargo);
-            funcionario.setSalario(salario);
-            funcionario.setTelefone(telefone);
-            funcionario.setNome(nome);
-            telaFuncionario.printModifySucess();
-        } catch (Exception e) {
-            telaFuncionario.printExceptionMessage(e);
-        }
+//        try {
+//            Funcionario funcionario = findFuncionarioByMatricula(matricula);
+//            funcionario.setNascimento(nascimento);
+//            funcionario.setCargo(cargo);
+//            funcionario.setSalario(salario);
+//            funcionario.setTelefone(telefone);
+//            funcionario.setNome(nome);
+//            telaFuncionario.printModifySucess();
+//        } catch (Exception e) {
+//            telaFuncionario.printExceptionMessage(e);
+//        }
         controladorFuncionario.inicia();
     }
 
@@ -298,7 +298,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
      * @return Funcionário associado à matricula informada.
      * @throws Exception
      */
-    public Funcionario findFuncionarioByMatricula(int matricula) throws Exception {
+    public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception {
         Funcionario funcionario = mapeadorFuncionario.get(matricula);
         if(funcionario != null){
             return funcionario;
@@ -356,6 +356,30 @@ public class ControladorFuncionario implements IControladorFuncionario {
                 mapeadorFuncionario.put(funcionario);
             }
         }
-        telaFuncionario.printLista(colecao);
+//        telaFuncionario.printLista(colecao);
     }
+
+	@Override
+	public void iniciaTelaCadastroFuncionario() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void iniciaTelaAlteraFuncionario() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void iniciaTelaRemoveFuncionario() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void iniciaTelaPrincipal() {
+		// TODO Auto-generated method stub
+		
+	}
 }
