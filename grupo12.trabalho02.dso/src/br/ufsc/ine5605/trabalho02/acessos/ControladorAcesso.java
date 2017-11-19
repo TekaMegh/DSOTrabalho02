@@ -268,4 +268,13 @@ public class ControladorAcesso implements IControladorAcesso {
 		return lista;
 	}
 
+	@Override
+	public void removeAcessoByMatricula(int matricula) {
+		for (Acesso acesso : mapAcessos.getList()) {
+			if(acesso.getMatricula() == matricula) {
+				mapAcessos.remove(acesso);
+			}
+		}
+	}
+
 }

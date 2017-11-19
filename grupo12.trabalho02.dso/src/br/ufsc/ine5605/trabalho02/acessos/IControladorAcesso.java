@@ -39,5 +39,7 @@ public interface IControladorAcesso {
 	public ArrayList<Integer> getMatriculasFuncionarios();
 
 	public int parseInt(Object selectedItem);
+	
+	public void removeAcessoByMatricula(int matricula);
 
 }
