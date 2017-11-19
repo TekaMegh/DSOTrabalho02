@@ -74,4 +74,15 @@ public interface IControladorFuncionario {
      */
     public void printFuncionarioByCargo(Cargo cargo);
 
+	public void iniciaTelaCadastroFuncionario();
+
+	public void iniciaTelaAlteraFuncionario();
+
+	public void iniciaTelaRemoveFuncionario();
+
+	public void iniciaTelaPrincipal();
+
+	public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception;
+
+
 }
