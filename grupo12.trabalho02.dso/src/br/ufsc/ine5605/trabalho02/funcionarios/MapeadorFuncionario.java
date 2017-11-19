@@ -18,7 +18,7 @@ import br.ufsc.ine5605.trabalho02.acessos.Acesso;
 
 /**
  *
- * @author rak_w
+ * @author carcaroff
  */
 public class MapeadorFuncionario {
 	private HashMap<Integer, Funcionario> cacheFuncionario = new HashMap<>();
@@ -35,7 +35,7 @@ public class MapeadorFuncionario {
 	}
 
 	/**
-	 * Pega um funcionario especÃ­fico baseado na matricula passada.
+	 * Pega um funcionario específico baseado na matricula passada.
 	 * 
 	 * @param matricula
 	 * @return Funcionario encontrado
@@ -46,7 +46,7 @@ public class MapeadorFuncionario {
 
 	/**
 	 * 
-	 * @return ColeÃ§Ã£o dos funcionarios.
+	 * @return Coleção dos funcionarios.
 	 */
 	public Collection<Funcionario> getList() {
 		load();

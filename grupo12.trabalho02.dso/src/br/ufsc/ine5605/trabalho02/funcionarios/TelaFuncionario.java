@@ -6,12 +6,10 @@
 package br.ufsc.ine5605.trabalho02.funcionarios;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
-import br.ufsc.ine5605.trabalho02.cargos.Cargo;
 import br.ufsc.ine5605.trabalho02.cargos.ControladorCargo;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -23,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -132,13 +129,13 @@ public class TelaFuncionario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btCadastroFuncionario)) {
-				ControladorCargo.getInstance().iniciaTelaCadastroCargo();
+				ControladorFuncionario.getInstance().iniciaTelaCadastroFuncionario();
 			} else if (e.getSource().equals(btAlterarFuncionario)) {
-				ControladorCargo.getInstance().iniciaTelaCadastroCargo();
+				ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario();
 			} else if (e.getSource().equals(btRemoverFuncionario)) {
-				JOptionPane.showMessageDialog(null, "O funcionário foi removido", "Funcionário", 1);
+				ControladorFuncionario.getInstance().iniciaTelaRemoveFuncionario();
 			} else if (e.getSource().equals(btVoltarMenuPrincipal)) {
-				ControladorCargo.getInstance().iniciaTelaPrincipal();
+				ControladorFuncionario.getInstance().iniciaTelaPrincipal();
 			}
 		}
 	}

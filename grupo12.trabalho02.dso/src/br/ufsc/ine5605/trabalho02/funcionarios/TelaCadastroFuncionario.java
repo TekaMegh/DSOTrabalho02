@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author rak_w
+ * @author carcaroff
  */
 public class TelaCadastroFuncionario extends JFrame{
     
@@ -81,6 +81,24 @@ public class TelaCadastroFuncionario extends JFrame{
         lbDataNascimento = new JLabel("Data de Nascimento:");               
         container.add(lbDataNascimento, constraints);
         
+        //Configuracao JLabel Cargo
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        lbCargo = new JLabel("Cargo:");               
+        container.add(lbCargo, constraints);
+        
+        //Configuracao JLabel Salario
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        lbSalario = new JLabel("Salário:");
+        container.add(lbSalario, constraints);
+        
+        //Configuracao JLabel Data de Nascimento
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        lbTelefone = new JLabel("Telefone:");
+        container.add(lbTelefone, constraints);
+        
         //Configuracao JTextField Nome
         constraints.gridheight = 1;
         constraints.gridwidth = 3;
@@ -99,7 +117,7 @@ public class TelaCadastroFuncionario extends JFrame{
         
         setSize(700, 550);
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
