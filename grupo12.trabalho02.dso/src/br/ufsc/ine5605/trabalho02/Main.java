@@ -35,7 +35,7 @@ public class Main {
 			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000, cargo1);
 			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000, cargo1);
 		} catch (Exception e) {
-			TelaFuncionario.printExceptionMessage(e);
+			e.printStackTrace();
 		}
 
 		ControladorPrincipal.getInstance().inicia();
