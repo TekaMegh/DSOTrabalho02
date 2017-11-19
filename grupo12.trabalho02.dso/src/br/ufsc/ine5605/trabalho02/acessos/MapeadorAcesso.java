@@ -27,7 +27,8 @@ public class MapeadorAcesso {
 	}
 
 	public void put(Acesso acesso) {
-		acesso.setIdAcesso(cacheAcessos.size() + 1);
+		int idAcesso = cacheAcessos.get(cacheAcessos.size() - 1).getIdAcesso();
+		acesso.setIdAcesso(idAcesso + 1);
 		cacheAcessos.put(acesso.getIdAcesso(), acesso);
 		persist();
 	}
@@ -67,6 +68,7 @@ public class MapeadorAcesso {
 	 */
 	public void remove(Acesso acesso) {
 		cacheAcessos.remove(acesso.getIdAcesso());
+
 		persist();
 	}
 

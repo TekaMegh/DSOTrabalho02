@@ -36,13 +36,13 @@ public class TelaEntrada extends JFrame {
 	private JButton btCancelar;
 	private JFormattedTextField tfMatricula;
 	private JFormattedTextField tfHoraDeAcesso;
-	
-	private NumberFormat ftmMatricula;//Atributo formatador para matricula
-	private DateFormat ftmHoraDeAcesso;//Atributo formatador para hora de acesso
+
+	private NumberFormat ftmMatricula;// Atributo formatador para matricula
+	private DateFormat ftmHoraDeAcesso;// Atributo formatador para hora de acesso
 
 	private GerenciadorBotoes gerenciadorBotoes;
 
-	public TelaEntrada()  {
+	public TelaEntrada() {
 		super("Entrada");
 		this.gerenciadorBotoes = new GerenciadorBotoes();
 		try {
@@ -82,7 +82,7 @@ public class TelaEntrada extends JFrame {
 		container.add(tfMatricula, construtor);
 
 		// Configuracao JFormattedTextField HoraDeAcesso
-		ftmHoraDeAcesso = new SimpleDateFormat("HH:mm");	
+		ftmHoraDeAcesso = new SimpleDateFormat("HH:mm");
 		tfHoraDeAcesso = new JFormattedTextField(ftmHoraDeAcesso);
 		tfHoraDeAcesso.setValue(new Date());
 		construtor.gridx = 4;
@@ -102,7 +102,7 @@ public class TelaEntrada extends JFrame {
 		btCancelar = new JButton("Cancelar");
 		btCancelar.addActionListener(gerenciadorBotoes);
 		container.add(btCancelar, construtor);
-		
+
 		setSize(300, 150);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,7 +114,9 @@ public class TelaEntrada extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btEntrar)) {
-				JOptionPane.showMessageDialog(null, ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()), "Mensagem", JOptionPane.INFORMATION_MESSAGE); 
+				JOptionPane.showMessageDialog(null,
+						ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()),
+						"Mensagem", JOptionPane.INFORMATION_MESSAGE);
 				ControladorAcesso.getInstance().printListaAcessoByMatricula();
 			} else if (e.getSource().equals(btCancelar)) {
 				setVisible(false);
@@ -125,7 +127,7 @@ public class TelaEntrada extends JFrame {
 
 	public void mostrarTela() {
 		setVisible(true);
-		
+
 	}
 
 }
