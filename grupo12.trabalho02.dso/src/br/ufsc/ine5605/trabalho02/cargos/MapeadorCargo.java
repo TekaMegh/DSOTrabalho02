@@ -32,6 +32,10 @@ public class MapeadorCargo {
         cacheCargos.put(cargo.getCodigo(), cargo);
     }
     
+    public void removeCargo(int identificador) {
+        this.cacheCargos.remove(identificador);
+    }
+    
     public Collection<Cargo> getList() {
         return cacheCargos.values();
     }
@@ -80,5 +84,5 @@ public class MapeadorCargo {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
         }   
-    }
+    }    
 }

@@ -6,6 +6,7 @@
 package br.ufsc.ine5605.trabalho02.cargos;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -68,15 +69,28 @@ public class ControladorCargo implements IControladorCargo{
         return this.mapCargo.getList();
     }
     
+    public ArrayList<String> getNomeCargos() {
+        ArrayList<String> nomes = new ArrayList<>();
+        for(Cargo cargo : this.mapCargo.getList()) {
+            String nome = cargo.getNome();
+            nomes.add(nome);
+        }
+        return nomes;
+    }
+    
+    public Cargo getCargo(int identificador) {
+        return this.mapCargo.getCargo(identificador);
+    }
+    
     /**
      *
      * @param nome
      * @param mayEnter
+     * @param gerencial
      * @return Cargo
      * Instancia um Cargo com codigo unico
      * Adiciona o Cargo e retorna o Cargo
      */
-    @Override
     public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
         boolean codigoExiste;
         do {
@@ -99,10 +113,18 @@ public class ControladorCargo implements IControladorCargo{
      * Retorna uma booleana indicando a existencia ou não do cargo
      */
     public boolean hasCodigo(int codigo) {
-        //if (this.mapCargo.getCargo(codigo)) {
-              
-        
-        return false;
+        for(Cargo cargo : getListaCargos()) {
+            if(cargo.getCodigo() == codigo) {
+                return true;
+            }
+        }
+        return false;      
+    }
+
+    @Override
+    public void removeCargoByIdentifier(Object valueAt) {
+        int indentificador = Integer.parseInt(valueAt.toString());
+        this.mapCargo.removeCargo(indentificador);
     }
     
 }

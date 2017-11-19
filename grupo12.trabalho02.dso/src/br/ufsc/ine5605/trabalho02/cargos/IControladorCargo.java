@@ -18,5 +18,7 @@ public interface IControladorCargo {
     public void iniciaTelaPrincipal();
 
     public Iterable<Cargo> getListaCargos();
+
+    public void removeCargoByIdentifier(Object valueAt);
        
 }
