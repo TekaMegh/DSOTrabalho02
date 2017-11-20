@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -114,12 +115,20 @@ public class TelaCargo extends JFrame{
             } else if(cargo.getIntervalos()==null && cargo.isGerencial()) {
                 modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(),"Acesso livre"});
             } else {
+                int cont = 0;
                 for(IntervaloDeAcesso intervalo : cargo.getIntervalos()) {
-                    String incial = intervalo.getHorarioInicial();
-                    String Final = intervalo.getHorarioFinal();
+                    String horaInicial = formatToDate(intervalo.getHorarioInicial());
+                    String horaFinal = formatToDate(intervalo.getHorarioFinal());
+                    String horario = horaInicial + " a " + horaFinal;
+                    if(cont==0) {
+                        modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(), horario});
+                    } else {
+                        modelTbCargos.addRow(new Object[]{"", "", horario});
+                    }
+                    cont++;
                 }
             }
-            modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(), cargo.getIntervalos()});
+            
         }
         
         tbCargos.setModel(modelTbCargos);
@@ -129,6 +138,10 @@ public class TelaCargo extends JFrame{
         tbCargos.getColumnModel().getColumn(2).setPreferredWidth(110);
         
         this.repaint();
+    }
+
+    private String formatToDate(Date horarioInicial) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private class GerenciadorTelaCargo implements ActionListener {
