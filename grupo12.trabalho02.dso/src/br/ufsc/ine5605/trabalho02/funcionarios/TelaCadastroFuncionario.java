@@ -11,7 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +40,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	private JTextField tfNome;
 	private JFormattedTextField tfDataNascimento;
 	private JFormattedTextField tfSalario;
-	private JFormattedTextField tfTelefone;
+	private JTextField tfTelefone;
 
 	private JButton btSave;
 	private JButton btCancel;
@@ -50,6 +50,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	private NumberFormat numberFormat;
 	private SimpleDateFormat dateFormat;
 
+	private DecimalFormat df = new DecimalFormat("0.##");
 	private GerenciadorBotoes btManager;
 
 	public TelaCadastroFuncionario() {
@@ -121,9 +122,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 3;
-		String[] cargos = {"aa", "a"};
-//				ControladorFuncionario.getInstance().listaCargos();
-		cbCargos = new JComboBox<String>(cargos);
+		cbCargos = new JComboBox<String>();
 		container.add(cbCargos, constraints);
 
 		// Configuracao JTextField Salário
@@ -131,7 +130,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 4;
-		numberFormat = NumberFormat.getIntegerInstance();
+		numberFormat = NumberFormat.getNumberInstance();
 		tfSalario = new JFormattedTextField(numberFormat);
 		container.add(tfSalario, constraints);
 
@@ -140,7 +139,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 5;
-		tfTelefone = new JFormattedTextField();
+		tfTelefone = new JTextField();
 		container.add(tfTelefone, constraints);
 
 		// Configuracao JButton Salvar
@@ -162,7 +161,12 @@ public class TelaCadastroFuncionario extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-
+	public void updateComboBox(String[] cargos) {
+		cbCargos.removeAllItems();
+		for(String cargo : cargos) {
+			cbCargos.addItem(cargo);
+		}
+	}
 	private class GerenciadorBotoes implements ActionListener {
 
 		@Override
@@ -172,10 +176,10 @@ public class TelaCadastroFuncionario extends JFrame {
 				Cargo cargo = ControladorFuncionario.getInstance().getCargoByNome(cargoSelecionado);
 				try {
 					ControladorFuncionario.getInstance().incluiFuncionario(tfNome.getText(),
-							(Date) tfDataNascimento.getValue(), (String) tfTelefone.getValue(),
-							(Double) tfSalario.getValue(), cargo);
+							(Date)tfDataNascimento.getValue(), (String)tfTelefone.getText(),
+							Double.parseDouble(tfSalario.getValue().toString()), cargo);
 				} catch (Exception exc) {
-
+					System.out.println(exc.getMessage());
 				}
 				ControladorFuncionario.getInstance().inicia();
 			} else if (e.getSource().equals(btCancel)) {

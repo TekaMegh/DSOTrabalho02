@@ -12,7 +12,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -114,12 +116,17 @@ public class TelaFuncionario extends JFrame {
         modeltbFuncionarios.addColumn("Telefone");
         
         for(Funcionario funcionario : ControladorFuncionario.getInstance().getListaFuncionario()) {
-            modeltbFuncionarios.addRow(new Object[]{funcionario.getMatricula(), funcionario.getNome(), funcionario.getNascimento(),
+            modeltbFuncionarios.addRow(new Object[]{funcionario.getMatricula(), funcionario.getNome(), formatDate(funcionario.getNascimento()),
             		funcionario.getCargo().getNome(), funcionario.getSalario(), funcionario.getTelefone()});
         }
          tbFuncionarios.setModel(modeltbFuncionarios);
          this.repaint();
     }
+    
+    private String formatDate(Date date) {
+		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+		return formatador.format(date);
+	}
 	private class GerenciadorBotoes implements ActionListener {
 
 		@Override

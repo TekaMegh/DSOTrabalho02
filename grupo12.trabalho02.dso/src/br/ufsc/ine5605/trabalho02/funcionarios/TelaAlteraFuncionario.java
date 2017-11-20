@@ -44,7 +44,7 @@ public class TelaAlteraFuncionario extends JFrame {
 	private JFormattedTextField tfDataNascimento;
 	private JTextField tfCargo;
 	private JFormattedTextField tfSalario;
-	private JFormattedTextField tfTelefone;
+	private JTextField tfTelefone;
 
 	private JButton btSave;
 	private JButton btCancel;
@@ -55,7 +55,7 @@ public class TelaAlteraFuncionario extends JFrame {
 	private SimpleDateFormat dateFormat;
 	
 	private Integer matricula;
-
+	
 	private GerenciadorBotoes btManager;
 
 	public TelaAlteraFuncionario() {
@@ -128,9 +128,7 @@ public class TelaAlteraFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 3;
-		String[] cargos = {"aa", "a"};
-//				ControladorFuncionario.getInstance().listaCargos();
-		cbCargos = new JComboBox<String>(cargos);
+		cbCargos = new JComboBox<String>();
 		container.add(cbCargos, constraints);
 
 		// Configuracao JTextField Salário
@@ -147,7 +145,7 @@ public class TelaAlteraFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 5;
-		tfTelefone = new JFormattedTextField();
+		tfTelefone = new JTextField();
 		container.add(tfTelefone, constraints);
 
 		// Configuracao JButton Salvar
@@ -177,6 +175,13 @@ public class TelaAlteraFuncionario extends JFrame {
 		tfSalario.setValue((Double)values.get(4));
 		tfTelefone.setText((String)values.get(5));
 	}
+	
+	public void updateComboBox(String[] cargos) {
+		cbCargos.removeAllItems();
+		for(String cargo : cargos) {
+			cbCargos.addItem(cargo);
+		}
+	}
 	private class GerenciadorBotoes implements ActionListener {
 		
 		@Override
@@ -185,15 +190,27 @@ public class TelaAlteraFuncionario extends JFrame {
 				String cargoSelecionado = (String)cbCargos.getSelectedItem();
 				Cargo cargo = ControladorFuncionario.getInstance().getCargoByNome(cargoSelecionado);
 				try {
-					ControladorFuncionario.getInstance().modificaFuncionario(matricula, tfNome.getText(), (Date)tfDataNascimento.getValue(),
-							(String)tfTelefone.getValue(), (Double)tfSalario.getValue(), cargo);
+					ControladorFuncionario.getInstance().modificaFuncionario(matricula, tfNome.getText(), formatDate(tfDataNascimento.getValue()),
+							(String)tfTelefone.getText(), Double.parseDouble(tfSalario.getValue().toString()), cargo);
 				} catch (Exception exc) {
-					
+					System.out.println(exc.getMessage());
 				}
 				ControladorFuncionario.getInstance().inicia();
 			} else if (e.getSource().equals(btCancel)) {
 				ControladorFuncionario.getInstance().inicia();
 			}
+		}
+		
+		private Date formatDate(Object value) {
+			SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+			String string = (String)value;
+			Date date = null;
+			try {
+				date = formatador.parse(string);
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+			return date;
 		}
 	}
 }

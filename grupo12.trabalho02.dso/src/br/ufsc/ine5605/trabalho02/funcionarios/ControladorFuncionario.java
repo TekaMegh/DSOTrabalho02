@@ -198,6 +198,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 
 	@Override
 	public void iniciaTelaCadastroFuncionario() {
+		telaCadastroFuncionario.updateComboBox(this.listaCargos());
 		telaFuncionario.setVisible(false);
 		telaCadastroFuncionario.setVisible(true);
 		telaAlteraFuncionario.setVisible(false);
@@ -206,6 +207,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	@Override
 	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values) {
 		telaAlteraFuncionario.setValues(values);
+		telaAlteraFuncionario.updateComboBox(this.listaCargos());
 		telaFuncionario.setVisible(false);
 		telaCadastroFuncionario.setVisible(false);
 		telaAlteraFuncionario.setVisible(true);
