@@ -9,6 +9,7 @@ import java.sql.Date;
 
 import br.ufsc.ine5605.trabalho02.acessos.MapeadorAcesso;
 import br.ufsc.ine5605.trabalho02.cargos.Cargo;
+import br.ufsc.ine5605.trabalho02.cargos.ControladorCargo;
 import br.ufsc.ine5605.trabalho02.funcionarios.ControladorFuncionario;
 import br.ufsc.ine5605.trabalho02.funcionarios.TelaFuncionario;
 
@@ -23,16 +24,17 @@ public class Main {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		Cargo cargo1 = new Cargo(123, "badeco", true, false);
 		
-		cargo1.addIntervalo("08:00", "12:00");
-		cargo1.addIntervalo("14:00", "18:00");
+		ControladorCargo.getInstance().incluiCargo("badeco", true , false);
+		
+		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("08:00", "12:00");
+		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("14:00", "18:00");
 
 
 		try {
-			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000, cargo1);
-			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000, cargo1);
-			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000, cargo1);
+			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
+			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
+			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
 		} catch (Exception e) {
 
 			e.printStackTrace();

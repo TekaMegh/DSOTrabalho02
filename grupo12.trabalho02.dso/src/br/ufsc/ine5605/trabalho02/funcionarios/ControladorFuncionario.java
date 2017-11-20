@@ -57,8 +57,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	 * @throws Exception
 	 */
 	@Override
-	public void incluiFuncionario(String nome, Date nascimento, String telefone, Double salario, Cargo cargo)
-			throws Exception {
+	public void incluiFuncionario(String nome, Date nascimento, String telefone, Double salario, Cargo cargo) throws Exception {
 		Funcionario funcionario1 = new Funcionario(numMatricula, nome, nascimento, telefone, salario, cargo);
 		mapeadorFuncionario.put(funcionario1);
 		numMatricula += 1;

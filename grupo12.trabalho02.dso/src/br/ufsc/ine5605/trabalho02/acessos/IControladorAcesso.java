@@ -26,8 +26,6 @@ public interface IControladorAcesso {
 
 	public ArrayList<Acesso> getAcessosByMatricula(int matricula);
 
-	public void printListaAcessoByMatricula();
-
 	public Collection<Acesso> getAcessos();
 	
 	public Date parseDate(Object object) throws ParseException;

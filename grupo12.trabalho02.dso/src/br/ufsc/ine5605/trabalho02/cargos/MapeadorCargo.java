@@ -63,11 +63,10 @@ public class MapeadorCargo {
             oo = null;
             fout = null;
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {
+			System.out.println(e);
+			persist();
+		}
     }
     
     public void load() {
@@ -83,12 +82,16 @@ public class MapeadorCargo {
             oi = null;
             fin = null;
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MapeadorCargo.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        } catch (ClassNotFoundException e) {
+			System.out.println(e);
+
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+			persist();
+
+		} catch (IOException e) {
+			System.out.println(e);
+			persist();
+		}  
     }    
 }

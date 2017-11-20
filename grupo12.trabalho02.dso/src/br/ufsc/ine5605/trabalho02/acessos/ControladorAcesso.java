@@ -213,33 +213,7 @@ public class ControladorAcesso implements IControladorAcesso {
 		this.telaEntrada.mostrarTela();
 	}
 
-	//////////////////////////////////
-	/// APENAS PARA TESTES DE ENTRADA
-	public void printListaAcessoByMatricula() {
-
-		int matricula = 1;
-
-		DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat formatadorHora = new SimpleDateFormat("HH:mm");
-		System.out.println("Acessos negados por "
-				+ ControladorPrincipal.getInstance().getFuncionarioByMatricula(matricula).getNome() + ": ");
-		if (mapAcessos.getList().isEmpty()) {
-			System.out.println("Não existem acessos negados nessa matrícula.");
-		}
-		for (Acesso acesso : mapAcessos.getList()) {
-			if (acesso.getMatricula() == matricula) {
-				System.out.println("--------- ");
-				String data = formatadorData.format(acesso.getDataDaTentativa());
-				String hora = formatadorHora.format(acesso.getHoraDeAcesso());
-				System.out.println("-- Data da Tentativa de acesso: " + data + " \nHora do acesso: " + hora
-						+ " \nmotivo: " + acesso.getTipo().descricao() + "");
-			}
-
-		}
-
-	}
-
-	//////////////////////////////////////////
+	
 	@Override
 	public Collection<Acesso> getAcessos() {
 		return mapAcessos.getList();

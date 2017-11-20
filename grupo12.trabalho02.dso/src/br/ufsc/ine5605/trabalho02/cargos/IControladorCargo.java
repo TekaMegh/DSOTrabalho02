@@ -6,6 +6,7 @@
 package br.ufsc.ine5605.trabalho02.cargos;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface IControladorCargo {
 
     public void iniciaTelaPrincipal();
 
-    public Iterable<Cargo> getListaCargos();
+    public Collection<Cargo> getListaCargos();
     
     public ArrayList<String> getNomeCargos();
     
@@ -32,6 +33,8 @@ public interface IControladorCargo {
     public void removeCargo(int parseInt);
 
     public Cargo getCargoByNome(String nome);
+    
+    public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial);
 
     
 }

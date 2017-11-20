@@ -58,10 +58,6 @@ public class TelaAcesso extends JFrame {
 		tbItens.setPreferredScrollableViewportSize(new Dimension(700, 100));
 		tbItens.setFillsViewportHeight(true);
 		constraint.fill = GridBagConstraints.BOTH;
-		// constraint.weightx = 0.5;
-		// constraint.gridwidth = 5;
-		// constraint.gridx = 0;
-		// constraint.gridy = 1;
 		constraint.gridheight = 4;
 		constraint.gridwidth = 9;
 		constraint.gridx = 0;
@@ -73,7 +69,7 @@ public class TelaAcesso extends JFrame {
 		/// ----------------------- configuracao botões
 		/// ------------------------------///
 
-		//////////// Configuracap dos filtros
+		//////////////////////////// -------------------- Configuracap dos filtros
 		///// filtroMatricula e seu Label
 		lbFiltroMatricula = new JLabel("Filtro por Matrícula: ");
 		constraint.gridheight = 1;
@@ -129,14 +125,12 @@ public class TelaAcesso extends JFrame {
 	 */
 	private void updateJComboBoxes() {
 
-		cbFiltroMatricula.addItem("Todos");
 		for (int matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
 
 			boolean exists = false;
-			for (int index = 0; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
-
-				if (cbFiltroMatricula.getItemAt(index).equals("Todos"))
-					continue;
+			if(!cbFiltroMatricula.getItemAt(0).toString().equals("Todos"))  cbFiltroMatricula.addItem("Todos");
+			for (int index = 1; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
+				
 
 				if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
 					exists = true;

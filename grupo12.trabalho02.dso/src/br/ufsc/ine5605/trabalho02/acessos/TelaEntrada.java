@@ -117,7 +117,6 @@ public class TelaEntrada extends JFrame {
 				JOptionPane.showMessageDialog(null,
 						ControladorAcesso.getInstance().validaAcesso(tfMatricula.getValue(), tfHoraDeAcesso.getValue()),
 						"Mensagem", JOptionPane.INFORMATION_MESSAGE);
-				ControladorAcesso.getInstance().printListaAcessoByMatricula();
 			} else if (e.getSource().equals(btCancelar)) {
 				setVisible(false);
 				ControladorPrincipal.getInstance().inicia();

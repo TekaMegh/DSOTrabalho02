@@ -87,13 +87,13 @@ public class TelaCadastroCargo extends JFrame{
         //Configuracao JTextField Nome
         constraint.gridx = 4;
         constraint.gridy = 1;
-        tfNome = new JTextField(10);               
+        tfNome = new JTextField(10);
         container.add(tfNome, constraint);
         
         //Configuracao JTextField Codigo
         constraint.gridx = 4;
         constraint.gridy = 2;
-        tfCodigo = new JTextField(10);               
+        tfCodigo = new JTextField(10);
         container.add(tfCodigo, constraint);
         
         //Configuracao JComoboBox Acesso
