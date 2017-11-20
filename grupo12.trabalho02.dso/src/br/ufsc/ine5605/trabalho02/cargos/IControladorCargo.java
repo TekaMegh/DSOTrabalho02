@@ -23,8 +23,15 @@ public interface IControladorCargo {
     
     public ArrayList<String> getNomeCargos();
     
-    public Cargo getCargo(int identificador);
+    public Cargo getCargo(String nome);
 
-    public void removeCargoByIdentifier(Object valueAt);
-       
+    public int getIdentificadorByCodigo(int codigo);
+
+    public void removeCargoByCodigo(int parseInt);
+
+    public void removeCargo(int parseInt);
+
+    public Cargo getCargoByNome(String nome);
+
+    
 }

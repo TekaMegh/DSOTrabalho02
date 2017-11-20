@@ -24,19 +24,25 @@ public class MapeadorCargo {
     private HashMap<Integer, Cargo> cacheCargos = new HashMap<>();
     private final String filename = "cargos.dat";
     
+    public MapeadorCargo() {
+        load();
+    }
+    
     public Cargo getCargo (Integer idCargo) {
         return cacheCargos.get(idCargo);
     }
     
     public void putCargo (Cargo cargo) {
         cacheCargos.put(cargo.getCodigo(), cargo);
+        this.persist();
     }
     
     public void removeCargo(int identificador) {
         this.cacheCargos.remove(identificador);
+        this.persist();
     }
     
-    public Collection<Cargo> getList() {
+    public Collection<Cargo> getList() {        
         return cacheCargos.values();
     }
     

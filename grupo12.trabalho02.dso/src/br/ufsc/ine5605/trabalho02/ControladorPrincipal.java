@@ -93,8 +93,8 @@ public class ControladorPrincipal {
             return ControladorCargo.getInstance().getNomeCargos();
         }
         
-        public Cargo getCargo(int identificador) {
-            return ControladorCargo.getInstance().getCargo(identificador);
+        public Cargo getCargoByNome(String nome) {
+            return ControladorCargo.getInstance().getCargoByNome(nome);
         }
 
 	public Collection<Funcionario> getListaFuncionarios() {

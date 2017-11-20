@@ -13,29 +13,28 @@ import java.util.Collection;
  *
  * @author rak_w
  */
-public class ControladorCargo implements IControladorCargo{
-    
+public class ControladorCargo implements IControladorCargo {
+
     private static ControladorCargo controladorCargo;
     private TelaCargo telaCargo;
     private TelaCadastroCargo telaCadastroCargo;
     private MapeadorCargo mapCargo;
     private int numCodigo;
-    
+
     /**
-     * Método construtor da classe
-     * Inicializa os atributos da classe
-     */    
+     * Método construtor da classe Inicializa os atributos da classe
+     */
     public ControladorCargo() {
         this.telaCargo = new TelaCargo();
         this.telaCadastroCargo = new TelaCadastroCargo();
         this.mapCargo = new MapeadorCargo();
         this.numCodigo = this.mapCargo.getList().size();
     }
-    
+
     /**
-     * 
-     * @return IControladorCargo
-     * Retorna a unica instancia do ControladorCargo como interface.
+     *
+     * @return IControladorCargo Retorna a unica instancia do ControladorCargo
+     * como interface.
      */
     public static IControladorCargo getInstance() {
         if (controladorCargo == null) {
@@ -43,7 +42,7 @@ public class ControladorCargo implements IControladorCargo{
         }
         return controladorCargo;
     }
-    
+
     @Override
     public void iniciaTelaCargo() {
         this.telaCargo.updateDate();
@@ -68,28 +67,32 @@ public class ControladorCargo implements IControladorCargo{
     public Collection<Cargo> getListaCargos() {
         return this.mapCargo.getList();
     }
-    
+
     public ArrayList<String> getNomeCargos() {
         ArrayList<String> nomes = new ArrayList<>();
-        for(Cargo cargo : this.mapCargo.getList()) {
+        for (Cargo cargo : this.mapCargo.getList()) {
             String nome = cargo.getNome();
             nomes.add(nome);
         }
         return nomes;
     }
-    
-    public Cargo getCargo(int identificador) {
-        return this.mapCargo.getCargo(identificador);
+
+    public Cargo getCargoByNome(String nome) {
+        for(Cargo cargo : this.mapCargo.getList()) {
+            if(cargo.getNome().equals(nome)) {
+                return cargo;
+            }
+        }
+        return null;
     }
-    
+
     /**
      *
      * @param nome
      * @param mayEnter
      * @param gerencial
-     * @return Cargo
-     * Instancia um Cargo com codigo unico
-     * Adiciona o Cargo e retorna o Cargo
+     * @return Cargo Instancia um Cargo com codigo unico Adiciona o Cargo e
+     * retorna o Cargo
      */
     public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
         boolean codigoExiste;
@@ -104,27 +107,50 @@ public class ControladorCargo implements IControladorCargo{
         this.mapCargo.putCargo(cargo);
         return cargo;
     }
-    
+
+    @Override
+    public void removeCargoByCodigo(int codigo) {
+        int identificador = this.getIdentificadorByCodigo(codigo);
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        boolean hasFuncionario = ControladorPrincipal.getInstance().hasFuncionarioByCargo(cargo);
+        if (!hasFuncionario) {
+            this.mapCargo.removeCargo(identificador);
+        }
+    }
+
+    public Cargo getCargoByCodigo(int codigo) {
+        for (Cargo cargo : this.mapCargo.getList()) {
+            if (cargo.getCodigo() == codigo) {
+                return cargo;
+            }
+        }
+        return null;
+    }
+
     /**
-     * 
+     *
      * @param codigo
-     * @return boolean
-     * Verifica a existencia de um cargo com o codigo recebido
+     * @return boolean Verifica a existencia de um cargo com o codigo recebido
      * Retorna uma booleana indicando a existencia ou não do cargo
      */
     public boolean hasCodigo(int codigo) {
-        for(Cargo cargo : getListaCargos()) {
-            if(cargo.getCodigo() == codigo) {
+        for (Cargo cargo : getListaCargos()) {
+            if (cargo.getCodigo() == codigo) {
                 return true;
             }
         }
-        return false;      
+        return false;
     }
 
     @Override
-    public void removeCargoByIdentifier(Object valueAt) {
-        int indentificador = Integer.parseInt(valueAt.toString());
-        this.mapCargo.removeCargo(indentificador);
+    public int getIdentificadorByCodigo(int codigo) {
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        
     }
-    
+
+    @Override
+    public void removeCargo(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

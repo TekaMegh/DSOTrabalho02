@@ -130,7 +130,8 @@ public class TelaCargo extends JFrame{
             } else if(e.getSource().equals(btAlterar)) {
                ControladorCargo.getInstance().iniciaTelaCadastroCargo();
             } else if(e.getSource().equals(btRemover)) {
-                ControladorCargo.getInstance().removeCargoByIdentifier(tbCargos.getValueAt(tbCargos.getSelectedRow(), 0));
+                Object valueAt = tbCargos.getValueAt(tbCargos.getSelectedRow(), 0);
+                ControladorCargo.getInstance().removeCargo(Integer.parseInt(valueAt.toString()));                
                 JOptionPane.showMessageDialog(null, "O cargo foi removido", "Cargo", 1);
             } else if(e.getSource().equals(btVoltar)) {
                 ControladorCargo.getInstance().iniciaTelaPrincipal();
