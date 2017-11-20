@@ -19,7 +19,11 @@ public interface IControladorCargo {
     public void iniciaTelaCargo();
 
     public void iniciaTelaPrincipal();
-
+    
+    public void iniciaTelaIntervalosDeAcesso();
+    
+    public void configuraTelaIntervaloDeAcesso(Cargo cargo);
+    
     public Collection<Cargo> getListaCargos();
     
     public ArrayList<String> getNomeCargos();
@@ -27,12 +31,22 @@ public interface IControladorCargo {
     public void removeCargo(int parseInt);
 
     public Cargo getCargoByNome(String nome);
+    
+    public Cargo getCargoByCodigo(int codigo);
 
-    public void incluiCargo(String nome, int codigo, boolean b, boolean b0);
+    public void incluiCargo(String nome, int codigo, boolean mayEnter, boolean gerencial);
 
     public void setIntervaloInCargoByCodigo(int parseInt, String string, String string0) throws Exception;
     
     public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial);
+    
+    public int parseInt(Object selectedItem);
+
+	public void iniciaTelaCadastroIntervalosDeAcesso();
+
+	public void configuraTelaCadastroCargo(ArrayList<String> intervalos);
+
+	
 
 
     

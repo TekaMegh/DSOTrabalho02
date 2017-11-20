@@ -18,6 +18,8 @@ public class ControladorCargo implements IControladorCargo {
     private static ControladorCargo controladorCargo;
     private TelaCargo telaCargo;
     private TelaCadastroCargo telaCadastroCargo;
+    private TelaIntervalosDeAcesso telaIntervalosDeAcesso;
+    private TelaCadastroIntervalosDeAcesso telaCadastroIntervalosDeAcesso;
     private MapeadorCargo mapCargo;
     private int numCodigo;
 
@@ -28,6 +30,8 @@ public class ControladorCargo implements IControladorCargo {
         this.telaCargo = new TelaCargo();
         this.telaCadastroCargo = new TelaCadastroCargo();
         this.mapCargo = new MapeadorCargo();
+        this.telaIntervalosDeAcesso = new TelaIntervalosDeAcesso();
+        this.telaCadastroIntervalosDeAcesso = new TelaCadastroIntervalosDeAcesso();
         this.numCodigo = this.mapCargo.getList().size();
     }
 
@@ -45,21 +49,48 @@ public class ControladorCargo implements IControladorCargo {
 
     @Override
     public void iniciaTelaCargo() {
-        this.telaCargo.updateDate();
+        this.telaCargo.updateData();
+        this.telaCadastroIntervalosDeAcesso.setVisible(false);
         this.telaCadastroCargo.setVisible(false);
+        this.telaIntervalosDeAcesso.setVisible(false);
         this.telaCargo.setVisible(true);
     }
 
     @Override
     public void iniciaTelaCadastroCargo() {
+    	this.telaCadastroIntervalosDeAcesso.setVisible(false);
         this.telaCargo.setVisible(false);
+        this.telaIntervalosDeAcesso.setVisible(false);
         this.telaCadastroCargo.setVisible(true);
     }
 
     @Override
+	public void configuraTelaCadastroCargo(ArrayList<String> intervalos) {
+    	
+		this.telaCadastroCargo.updateData(intervalos);
+		
+	}
+
+    @Override
+    public void iniciaTelaIntervalosDeAcesso() {
+    	this.telaIntervalosDeAcesso.setVisible(true);
+    }
+
+    @Override
+	public void configuraTelaIntervaloDeAcesso(Cargo cargo) {
+		this.telaIntervalosDeAcesso.updateData(cargo);
+	}
+    
+    @Override
+	public void iniciaTelaCadastroIntervalosDeAcesso() {
+		this.telaCadastroIntervalosDeAcesso.setVisible(true);
+	}
+    	
+@Override
     public void iniciaTelaPrincipal() {
         this.telaCargo.setVisible(false);
         this.telaCadastroCargo.setVisible(false);
+        this.telaIntervalosDeAcesso.setVisible(false);
         ControladorPrincipal.getInstance().inicia();
     }
 
@@ -109,6 +140,7 @@ public class ControladorCargo implements IControladorCargo {
         }
     }
 
+    @Override
     public Cargo getCargoByCodigo(int codigo) {
         for (Cargo cargo : this.mapCargo.getList()) {
             if (cargo.getCodigo() == codigo) {
@@ -140,6 +172,7 @@ public class ControladorCargo implements IControladorCargo {
         if (!hasFuncionario) {
             this.mapCargo.removeCargo(codigo);
         }
+        this.iniciaTelaCargo();
     }
 
     /**
@@ -166,9 +199,18 @@ public class ControladorCargo implements IControladorCargo {
         return cargo.getIntervalos();
     }
 
+    public int parseInt(Object object) {
+    	return Integer.parseInt(object.toString());
+    }
+
+
 	@Override
 	public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+
+	
 }

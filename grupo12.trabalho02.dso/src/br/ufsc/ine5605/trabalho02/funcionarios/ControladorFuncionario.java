@@ -35,7 +35,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Abre a tela de Funcionários e encaminha opção selecionada para o metodo de
+	 * Abre a tela de Funcionï¿½rios e encaminha opï¿½ï¿½o selecionada para o metodo de
 	 * switch.
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * O método inclui o novo funcionário na lista(arraylist) de funcionarios.
+	 * O mï¿½todo inclui o novo funcionï¿½rio na lista(arraylist) de funcionarios.
 	 *
 	 * @param nome
 	 * @param nascimento
@@ -66,7 +66,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Exclui um funcionário através da matrícula.
+	 * Exclui um funcionï¿½rio atravï¿½s da matrï¿½cula.
 	 *
 	 * @param matricula
 	 * @throws Exception
@@ -74,7 +74,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	@Override
 	public void removeFuncionario(int matricula) throws Exception {
 		if (matricula <= 0) {
-			throw new IllegalArgumentException("Matrícula não pode ter valor inferior a zero!");
+			throw new IllegalArgumentException("Matrï¿½cula nï¿½o pode ter valor inferior a zero!");
 		}
 		 try {
 		 mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
@@ -82,11 +82,11 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		 } catch (Exception e) {
 
 		 }
-		ControladorFuncionario.getInstance().inicia();
+		inicia();
 	}
 
 	/**
-	 * Modifica os dados do funcionário.
+	 * Modifica os dados do funcionï¿½rio.
 	 *
 	 * @param matricula
 	 * @param nome
@@ -100,19 +100,19 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	public void modificaFuncionario(int matricula, String nome, Date nascimento, String telefone, Double salario,
 			Cargo cargo) throws Exception {
 		if (matricula <= 0) {
-			throw new IllegalArgumentException("Matrícula não pode ter valor inferior a zero!");
+			throw new IllegalArgumentException("Matrï¿½cula nï¿½o pode ter valor inferior a zero!");
 		}
 		if (nome == null) {
-			throw new NullPointerException("Nome não pode ter valor nulo!");
+			throw new NullPointerException("Nome nï¿½o pode ter valor nulo!");
 		}
 		if (nascimento == null) {
-			throw new NullPointerException("Data de nascimento não pode ter valor nulo!");
+			throw new NullPointerException("Data de nascimento nï¿½o pode ter valor nulo!");
 		}
 		if (telefone == null) {
-			throw new NullPointerException("Telefone não pode ter valor nulo!");
+			throw new NullPointerException("Telefone nï¿½o pode ter valor nulo!");
 		}
 		if (cargo == null) {
-			throw new NullPointerException("Cargo não pode ter valor nulo!");
+			throw new NullPointerException("Cargo nï¿½o pode ter valor nulo!");
 		}
 
 		try {
@@ -130,10 +130,10 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Procura e retorna o funcionário associado à matricula informada.
+	 * Procura e retorna o funcionï¿½rio associado ï¿½ matricula informada.
 	 *
 	 * @param matricula
-	 * @return Funcionário associado à matricula informada.
+	 * @return Funcionï¿½rio associado ï¿½ matricula informada.
 	 * @throws Exception
 	 */
 	public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception {
@@ -141,7 +141,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		if (funcionario != null) {
 			return funcionario;
 		}
-		throw new RuntimeException("Não existe o funcionário com a matrícula informada");
+		throw new RuntimeException("Nï¿½o existe o funcionï¿½rio com a matrï¿½cula informada");
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Retorna a instancia do controlador Funcionário.
+	 * Retorna a instancia do controlador Funcionï¿½rio.
 	 *
 	 * @return Controlador Funcionario
 	 */
@@ -162,11 +162,11 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Percorre lista de funcionários checando a presença de funcionários com o
+	 * Percorre lista de funcionï¿½rios checando a presenï¿½a de funcionï¿½rios com o
 	 * cargo informado.
 	 *
 	 * @param cargo
-	 * @return boolean indicando a presença ou não de funcionários com o cargo
+	 * @return boolean indicando a presenï¿½a ou nï¿½o de funcionï¿½rios com o cargo
 	 *         informado.
 	 */
 	@Override
@@ -180,8 +180,8 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Procura por funcionários associados ao cargo passado como parâmetro
-	 * adiciona numa lista, a qual será impressa na tela posteriormente.
+	 * Procura por funcionï¿½rios associados ao cargo passado como parï¿½metro
+	 * adiciona numa lista, a qual serï¿½ impressa na tela posteriormente.
 	 *
 	 * @param cargo
 	 */

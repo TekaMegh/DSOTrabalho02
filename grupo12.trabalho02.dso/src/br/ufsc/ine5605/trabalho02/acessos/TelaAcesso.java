@@ -11,7 +11,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.omg.CORBA.ObjectHolder;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
 
@@ -78,8 +79,9 @@ public class TelaAcesso extends JFrame {
 		constraint.gridy = 6;
 		constraint.fill = GridBagConstraints.NONE;
 		container.add(lbFiltroMatricula, constraint);
+		
 
-		cbFiltroMatricula = new JComboBox<Object>();
+		cbFiltroMatricula = new JComboBox<Object>(new Object[] {"Todos"});
 		cbFiltroMatricula.addActionListener(gerenciadorBotoes);
 		constraint.gridwidth = 2;
 		constraint.gridx = 2;
@@ -128,10 +130,8 @@ public class TelaAcesso extends JFrame {
 		for (int matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
 
 			boolean exists = false;
-			if(!cbFiltroMatricula.getItemAt(0).toString().equals("Todos"))  cbFiltroMatricula.addItem("Todos");
 			for (int index = 1; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
 				
-
 				if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
 					exists = true;
 				}

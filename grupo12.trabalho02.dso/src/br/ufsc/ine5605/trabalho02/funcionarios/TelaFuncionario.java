@@ -39,7 +39,7 @@ public class TelaFuncionario extends JFrame {
 
 	
 	public TelaFuncionario() {
-		super("Tela de Funcionários");
+		super("Tela de Funcionarios");
 		this.btManager = new GerenciadorBotoes();
 		this.configuraTela();
 	}
@@ -56,7 +56,7 @@ public class TelaFuncionario extends JFrame {
         constraint.gridwidth = 3;
         constraint.gridx = 1;
         constraint.gridy = 1;
-        lbTexto = new JLabel("Funcionários cadastrados:");               
+        lbTexto = new JLabel("Funcionarios cadastrados:");               
         container.add(lbTexto, constraint);
         
         //Configuracao JTable de Funcionarios
@@ -75,21 +75,21 @@ public class TelaFuncionario extends JFrame {
         constraint.gridwidth = 3;
         constraint.gridx = 1;
         constraint.gridy = 6;
-        btCadastroFuncionario = new JButton("Novo Funcionário");               
+        btCadastroFuncionario = new JButton("Novo Funcionario");               
         btCadastroFuncionario.addActionListener(btManager);
         container.add(btCadastroFuncionario, constraint);
         
         //Configuracao JButton Alterar
         constraint.gridx = 4;
         constraint.gridy = 6;
-        btAlterarFuncionario = new JButton("Alterar Funcionário");               
+        btAlterarFuncionario = new JButton("Alterar Funcionario");               
         btAlterarFuncionario.addActionListener(btManager);
         container.add(btAlterarFuncionario, constraint);
         
         //Configuracao JButton Remover
         constraint.gridx = 7;
         constraint.gridy = 6;
-        btRemoverFuncionario = new JButton("Remover Funcionário");               
+        btRemoverFuncionario = new JButton("Remover Funcionario");               
         btRemoverFuncionario.addActionListener(btManager);
         container.add(btRemoverFuncionario, constraint);
         
@@ -108,11 +108,11 @@ public class TelaFuncionario extends JFrame {
     
     public void updateData(){
         DefaultTableModel modeltbFuncionarios = new DefaultTableModel();
-        modeltbFuncionarios.addColumn("Matrícula");
+        modeltbFuncionarios.addColumn("Matrï¿½cula");
         modeltbFuncionarios.addColumn("Nome");
         modeltbFuncionarios.addColumn("Data de Nascimento");
         modeltbFuncionarios.addColumn("Cargo");
-        modeltbFuncionarios.addColumn("Salário");
+        modeltbFuncionarios.addColumn("Salï¿½rio");
         modeltbFuncionarios.addColumn("Telefone");
         
         for(Funcionario funcionario : ControladorFuncionario.getInstance().getListaFuncionario()) {

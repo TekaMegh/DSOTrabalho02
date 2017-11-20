@@ -26,23 +26,29 @@ public class Main {
 	public static void main(String[] args) {
 		
 
-		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("08:00", "12:00");
-		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("14:00", "18:00");
-
-
-		try {
-			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
-			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
-			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
+//		ControladorCargo.getInstance().incluiCargo("badeco", 1, true, false);
+//		ControladorCargo.getInstance().incluiCargo("gerente", 2, true, true);
+//		ControladorCargo.getInstance().incluiCargo("secretario", 3, true, false);
+//		
+//		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("08:00", "12:00");
+//		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("14:00", "18:00");
+//		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("20:00", "03:00");
+//		
+//		ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("08:00", "12:00");
+//		ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("14:00", "18:00");
+//
+//
+//		try {
+//			ControladorFuncionario.getInstance().incluiFuncionario("levy", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
+//			ControladorFuncionario.getInstance().incluiFuncionario("joao", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
+//			ControladorFuncionario.getInstance().incluiFuncionario("ronaldo", new Date(0), "(85)8548-8526", 5000.00, ControladorCargo.getInstance().getCargoByNome("badeco"));
+//		} catch (Exception e) {
+//
+//			e.printStackTrace();
+//
+//		}
 
 		ControladorPrincipal.getInstance().inicia();
-		
-		ControladorPrincipal.getInstance().getNomeCargos();
 	}
 
 }

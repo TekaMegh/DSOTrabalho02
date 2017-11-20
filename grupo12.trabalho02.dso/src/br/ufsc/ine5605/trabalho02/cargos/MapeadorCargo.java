@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MapeadorCargo {
     private HashMap<Integer, Cargo> cacheCargos = new HashMap<>();
-    private final String filename = "cargos.dat";
+    private final String filename = "cargos.BATATA";
     
     public MapeadorCargo() {
         load();
