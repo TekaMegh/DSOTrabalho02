@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -125,19 +127,21 @@ public class TelaCadastroCargo extends JFrame{
         
         //Configuracao JLabel Codigo
         constraint.gridheight = 1;
-        constraint.gridwidth = 3;
+        constraint.gridwidth = 2;
         constraint.gridx = 1;
         constraint.gridy = 8;
         lbInicio = new JLabel("Inicio:");               
         container.add(lbInicio, constraint);
         
         //Configuracao JLabel Codigo
-        constraint.gridx = 1;
-        constraint.gridy = 9;
-        lbCodigo = new JLabel("Codigo:");               
-        container.add(lbCodigo, constraint);
+        constraint.gridx = 5;
+        constraint.gridy = 8;
+        lbFim = new JLabel("Fim:");               
+        container.add(lbFim, constraint);
         
         //Configuracao JButton Salvar
+        constraint.gridheight = 1;
+        constraint.gridwidth = 3;
         constraint.gridx = 1;
         constraint.gridy = 11;
         btSalvar = new JButton("Salvar");
@@ -151,7 +155,7 @@ public class TelaCadastroCargo extends JFrame{
         btCancelar.addActionListener(gerenciadorTelaCadastroCargo);
         container.add(btCancelar, constraint);
         
-        setSize(300, 350);
+        setSize(300, 600);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -164,6 +168,25 @@ public class TelaCadastroCargo extends JFrame{
              if(e.getSource().equals(btCancelar)) {
                 ControladorCargo.getInstance().iniciaTelaCargo();
             } else if(e.getSource().equals(btSalvar)) {
+                String nome = tfNome.getText();
+                String codigo = tfCodigo.getText();
+                String Acesso = cbAcesso.getSelectedItem().toString();
+                if(Acesso.equals("Comercial")) {
+                    ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), true, false);
+                    try {
+                        ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo), "08:00", "12:00");
+                        ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo), "14:00", "18:00");
+                    } catch (Exception ex) {
+                        Logger.getLogger(TelaCadastroCargo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if(Acesso.equals("Sem Acesso")) {
+                    ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), false, false);
+                } else if(Acesso.equals("Gerencial")) {
+                    ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), true, true);
+                } else if(Acesso.equals("Gerencial")) {
+                    
+                }
+                
                 ControladorCargo.getInstance().iniciaTelaCargo();
                 JOptionPane.showMessageDialog(null, "Cargo salvo!", "Cargo", 1);
                //ControladorCargo.getInstance().incluiCargo();
