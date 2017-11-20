@@ -111,6 +111,16 @@ public class TelaEntrada extends JFrame {
 
 	public class GerenciadorBotoes implements ActionListener {
 
+		/**
+		 * Se botão Entrar é pressionado, ocorre validacao do Acesso utilizando o
+		 * intervalo de acesso do cargo do funcionário ao qual a matrícula inserida se
+		 * refere.
+		 * 
+		 * Se botão Cancelar é pressionado, a tela fica invísivil e inicia a tela
+		 * principal.
+		 * 
+		 * 
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btEntrar)) {

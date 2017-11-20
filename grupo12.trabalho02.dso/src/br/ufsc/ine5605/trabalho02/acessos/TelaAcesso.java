@@ -51,7 +51,7 @@ public class TelaAcesso extends JFrame {
 
 	private void configuraTelaAcesso() {
 
-		////////// configuracao da JTable
+		// ------------------------------------------ CONFIGURACAO DA JTABLE
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraint = new GridBagConstraints();
@@ -66,11 +66,10 @@ public class TelaAcesso extends JFrame {
 		spBaseTabela = new JScrollPane(tbItens);
 		spBaseTabela.setMinimumSize(new Dimension(700, 100));
 		container.add(spBaseTabela, constraint);
+		/// --------------------------------------------------------------------------------------------///
 
-		/// ----------------------- configuracao botões
-		/// ------------------------------///
+		/// ----------------------- CONFIGURA COMPONENTES
 
-		//////////////////////////// -------------------- Configuracap dos filtros
 		///// filtroMatricula e seu Label
 		lbFiltroMatricula = new JLabel("Filtro por Matrícula: ");
 		constraint.gridheight = 1;
@@ -79,9 +78,8 @@ public class TelaAcesso extends JFrame {
 		constraint.gridy = 6;
 		constraint.fill = GridBagConstraints.NONE;
 		container.add(lbFiltroMatricula, constraint);
-		
 
-		cbFiltroMatricula = new JComboBox<Object>(new Object[] {"Todos"});
+		cbFiltroMatricula = new JComboBox<Object>(new Object[] { "Todos" });
 		cbFiltroMatricula.addActionListener(gerenciadorBotoes);
 		constraint.gridwidth = 2;
 		constraint.gridx = 2;
@@ -116,6 +114,9 @@ public class TelaAcesso extends JFrame {
 		constraint.fill = GridBagConstraints.BOTH;
 		container.add(btVoltar, constraint);
 
+		// ---------------------------------------------------------------------------//
+
+		// --------------- EXTRAS DA TELA -----------------//
 		setSize(750, 300);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,15 +124,16 @@ public class TelaAcesso extends JFrame {
 	}
 
 	/**
-	 * Atualiza a ComboBox de filtro por matrícula.
+	 * Atualiza a ComboBox de filtro por matrícula utilizando as matrículas de
+	 * funcionários existentes.
 	 */
-	private void updateJComboBoxes() {
+	private void updateCbFiltroMatricula() {
 
 		for (int matricula : ControladorAcesso.getInstance().getMatriculasFuncionarios()) {
 
 			boolean exists = false;
 			for (int index = 1; index < cbFiltroMatricula.getItemCount() && !exists; index++) {
-				
+
 				if (matricula == (ControladorAcesso.getInstance().parseInt(cbFiltroMatricula.getItemAt(index)))) {
 					exists = true;
 				}
@@ -204,7 +206,7 @@ public class TelaAcesso extends JFrame {
 	}
 
 	/**
-	 * refaz a JTable usando o tipo selecionado na ComboBox
+	 * Refaz a JTable usando o Tipo de Acesso selecionado na ComboBox
 	 * 
 	 * @param selectedItem
 	 */
@@ -276,7 +278,7 @@ public class TelaAcesso extends JFrame {
 	}
 
 	/**
-	 * Refaz a JTable usando a matricula selecionada na ComboBox
+	 * Refaz a JTable usando a Matricula selecionada na ComboBox
 	 * 
 	 * @param selectedItem
 	 */
@@ -328,7 +330,7 @@ public class TelaAcesso extends JFrame {
 	public void mostraTela() {
 
 		updateDefault();
-		updateJComboBoxes();
+		updateCbFiltroMatricula();
 		setVisible(true);
 
 	}

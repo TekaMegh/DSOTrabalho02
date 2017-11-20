@@ -28,8 +28,8 @@ public class MapeadorAcesso {
 
 	public void put(Acesso acesso) {
 		int idAcesso = 0;
-		if(cacheAcessos.size()>0) {
-			idAcesso = cacheAcessos.get(cacheAcessos.size()-1).getIdAcesso();
+		if (cacheAcessos.size() > 0) {
+			idAcesso = cacheAcessos.get(cacheAcessos.size() - 1).getIdAcesso();
 		}
 		acesso.setIdAcesso(idAcesso + 1);
 		cacheAcessos.put(acesso.getIdAcesso(), acesso);

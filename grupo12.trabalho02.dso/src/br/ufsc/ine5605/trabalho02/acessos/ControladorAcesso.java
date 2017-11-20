@@ -53,8 +53,9 @@ public class ControladorAcesso implements IControladorAcesso {
 	 * 
 	 * @param matricula
 	 * @param horaDeAcesso
-	 * @return
+	 * @return String da descricao do tipo de Acesso
 	 * @throws ParseException
+	 *             se as variaveis n forem corretas
 	 */
 	@Override
 	public String validaAcesso(Object matriculaParam, Object tempoParam) {
@@ -201,30 +202,45 @@ public class ControladorAcesso implements IControladorAcesso {
 		return false;
 	}
 
+	/**
+	 * Torna tela de Entrada invisível e invoca tela de Acesso
+	 * 
+	 */
 	@Override
 	public void iniciaTelaAcesso() {
 		this.telaEntrada.setVisible(false);
 		this.telaAcesso.mostraTela();
 	}
 
+	/**
+	 * torna Tela de Acesso invisível e invoca tela de Entrada
+	 */
 	@Override
 	public void iniciaTelaEntrada() {
 		this.telaAcesso.setVisible(false);
 		this.telaEntrada.mostrarTela();
 	}
 
-	
+	/**
+	 * Retorna colecao de Acesso
+	 */
 	@Override
 	public Collection<Acesso> getAcessos() {
 		return mapAcessos.getList();
 	}
 
+	/**
+	 * Formata a Date recebida para uma String na forma de "HH:mm"
+	 */
 	@Override
 	public String formatToHour(Date horaDeAcesso) {
 		return formatadorHora.format(horaDeAcesso);
 
 	}
 
+	/**
+	 * formata a Data recebida para uma String na forma de "dd/MM/yyyy"
+	 */
 	@Override
 	public String formatToDate(Date dataDaTentativa) {
 		DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
@@ -245,7 +261,7 @@ public class ControladorAcesso implements IControladorAcesso {
 	@Override
 	public void removeAcessoByMatricula(int matricula) {
 		for (Acesso acesso : mapAcessos.getList()) {
-			if(acesso.getMatricula() == matricula) {
+			if (acesso.getMatricula() == matricula) {
 				mapAcessos.remove(acesso);
 			}
 		}
