@@ -69,6 +69,6 @@ public interface IControladorAcesso {
 	 */
 	public int parseInt(Object selectedItem);
 
-	public void removeAcessoByMatricula(int matricula);
+	public void removeAcessosByMatricula(int matricula);
 
 }

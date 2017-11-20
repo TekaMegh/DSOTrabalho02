@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +60,7 @@ public class TelaAlteraFuncionario extends JFrame {
 	private GerenciadorBotoes btManager;
 
 	public TelaAlteraFuncionario() {
-		super("Alterar Funcionário");
+		super("Alterar Funcionï¿½rio");
 		this.btManager = new GerenciadorBotoes();
 		this.setVisible(false);
 		this.configuraTela();
@@ -96,7 +97,7 @@ public class TelaAlteraFuncionario extends JFrame {
 		// Configuracao JLabel Salario
 		constraints.gridx = 1;
 		constraints.gridy = 4;
-		lbSalario = new JLabel("Salário:");
+		lbSalario = new JLabel("Salï¿½rio:");
 		container.add(lbSalario, constraints);
 
 		// Configuracao JLabel Data de Nascimento
@@ -131,7 +132,7 @@ public class TelaAlteraFuncionario extends JFrame {
 		cbCargos = new JComboBox<String>();
 		container.add(cbCargos, constraints);
 
-		// Configuracao JTextField Salário
+		// Configuracao JTextField Salï¿½rio
 		constraints.gridheight = 1;
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
@@ -167,13 +168,28 @@ public class TelaAlteraFuncionario extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-	public void setValues(ArrayList<Object> values) {
+	public void setValues(ArrayList<Object> values) throws ParseException {
 		this.matricula = (Integer)values.get(0);
 		tfNome.setText((String)values.get(1));
-		tfDataNascimento.setValue((Date)values.get(2));
+		tfDataNascimento.setValue(parseDate((values.get(2))));
 		cbCargos.setSelectedItem(values.get(3));
 		tfSalario.setValue((Double)values.get(4));
 		tfTelefone.setText((String)values.get(5));
+	}
+	
+	/**
+	 * Realiza um comando "parse" no objeto recebido, o transformando em um "Date".
+	 *
+	 * @param Object
+	 * @return Date do Object recebido
+	 * @throws java.text.ParseException
+	 */
+	public Date parseDate(Object object) throws ParseException {
+
+		SimpleDateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatadorData.parse(object.toString());
+		return date;
+
 	}
 	
 	public void updateComboBox(String[] cargos) {

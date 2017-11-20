@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -135,7 +136,12 @@ public class TelaFuncionario extends JFrame {
 				ControladorFuncionario.getInstance().iniciaTelaCadastroFuncionario();
 			} else if (e.getSource().equals(btAlterarFuncionario)) {
 				ArrayList<Object> values = valuesAtSelectedRow();
-				ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario(values);
+				try {
+					ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario(values);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else if (e.getSource().equals(btRemoverFuncionario)) {
 				Integer matricula = getSelectedMatricula();
 				try {

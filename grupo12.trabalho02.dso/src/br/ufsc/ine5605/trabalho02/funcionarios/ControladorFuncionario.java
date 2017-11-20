@@ -7,6 +7,8 @@ package br.ufsc.ine5605.trabalho02.funcionarios;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
 import br.ufsc.ine5605.trabalho02.cargos.Cargo;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,7 +80,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		}
 		 try {
 		 mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
-		 ControladorPrincipal.getInstance().removeAcessoByMatricula(matricula);
+		 ControladorPrincipal.getInstance().removeAcessosByMatricula(matricula);
 
 		 } catch (Exception e) {
 
@@ -206,7 +208,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	@Override
-	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values) {
+	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values) throws ParseException {
 		telaAlteraFuncionario.setValues(values);
 		telaAlteraFuncionario.updateComboBox(this.listaCargos());
 		telaFuncionario.setVisible(false);

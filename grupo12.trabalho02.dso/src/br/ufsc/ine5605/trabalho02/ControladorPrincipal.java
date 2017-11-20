@@ -143,8 +143,8 @@ public class ControladorPrincipal {
 		}
 	}
 	
-	public void removeAcessoByMatricula(int matricula) {
-		ControladorAcesso.getInstance().removeAcessoByMatricula(matricula);
+	public void removeAcessosByMatricula(int matricula) {
+		ControladorAcesso.getInstance().removeAcessosByMatricula(matricula);
 	}
 	
 	

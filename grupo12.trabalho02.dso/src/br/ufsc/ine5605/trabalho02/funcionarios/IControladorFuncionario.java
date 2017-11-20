@@ -11,6 +11,7 @@ package br.ufsc.ine5605.trabalho02.funcionarios;
  */
 import br.ufsc.ine5605.trabalho02.cargos.Cargo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -78,7 +79,7 @@ public interface IControladorFuncionario {
 
 	public void iniciaTelaCadastroFuncionario();
 
-	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values);
+	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values) throws ParseException;
 
 	public void iniciaTelaPrincipal();
 
