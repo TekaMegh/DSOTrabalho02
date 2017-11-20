@@ -78,7 +78,16 @@ public class ControladorCargo implements IControladorCargo {
     @Override
     public void iniciaTelaAlteraCargo(Cargo cargo) {
         this.telaCargo.setVisible(false);
-        this.telaAlteraCargo.updateData(cargo.getNome(), cargo.getCodigo(), 0, this.getIntervalos(cargo.getIntervalos()));
+        if(!cargo.mayEnter()) {
+            this.telaAlteraCargo.updateData(cargo.getNome(), cargo.getCodigo(), 0, this.getIntervalos(cargo.getIntervalos()));
+        }
+        if(cargo.isGerencial()){
+            this.telaAlteraCargo.updateData(cargo.getNome(), cargo.getCodigo(), 2, this.getIntervalos(cargo.getIntervalos()));
+        }
+        if(cargo.mayEnter() && !cargo.isGerencial()) {
+            this.telaAlteraCargo.updateData(cargo.getNome(), cargo.getCodigo(), 3, this.getIntervalos(cargo.getIntervalos()));
+        }
+        
         this.telaAlteraCargo.setVisible(true);
     }
 

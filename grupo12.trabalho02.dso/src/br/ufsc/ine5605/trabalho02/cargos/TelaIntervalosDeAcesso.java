@@ -57,8 +57,6 @@ public class TelaIntervalosDeAcesso extends JFrame {
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        ;
-
     }
 
     public void updateData(Cargo cargo) {
