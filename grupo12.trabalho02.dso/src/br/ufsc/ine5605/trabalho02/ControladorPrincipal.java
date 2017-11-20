@@ -25,16 +25,9 @@ public class ControladorPrincipal {
 
 	private static ControladorPrincipal controladorPrincipal;
 	private TelaPrincipal telaPrincipal;
-	private IControladorCargo ctrlCargo;
-	private IControladorFuncionario ctrlFuncionario;
-	private IControladorAcesso ctrlAcesso;
-
+	
 	private ControladorPrincipal() {
 		this.telaPrincipal = new TelaPrincipal();
-		this.ctrlCargo = ControladorCargo.getInstance();
-		this.ctrlFuncionario = ControladorFuncionario.getInstance();
-		this.ctrlAcesso = ControladorAcesso.getInstance();
-
 	}
 
 	/**
@@ -113,7 +106,7 @@ public class ControladorPrincipal {
 	public Funcionario getFuncionarioByMatricula(Integer matricula) {
 		Funcionario funcionario = null;
 		try{
-			funcionario = ctrlFuncionario.findFuncionarioByMatricula(matricula);
+			funcionario = ControladorFuncionario.getInstance().findFuncionarioByMatricula(matricula);
 		} catch (Exception e) {
 			
 		}
@@ -122,7 +115,7 @@ public class ControladorPrincipal {
 
 	public void chooseCargo(){
 
-		ctrlCargo.iniciaTelaCargo();
+		ControladorCargo.getInstance().iniciaTelaCargo();
 
 	}
 
@@ -134,9 +127,9 @@ public class ControladorPrincipal {
 	 * @return Funcionario encontrado.
 	 */
 	public boolean hasFuncionarioByCargo(Cargo cargo) {
-		boolean hasFuncionario = ctrlFuncionario.hasFuncionarioByCargo(cargo);
+		boolean hasFuncionario = ControladorFuncionario.getInstance().hasFuncionarioByCargo(cargo);
 		if (hasFuncionario) {
-			ctrlFuncionario.printFuncionarioByCargo(cargo);
+			ControladorFuncionario.getInstance().printFuncionarioByCargo(cargo);
 		}
 		return hasFuncionario;
 	}

@@ -18,21 +18,24 @@ public class ControladorCargo implements IControladorCargo {
     private static ControladorCargo controladorCargo;
     private TelaCargo telaCargo;
     private TelaCadastroCargo telaCadastroCargo;
+    private TelaAlteraCargo telaAlteraCargo;
     private TelaIntervalosDeAcesso telaIntervalosDeAcesso;
     private TelaCadastroIntervalosDeAcesso telaCadastroIntervalosDeAcesso;
     private MapeadorCargo mapCargo;
-    private int numCodigo;
+    private int numCodigo = 1;
 
     /**
      * Método construtor da classe Inicializa os atributos da classe
      */
     public ControladorCargo() {
+
+        this.mapCargo = new MapeadorCargo();
+
         this.telaCargo = new TelaCargo();
         this.telaCadastroCargo = new TelaCadastroCargo();
-        this.mapCargo = new MapeadorCargo();
+        this.telaAlteraCargo = new TelaAlteraCargo();
         this.telaIntervalosDeAcesso = new TelaIntervalosDeAcesso();
-        this.telaCadastroIntervalosDeAcesso = new TelaCadastroIntervalosDeAcesso();
-        this.numCodigo = this.mapCargo.getList().size();
+        this.telaCadastroIntervalosDeAcesso = new TelaCadastroIntervalosDeAcesso();        
     }
 
     /**
@@ -46,72 +49,116 @@ public class ControladorCargo implements IControladorCargo {
         }
         return controladorCargo;
     }
+    
+    @Override
+    public void iniciaTelaPrincipal() {
+        this.telaCargo.setVisible(false);
+        ControladorPrincipal.getInstance().inicia();
+    }
 
     @Override
     public void iniciaTelaCargo() {
         this.telaCargo.updateData();
-        this.telaCadastroIntervalosDeAcesso.setVisible(false);
-        this.telaCadastroCargo.setVisible(false);
-        this.telaIntervalosDeAcesso.setVisible(false);
         this.telaCargo.setVisible(true);
     }
 
     @Override
     public void iniciaTelaCadastroCargo() {
-    	this.telaCadastroIntervalosDeAcesso.setVisible(false);
         this.telaCargo.setVisible(false);
-        this.telaIntervalosDeAcesso.setVisible(false);
+        this.telaCadastroCargo.novoCadastro(this.getNumCodigo());
         this.telaCadastroCargo.setVisible(true);
     }
-
-    @Override
-	public void configuraTelaCadastroCargo(ArrayList<String> intervalos) {
-    	
-		this.telaCadastroCargo.updateData(intervalos);
-		
-	}
-
-    @Override
-    public void iniciaTelaIntervalosDeAcesso() {
-    	this.telaIntervalosDeAcesso.setVisible(true);
-    }
-
-    @Override
-	public void configuraTelaIntervaloDeAcesso(Cargo cargo) {
-		this.telaIntervalosDeAcesso.updateData(cargo);
-	}
     
     @Override
-	public void iniciaTelaCadastroIntervalosDeAcesso() {
-		this.telaCadastroIntervalosDeAcesso.setVisible(true);
-	}
-    	
-@Override
-    public void iniciaTelaPrincipal() {
+    public void iniciaTelaAlteraCargo(Cargo cargo) {
         this.telaCargo.setVisible(false);
-        this.telaCadastroCargo.setVisible(false);
-        this.telaIntervalosDeAcesso.setVisible(false);
-        ControladorPrincipal.getInstance().inicia();
+        this.telaAlteraCargo.updateData(cargo);
+        this.telaAlteraCargo.setVisible(true);
     }
+    
+    @Override
+    public void iniciaTelaIntervalosDeAcesso() {
+        this.telaIntervalosDeAcesso.setVisible(true);
+    }
+    
+    @Override
+    public void iniciaTelaCadastroIntervalosDeAcesso() {
+        this.telaCadastroIntervalosDeAcesso.setVisible(true);
+    }
+
+    @Override
+    public void configuraTelaCadastroCargo(ArrayList<String> intervalos) {
+        this.telaCadastroCargo.updateData(intervalos);
+    }    
+
+    @Override
+    public void configuraTelaIntervaloDeAcesso(Cargo cargo) {
+        this.telaIntervalosDeAcesso.updateData(cargo);
+    }    
 
     @Override
     public Collection<Cargo> getListaCargos() {
         return this.mapCargo.getList();
     }
 
+    @Override
     public ArrayList<String> getNomeCargos() {
         ArrayList<String> nomes = new ArrayList<>();
         for (Cargo cargo : this.mapCargo.getList()) {
-        	
+
             String nome = cargo.getNome();
             nomes.add(nome);
         }
         return nomes;
     }
 
+    @Override
     public Cargo getCargoByNome(String nome) {
         for (Cargo cargo : this.mapCargo.getList()) {
             if (cargo.getNome().equals(nome)) {
+                return cargo;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String getNumCodigo() {
+        if(this.numCodigo == 1 && this.hasCodigo(numCodigo)) {
+            this.numCodigo = this.mapCargo.getList().size();
+        }
+        do {
+            if(this.hasCodigo(numCodigo)) {
+                this.numCodigo ++;
+            }
+        } while (this.hasCodigo(numCodigo));
+        
+        return String.valueOf(this.numCodigo);
+    }
+    
+    /**
+     *
+     * @param codigo
+     * @return boolean Verifica a existencia de um cargo com o codigo recebido
+     * Retorna uma booleana indicando a existencia ou não do cargo
+     */
+    public boolean hasCodigo(int codigo) {
+        for (Cargo cargo : getListaCargos()) {
+            if (cargo.getCodigo() == codigo) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public Cargo getCargoByCodigo(int codigo) {
+        for (Cargo cargo : this.mapCargo.getList()) {
+            if (cargo.getCodigo() == codigo) {
                 return cargo;
             }
         }
@@ -134,35 +181,18 @@ public class ControladorCargo implements IControladorCargo {
         codigoExiste = this.hasCodigo(codigo);
 
         if (!codigoExiste) {
-            Cargo cargo = new Cargo(this.numCodigo, nome, mayEnter, gerencial);
+            Cargo cargo = new Cargo(codigo, nome, mayEnter, gerencial);
             this.numCodigo += 1;
             this.mapCargo.putCargo(cargo);
         }
+        this.iniciaTelaCargo();
     }
-
-    @Override
-    public Cargo getCargoByCodigo(int codigo) {
-        for (Cargo cargo : this.mapCargo.getList()) {
-            if (cargo.getCodigo() == codigo) {
-                return cargo;
-            }
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param codigo
-     * @return boolean Verifica a existencia de um cargo com o codigo recebido
-     * Retorna uma booleana indicando a existencia ou não do cargo
-     */
-    public boolean hasCodigo(int codigo) {
-        for (Cargo cargo : getListaCargos()) {
-            if (cargo.getCodigo() == codigo) {
-                return true;
-            }
-        }
-        return false;
+    
+    public void alteraCargoByCodigo(String nome, int codigo, boolean mayEnter, boolean gerencial) {
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        cargo.setNome(nome);
+        cargo.setMayEnter(mayEnter);
+        cargo.setGerencial(gerencial);
     }
 
     @Override
@@ -188,7 +218,6 @@ public class ControladorCargo implements IControladorCargo {
         cargo.addIntervalo(deHora, ateHora);
     }
 
-
     public void removeIntervalosByCodigo(int codigo, IntervaloDeAcesso intervalo) throws Exception {
         Cargo cargo = this.getCargoByCodigo(codigo);
         cargo.removeIntervalo(intervalo);
@@ -200,17 +229,6 @@ public class ControladorCargo implements IControladorCargo {
     }
 
     public int parseInt(Object object) {
-    	return Integer.parseInt(object.toString());
+        return Integer.parseInt(object.toString());
     }
-
-
-	@Override
-	public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
-	
 }

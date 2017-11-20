@@ -110,7 +110,7 @@ public class TelaCargo extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		;
+		
 	}
 
 	public void updateData() {
@@ -145,11 +145,21 @@ public class TelaCargo extends JFrame {
 			if (e.getSource().equals(btNovo)) {
 				ControladorCargo.getInstance().iniciaTelaCadastroCargo();
 			} else if (e.getSource().equals(btAlterar)) {
-				ControladorCargo.getInstance().iniciaTelaCadastroCargo();
+                            if (tbCargos.getSelectedRow() != -1) {
+                                Object valueAt = tbCargos.getValueAt(tbCargos.getSelectedRow(), 0);
+                                Cargo cargo = ControladorCargo.getInstance().getCargoByCodigo(Integer.parseInt(valueAt.toString()));
+				ControladorCargo.getInstance().iniciaTelaAlteraCargo(cargo);
+                            } else { 
+                                JOptionPane.showMessageDialog(null, "Selecione um cargo para alterar", "Cargo", 1);
+                            }
 			} else if (e.getSource().equals(btRemover)) {
+                            if (tbCargos.getSelectedRow() != -1) {
 				Object valueAt = tbCargos.getValueAt(tbCargos.getSelectedRow(), 0);
 				ControladorCargo.getInstance().removeCargo(Integer.parseInt(valueAt.toString()));
 				JOptionPane.showMessageDialog(null, "O cargo foi removido", "Cargo", 1);
+                            } else { 
+                                JOptionPane.showMessageDialog(null, "Selecione um cargo para remover", "Cargo", 1);
+                            }
 			} else if (e.getSource().equals(btVoltar)) {
 				ControladorCargo.getInstance().iniciaTelaPrincipal();
 			} else if (e.getSource().equals(btMostrarIntervalos)) {
@@ -160,7 +170,9 @@ public class TelaCargo extends JFrame {
 							ControladorCargo.getInstance().getCargoByCodigo(ControladorCargo.getInstance()
 									.parseInt(tbCargos.getValueAt(tbCargos.getSelectedRow(), 0).toString())));
 
-				}
+				} else { 
+                                JOptionPane.showMessageDialog(null, "Selecione um cargo para vizualizar os intervalos", "Cargo", 1);
+                            }
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -31,231 +32,212 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaCadastroCargo extends JFrame {
 
-	private JLabel lbNome;
-	private JLabel lbCodigo;
-	private JLabel lbAcesso;
-	private JButton btSalvar;
-	private JButton btCancelar;
-	private JTextField tfNome;
-	private JTextField tfCodigo;
-	private JComboBox cbAcesso;
-	private String[] acesso = { "Sem acesso", "Comercial", "Gerencial", "Especial" };
-	private ArrayList<String> intervalos;
-	private JLabel lbIntervalo;
-	private JTable tbIntervalo;
-	private JLabel lbInicio;
-	private JLabel lbFim;
+    private JLabel lbNome;
+    private JLabel lbCodigo;
+    private JLabel lbAcesso;
+    private JButton btSalvar;
+    private JButton btCancelar;
+    private JTextField tfNome;
+    private JLabel lbCodigoCadastro;
+    private JComboBox cbAcesso;
+    private String[] acesso = {"Sem acesso", "Comercial", "Gerencial", "Especial"};
+    private ArrayList<String> intervalos;
+    private JTable tbIntervalo;
+    private JScrollPane spItens;
 
-	private SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
 
-	private GerenciadorTelaCadastroCargo gerenciadorTelaCadastroCargo;
+    private GerenciadorTelaCadastroCargo gerenciadorTelaCadastroCargo;
 
-	public TelaCadastroCargo() {
-		super("Cargo");
-		this.gerenciadorTelaCadastroCargo = new GerenciadorTelaCadastroCargo();
-		this.configuraTelaCadastroCargo();
-	}
+    public TelaCadastroCargo() {
+        super("Cargo");
+        this.gerenciadorTelaCadastroCargo = new GerenciadorTelaCadastroCargo();
+        this.configuraTelaCadastroCargo();
+    }
 
-	private void configuraTelaCadastroCargo() {
+    private void configuraTelaCadastroCargo() {
 
-		Container container = getContentPane();
-		container.setLayout(new GridBagLayout());
-		GridBagConstraints constraint = new GridBagConstraints();
-		constraint.fill = GridBagConstraints.BOTH;
-		constraint.insets = new Insets(5, 5, 5, 5);
+        Container container = getContentPane();
+        container.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.fill = GridBagConstraints.BOTH;
+        constraint.insets = new Insets(5, 5, 5, 5);
 
-		// Configuracao JLabel Nome
-		constraint.gridheight = 1;
-		constraint.gridwidth = 3;
-		constraint.gridx = 1;
-		constraint.gridy = 1;
-		lbNome = new JLabel("Nome:");
-		container.add(lbNome, constraint);
+        // Configuracao JLabel Nome
+        constraint.gridheight = 1;
+        constraint.gridwidth = 3;
+        constraint.gridx = 1;
+        constraint.gridy = 1;
+        lbNome = new JLabel("Nome:");
+        container.add(lbNome, constraint);
 
-		// Configuracao JLabel Codigo
-		constraint.gridx = 1;
-		constraint.gridy = 2;
-		lbCodigo = new JLabel("Codigo:");
-		container.add(lbCodigo, constraint);
+        // Configuracao JLabel Codigo
+        constraint.gridx = 1;
+        constraint.gridy = 2;
+        lbCodigo = new JLabel("Codigo:");
+        container.add(lbCodigo, constraint);
 
-		// Configuracao JLabel Acesso
-		constraint.gridx = 1;
-		constraint.gridy = 3;
-		lbAcesso = new JLabel("Acesso:");
-		container.add(lbAcesso, constraint);
+        // Configuracao JLabel Acesso
+        constraint.gridx = 1;
+        constraint.gridy = 3;
+        lbAcesso = new JLabel("Acesso:");
+        container.add(lbAcesso, constraint);
 
-		// Configuracao JTextField Nome
-		constraint.gridx = 4;
-		constraint.gridy = 1;
-		tfNome = new JTextField(10);
-		container.add(tfNome, constraint);
+        // Configuracao JTextField Nome
+        constraint.gridx = 4;
+        constraint.gridy = 1;
+        tfNome = new JTextField(10);
+        container.add(tfNome, constraint);
 
-		// Configuracao JTextField Codigo
-		constraint.gridx = 4;
-		constraint.gridy = 2;
-		tfCodigo = new JTextField(10);
-		container.add(tfCodigo, constraint);
+        // Configuracao JLabel CodigoCadastro
+        constraint.gridx = 4;
+        constraint.gridy = 2;
+        lbCodigoCadastro = new JLabel("");
+        container.add(lbCodigoCadastro, constraint);
 
-		// Configuracao JComboBox Acesso
-		constraint.gridx = 4;
-		constraint.gridy = 3;
-		cbAcesso = new JComboBox(acesso);
-		cbAcesso.addActionListener(gerenciadorTelaCadastroCargo);
-		container.add(cbAcesso, constraint);
+        // Configuracao JComboBox Acesso
+        constraint.gridx = 4;
+        constraint.gridy = 3;
+        cbAcesso = new JComboBox(acesso);
+        cbAcesso.addActionListener(gerenciadorTelaCadastroCargo);
+        container.add(cbAcesso, constraint);
+        
+        // Configuracao JTable Intervalo
+        tbIntervalo = new JTable();
+        tbIntervalo.setPreferredScrollableViewportSize(new Dimension(200, 50));
+        tbIntervalo.setFillsViewportHeight(true);
+        constraint.gridheight = 4;
+        constraint.gridwidth = 6;
+        constraint.gridx = 1;
+        constraint.gridy = 5;
+        spItens = new JScrollPane(tbIntervalo);
+        container.add(spItens, constraint);
+        spItens.setVisible(false);
+        
+        // Configuracao JButton Salvar
+        constraint.gridheight = 1;
+        constraint.gridwidth = 3;
+        constraint.gridx = 1;
+        constraint.gridy = 11;
+        btSalvar = new JButton("Salvar");
+        btSalvar.addActionListener(gerenciadorTelaCadastroCargo);
+        container.add(btSalvar, constraint);
 
-		// Configuracao JLabel Intervalo
-		constraint.gridx = 1;
-		constraint.gridy = 4;
-		lbIntervalo = new JLabel("Intervalo(s) de Acesso:");
-		container.add(lbIntervalo, constraint);
+        // Configuracao JButton Cancelar
+        constraint.gridx = 4;
+        constraint.gridy = 11;
+        btCancelar = new JButton("Cancelar");
+        btCancelar.addActionListener(gerenciadorTelaCadastroCargo);
+        container.add(btCancelar, constraint);
 
-		// Configuracao JTable Intervalo
-		tbIntervalo = new JTable();
-		tbIntervalo.setPreferredScrollableViewportSize(new Dimension(200, 100));
-		tbIntervalo.setFillsViewportHeight(true);
-		constraint.gridheight = 4;
-		constraint.gridwidth = 6;
-		constraint.gridx = 1;
-		constraint.gridy = 5;
-		container.add(tbIntervalo, constraint);
+        setSize(300, 300);
 
-		// Configuracao JLabel Codigo
-		constraint.gridheight = 1;
-		constraint.gridwidth = 2;
-		constraint.gridx = 1;
-		constraint.gridy = 8;
-		lbInicio = new JLabel("Inicio:");
-		container.add(lbInicio, constraint);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
 
-		// Configuracao JLabel Codigo
-		constraint.gridx = 5;
-		constraint.gridy = 8;
-		lbFim = new JLabel("Fim:");
-		container.add(lbFim, constraint);
+    public void updateData(ArrayList<String> intervalos) {
+        DefaultTableModel modelTbItens = new DefaultTableModel();
+        this.intervalos = intervalos;
+        modelTbItens.addColumn("Intervalo(s) de Acesso:");
+        if (intervalos != null) {
+            for (String intervalo : intervalos) {
+                modelTbItens.addRow(new Object[]{intervalo});
+            }
+        }
+        tbIntervalo.setModel(modelTbItens);
+        spItens.setVisible(true);
+        this.repaint();
+    }
 
-		// Configuracao JButton Salvar
-		constraint.gridheight = 1;
-		constraint.gridwidth = 3;
-		constraint.gridx = 1;
-		constraint.gridy = 11;
-		btSalvar = new JButton("Salvar");
-		btSalvar.addActionListener(gerenciadorTelaCadastroCargo);
-		container.add(btSalvar, constraint);
+    public void novoCadastro(String numCodigo) {
+        tbIntervalo.repaint();
+        tfNome.repaint();
+        cbAcesso.repaint();
+        lbCodigoCadastro.setText(numCodigo);
+        
+    }
+   
+    private class GerenciadorTelaCadastroCargo implements ActionListener {
 
-		// Configuracao JButton Cancelar
-		constraint.gridx = 4;
-		constraint.gridy = 11;
-		btCancelar = new JButton("Cancelar");
-		btCancelar.addActionListener(gerenciadorTelaCadastroCargo);
-		container.add(btCancelar, constraint);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(btCancelar)) {
+                ControladorCargo.getInstance().iniciaTelaCargo();
+            }
+            if (e.getSource().equals(cbAcesso)) {
+                if (cbAcesso.getSelectedItem().toString().equals("Especial")) {
+                    this.openCadastroIntervalos(cbAcesso.getSelectedItem());
+                } 
+            }
 
-		setSize(300, 300);
+            if (e.getSource().equals(btSalvar)) {
+                String nome = tfNome.getText();
+                String Acesso = cbAcesso.getSelectedItem().toString();
+                if (nome != null) {
+                    if (Acesso.equals("Comercial")) {
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, false);
+                        try {
+                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()), "08:00",
+                                    "12:00");
+                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()), "14:00",
+                                    "18:00");
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
+                    } else if (Acesso.equals("Sem Acesso")) {
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), false, false);
+                    } else if (Acesso.equals("Gerencial")) {
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, true);
+                    } else if (Acesso.equals("Especial")) {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-	}
+                        String HoraInicial = null;
+                        String HoraFinal = null;
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, false);
+                        for (int index = 0; index < tbIntervalo.getRowCount(); index++) {
+                            try {
+                                HoraInicial = this.formatToHour(formatadorHora
+                                        .parse((tbIntervalo.getValueAt(index, 0).toString().substring(0, 5))));
+                                HoraFinal = this.formatToHour(
+                                        formatadorHora.parse((tbIntervalo.getValueAt(index, 0).toString().substring(8))));
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+                            try {
+                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()),
+                                        HoraInicial, HoraFinal);
+                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()),
+                                        HoraInicial, HoraFinal);
+                            } catch (NumberFormatException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            } catch (Exception e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                        }
 
-	public void updateData(ArrayList<String> intervalos) {
-		DefaultTableModel modelTbItens = new DefaultTableModel();
-		this.intervalos = intervalos;
-		modelTbItens.addColumn("Intervalos de Acesso");
-		if (intervalos != null) {
-			for (String intervalo : intervalos) {
-				modelTbItens.addRow(new Object[] { intervalo });
-			}
-		}
-		tbIntervalo.setModel(modelTbItens);
-		this.repaint();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Cargo", 1);
+                }
 
-	}
+                ControladorCargo.getInstance().iniciaTelaCargo();
+                JOptionPane.showMessageDialog(null, "Cargo salvo!", "Cargo", 1);
 
-	public void updateData() {
-		DefaultTableModel modelTbItens = new DefaultTableModel();
-		modelTbItens.addColumn("Intervalos de Acesso");
-		modelTbItens.addRow(new Object[] { "" });
-		tbIntervalo.setModel(modelTbItens);
-		this.repaint();
-	}
+            }
+        }
 
-	private class GerenciadorTelaCadastroCargo implements ActionListener {
+        public String formatToHour(Date horarioInicial) {
+            SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
+            return formatadorHora.format(horarioInicial);
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(btCancelar)) {
-				ControladorCargo.getInstance().iniciaTelaCargo();
-			}
-			if (e.getSource().equals(cbAcesso)) {
-				if (cbAcesso.getSelectedItem().toString().equals("Especial")) {
-					this.openCadastroIntervalos(cbAcesso.getSelectedItem());
-				} else {
-					updateData();
-				}
+        }
 
-			}
+        private void openCadastroIntervalos(Object selectedItem) {
 
-			if (e.getSource().equals(btSalvar)) {
-				String nome = tfNome.getText();
-				String codigo = tfCodigo.getText();
-				String Acesso = cbAcesso.getSelectedItem().toString();
-				if (Acesso.equals("Comercial")) {
-					ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), true, false);
-					try {
-						ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo), "08:00",
-								"12:00");
-						ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo), "14:00",
-								"18:00");
-					} catch (Exception ex) {
-						System.out.println(ex);
-					}
-				} else if (Acesso.equals("Sem Acesso")) {
-					ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), false, false);
-				} else if (Acesso.equals("Gerencial")) {
-					ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), true, true);
-				} else if (Acesso.equals("Especial")) {
-					String HoraInicial = null;
-					String HoraFinal = null;
-					for (int index = 0; index < tbIntervalo.getRowCount(); index++) {
-						ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(codigo), true, false);
-						try {
-							HoraInicial = this.formatToHour(formatadorHora
-									.parse((tbIntervalo.getValueAt(index, 0).toString().substring(0, 5))));
-							HoraFinal = this.formatToHour(
-									formatadorHora.parse((tbIntervalo.getValueAt(index, 0).toString().substring(8))));
-						} catch (ParseException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo),
-									HoraInicial, HoraFinal);
-							ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(codigo),
-									HoraInicial, HoraFinal);
-						} catch (NumberFormatException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
+            ControladorCargo.getInstance().iniciaTelaCadastroIntervalosDeAcesso();
 
-				}
-
-				ControladorCargo.getInstance().iniciaTelaCargo();
-				JOptionPane.showMessageDialog(null, "Cargo salvo!", "Cargo", 1);
-				// ControladorCargo.getInstance().incluiCargo();
-			}
-		}
-
-		public String formatToHour(Date horarioInicial) {
-			SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
-			return formatadorHora.format(horarioInicial);
-
-		}
-
-		private void openCadastroIntervalos(Object selectedItem) {
-
-			ControladorCargo.getInstance().iniciaTelaCadastroIntervalosDeAcesso();
-
-		}
-	}
+        }
+    }
 }
