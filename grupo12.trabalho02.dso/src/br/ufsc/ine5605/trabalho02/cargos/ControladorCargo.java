@@ -71,6 +71,7 @@ public class ControladorCargo implements IControladorCargo {
     public ArrayList<String> getNomeCargos() {
         ArrayList<String> nomes = new ArrayList<>();
         for (Cargo cargo : this.mapCargo.getList()) {
+        	
             String nome = cargo.getNome();
             nomes.add(nome);
         }
