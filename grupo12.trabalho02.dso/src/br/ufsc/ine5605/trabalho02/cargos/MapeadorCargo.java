@@ -60,9 +60,6 @@ public class MapeadorCargo {
             oo.close();
             fout.close();
             
-            oo = null;
-            fout = null;
-            
         } catch (Exception e) {
 			System.out.println(e);
 			persist();
@@ -79,8 +76,6 @@ public class MapeadorCargo {
             
             oi.close();
             fin.close();
-            oi = null;
-            fin = null;
             
         } catch (ClassNotFoundException e) {
 			System.out.println(e);

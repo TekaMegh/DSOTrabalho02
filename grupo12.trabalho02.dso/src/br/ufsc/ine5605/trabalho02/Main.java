@@ -25,6 +25,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
+
 		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("08:00", "12:00");
 		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("14:00", "18:00");
 
@@ -40,6 +41,8 @@ public class Main {
 		}
 
 		ControladorPrincipal.getInstance().inicia();
+		
+		ControladorPrincipal.getInstance().getNomeCargos();
 	}
 
 }

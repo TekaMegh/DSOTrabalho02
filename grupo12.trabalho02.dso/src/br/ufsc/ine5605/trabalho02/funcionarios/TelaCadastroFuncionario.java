@@ -121,7 +121,8 @@ public class TelaCadastroFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 3;
-		String[] cargos = ControladorFuncionario.getInstance().listaCargos();
+		String[] cargos = {"aa", "a"};
+//				ControladorFuncionario.getInstance().listaCargos();
 		cbCargos = new JComboBox<String>(cargos);
 		container.add(cbCargos, constraints);
 

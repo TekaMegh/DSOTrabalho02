@@ -90,7 +90,11 @@ public class ControladorPrincipal {
 	}
         
         public ArrayList<String> getNomeCargos() {
-            return ControladorCargo.getInstance().getNomeCargos();
+        	ArrayList<String> cargos = ControladorCargo.getInstance().getNomeCargos();
+        	for (String nome : cargos) {
+        		System.out.println(nome);
+        	}
+            return cargos;
         }
         
         public Cargo getCargoByNome(String nome) {
