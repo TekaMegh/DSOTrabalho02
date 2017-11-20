@@ -72,6 +72,7 @@ public class TelaIntervalosDeAcesso extends JFrame {
             modelTbItens.addRow(new Object[]{"Sem Acesso"});
         } else {
             for (IntervaloDeAcesso intervalo : cargo.getIntervalos()) {
+            	
                 String horario = formatToHour(intervalo.getHorarioInicial()) + " a "
                         + formatToHour(intervalo.getHorarioFinal());
                 modelTbItens.addRow(new Object[]{horario});

@@ -33,9 +33,9 @@ public class Main {
 //		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("08:00", "12:00");
 //		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("14:00", "18:00");
 //		ControladorCargo.getInstance().getCargoByNome("badeco").addIntervalo("20:00", "03:00");
-//		
-//		ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("08:00", "12:00");
-//		ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("14:00", "18:00");
+		
+//	ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("08:00", "12:00");
+//	ControladorCargo.getInstance().getCargoByNome("secretario").addIntervalo("14:00", "18:00");
 //
 //
 //		try {
