@@ -25,11 +25,10 @@ public class MapeadorFuncionario {
 	private final String fileName = "Funcionarios.BATATA";
 
 	public MapeadorFuncionario() {
-			load();
-		}
+		load();
+	}
 
 	public void put(Funcionario funcionario) {
-
 		cacheFuncionario.put(funcionario.getMatricula(), funcionario);
 		persist();
 	}
@@ -63,7 +62,7 @@ public class MapeadorFuncionario {
 	}
 
 	/**
-	 * Remove um acesso.
+	 * Remove um funcionário.
 	 * 
 	 * @param acesso
 	 */
@@ -111,6 +110,9 @@ public class MapeadorFuncionario {
 			System.out.println(e);
 			persist();
 		}
-
+	}
+	
+	public Collection<Integer> keySets(){
+		return cacheFuncionario.keySet();
 	}
 }

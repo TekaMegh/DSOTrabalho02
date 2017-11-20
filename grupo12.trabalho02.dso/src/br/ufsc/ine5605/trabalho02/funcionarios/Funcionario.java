@@ -20,11 +20,11 @@ public class Funcionario implements Serializable{
     private String nome;
     private Date nascimento;
     private String telefone;
-    private Integer salario;
+    private Double salario;
     private Cargo cargo;
     private boolean blocked;
     
-    public Funcionario(Integer matricula, String nome, Date nascimento, String telefone, Integer salario, Cargo cargo){
+    public Funcionario(Integer matricula, String nome, Date nascimento, String telefone, Double salario, Cargo cargo){
         this.matricula = matricula;
         this.nome = nome;
         this.nascimento = nascimento;
@@ -62,11 +62,11 @@ public class Funcionario implements Serializable{
         this.telefone = telefone;
     }
 
-    public Integer getSalario() {
+    public Double getSalario() {
         return salario;
     }
 
-    public void setSalario(Integer salario) {
+    public void setSalario(Double salario) {
         this.salario = salario;
     }
 

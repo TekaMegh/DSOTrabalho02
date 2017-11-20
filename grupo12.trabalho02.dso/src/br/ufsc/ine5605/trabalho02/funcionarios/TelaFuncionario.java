@@ -5,9 +5,6 @@
  */
 package br.ufsc.ine5605.trabalho02.funcionarios;
 
-import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
-import br.ufsc.ine5605.trabalho02.cargos.ControladorCargo;
-
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -18,7 +15,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -37,8 +33,7 @@ public class TelaFuncionario extends JFrame {
 	private GerenciadorBotoes btManager;
 	private JScrollPane scroll;
 
-	// as duas primeiras letras sao para identificar a variavel: lb = label bt =
-	// botao
+	
 	public TelaFuncionario() {
 		super("Tela de Funcionários");
 		this.btManager = new GerenciadorBotoes();
@@ -50,7 +45,7 @@ public class TelaFuncionario extends JFrame {
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
         constraint.fill = GridBagConstraints.BOTH;
-        constraint.insets = new Insets(5,5,5,5);
+        constraint.insets = new Insets(10, 10, 10, 10);
                 
         //Configuracao JLabel
         constraint.gridheight = 1;
@@ -60,12 +55,12 @@ public class TelaFuncionario extends JFrame {
         lbTexto = new JLabel("Funcionários cadastrados:");               
         container.add(lbTexto, constraint);
         
-        //Configuracao JTable de Cargos
+        //Configuracao JTable de Funcionarios
         tbFuncionarios = new JTable();
-        tbFuncionarios.setPreferredScrollableViewportSize(new Dimension(200, 100));
+        tbFuncionarios.setPreferredScrollableViewportSize(new Dimension(500, 200));
         tbFuncionarios.setFillsViewportHeight(true);
         constraint.gridheight = 4;
-        constraint.gridwidth = 9;
+        constraint.gridwidth = 15;
         constraint.gridx = 1;
         constraint.gridy = 2;
         scroll = new JScrollPane(tbFuncionarios);
@@ -76,21 +71,21 @@ public class TelaFuncionario extends JFrame {
         constraint.gridwidth = 3;
         constraint.gridx = 1;
         constraint.gridy = 6;
-        btCadastroFuncionario = new JButton("Novo Cargo");               
+        btCadastroFuncionario = new JButton("Novo Funcionário");               
         btCadastroFuncionario.addActionListener(btManager);
         container.add(btCadastroFuncionario, constraint);
         
         //Configuracao JButton Alterar
         constraint.gridx = 4;
         constraint.gridy = 6;
-        btAlterarFuncionario = new JButton("Alterar Cargo");               
+        btAlterarFuncionario = new JButton("Alterar Funcionário");               
         btAlterarFuncionario.addActionListener(btManager);
         container.add(btAlterarFuncionario, constraint);
         
         //Configuracao JButton Remover
         constraint.gridx = 7;
         constraint.gridy = 6;
-        btRemoverFuncionario = new JButton("Remover Cargo");               
+        btRemoverFuncionario = new JButton("Remover Funcionário");               
         btRemoverFuncionario.addActionListener(btManager);
         container.add(btRemoverFuncionario, constraint);
         
@@ -101,14 +96,13 @@ public class TelaFuncionario extends JFrame {
         btVoltarMenuPrincipal.addActionListener(btManager);
         container.add(btVoltarMenuPrincipal, constraint);
         
-        //constraint.insets = new Insets(5,5,5,5);
-        setSize(450, 350);
+        setSize(700, 600);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
     
-    public void updateDate(){
+    public void updateData(){
         DefaultTableModel modeltbFuncionarios = new DefaultTableModel();
         modeltbFuncionarios.addColumn("Matrícula");
         modeltbFuncionarios.addColumn("Nome");
@@ -133,10 +127,22 @@ public class TelaFuncionario extends JFrame {
 			} else if (e.getSource().equals(btAlterarFuncionario)) {
 				ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario();
 			} else if (e.getSource().equals(btRemoverFuncionario)) {
-				ControladorFuncionario.getInstance().iniciaTelaRemoveFuncionario();
+				Integer matricula = getSelectedRow();
+				try {
+					ControladorFuncionario.getInstance().removeFuncionario(matricula);
+				} catch (Exception exc) {
+					
+				}
 			} else if (e.getSource().equals(btVoltarMenuPrincipal)) {
 				ControladorFuncionario.getInstance().iniciaTelaPrincipal();
 			}
 		}
+
+		private Integer getSelectedRow() {
+			int selectedRow = tbFuncionarios.getSelectedRow();
+			Integer matricula = (Integer)tbFuncionarios.getValueAt(selectedRow, 0);
+			return matricula;
+		}
+
 	}
 }

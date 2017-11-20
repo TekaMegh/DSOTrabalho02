@@ -31,7 +31,7 @@ public interface IControladorFuncionario {
      * @param cargo
      * @throws Exception
      */
-    public void incluiFuncionario(String nome, Date nascimento, String telefone, int salario, Cargo cargo) throws Exception;
+    public void incluiFuncionario(String nome, Date nascimento, String telefone, Double salario, Cargo cargo) throws Exception;
 
     /**
      * Exclui um funcionário através da matrícula.
@@ -52,7 +52,7 @@ public interface IControladorFuncionario {
      * @param cargo
      * @throws Exception
      */
-    public void modificaFuncionario(int matricula, String nome, Date nascimento, String telefone, int salario, Cargo cargo) throws Exception;
+    public void modificaFuncionario(int matricula, String nome, Date nascimento, String telefone, Double salario, Cargo cargo) throws Exception;
 
     public Collection<Funcionario> getListaFuncionario();
 
@@ -78,11 +78,10 @@ public interface IControladorFuncionario {
 
 	public void iniciaTelaAlteraFuncionario();
 
-	public void iniciaTelaRemoveFuncionario();
-
 	public void iniciaTelaPrincipal();
 
 	public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception;
 
+	public String[] listaCargos();
 
 }
