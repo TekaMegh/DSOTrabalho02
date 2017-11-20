@@ -48,4 +48,8 @@ public interface IControladorCargo {
 
     public void iniciaTelaAlteraCargo(Cargo cargo);
 
+    public ArrayList<String> getIntervalos(ArrayList<IntervaloDeAcesso> intervalos);
+
+    public void configuraTelaAlteraCargo(ArrayList<String> intervalos);
+
 }

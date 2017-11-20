@@ -6,6 +6,8 @@
 package br.ufsc.ine5605.trabalho02.cargos;
 
 import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -35,7 +37,7 @@ public class ControladorCargo implements IControladorCargo {
         this.telaCadastroCargo = new TelaCadastroCargo();
         this.telaAlteraCargo = new TelaAlteraCargo();
         this.telaIntervalosDeAcesso = new TelaIntervalosDeAcesso();
-        this.telaCadastroIntervalosDeAcesso = new TelaCadastroIntervalosDeAcesso();        
+        this.telaCadastroIntervalosDeAcesso = new TelaCadastroIntervalosDeAcesso();
     }
 
     /**
@@ -49,7 +51,7 @@ public class ControladorCargo implements IControladorCargo {
         }
         return controladorCargo;
     }
-    
+
     @Override
     public void iniciaTelaPrincipal() {
         this.telaCargo.setVisible(false);
@@ -58,6 +60,10 @@ public class ControladorCargo implements IControladorCargo {
 
     @Override
     public void iniciaTelaCargo() {
+        this.telaAlteraCargo.setVisible(false);
+        this.telaCadastroCargo.setVisible(false);
+        this.telaCadastroIntervalosDeAcesso.setVisible(false);
+        this.telaIntervalosDeAcesso.setVisible(false);
         this.telaCargo.updateData();
         this.telaCargo.setVisible(true);
     }
@@ -65,22 +71,22 @@ public class ControladorCargo implements IControladorCargo {
     @Override
     public void iniciaTelaCadastroCargo() {
         this.telaCargo.setVisible(false);
-        this.telaCadastroCargo.novoCadastro(this.getNumCodigo());
+        this.telaCadastroCargo.novoCodigo(this.getNumCodigo());
         this.telaCadastroCargo.setVisible(true);
     }
-    
+
     @Override
     public void iniciaTelaAlteraCargo(Cargo cargo) {
         this.telaCargo.setVisible(false);
-        this.telaAlteraCargo.updateData(cargo);
+        this.telaAlteraCargo.updateData(cargo.getNome(), cargo.getCodigo(), 0, this.getIntervalos(cargo.getIntervalos()));
         this.telaAlteraCargo.setVisible(true);
     }
-    
+
     @Override
     public void iniciaTelaIntervalosDeAcesso() {
         this.telaIntervalosDeAcesso.setVisible(true);
     }
-    
+
     @Override
     public void iniciaTelaCadastroIntervalosDeAcesso() {
         this.telaCadastroIntervalosDeAcesso.setVisible(true);
@@ -89,12 +95,17 @@ public class ControladorCargo implements IControladorCargo {
     @Override
     public void configuraTelaCadastroCargo(ArrayList<String> intervalos) {
         this.telaCadastroCargo.updateData(intervalos);
-    }    
+    }
+
+    @Override
+    public void configuraTelaAlteraCargo(ArrayList<String> intervalos) {
+        this.telaAlteraCargo.updateData(intervalos);
+    }
 
     @Override
     public void configuraTelaIntervaloDeAcesso(Cargo cargo) {
         this.telaIntervalosDeAcesso.updateData(cargo);
-    }    
+    }
 
     @Override
     public Collection<Cargo> getListaCargos() {
@@ -121,25 +132,25 @@ public class ControladorCargo implements IControladorCargo {
         }
         return null;
     }
-    
+
     /**
      *
      * @return
      */
     @Override
     public String getNumCodigo() {
-        if(this.numCodigo == 1 && this.hasCodigo(numCodigo)) {
+        if (this.numCodigo == 1 && this.hasCodigo(numCodigo)) {
             this.numCodigo = this.mapCargo.getList().size();
         }
         do {
-            if(this.hasCodigo(numCodigo)) {
-                this.numCodigo ++;
+            if (this.hasCodigo(numCodigo)) {
+                this.numCodigo++;
             }
         } while (this.hasCodigo(numCodigo));
-        
+
         return String.valueOf(this.numCodigo);
     }
-    
+
     /**
      *
      * @param codigo
@@ -154,7 +165,7 @@ public class ControladorCargo implements IControladorCargo {
         }
         return false;
     }
-    
+
     @Override
     public Cargo getCargoByCodigo(int codigo) {
         for (Cargo cargo : this.mapCargo.getList()) {
@@ -171,8 +182,6 @@ public class ControladorCargo implements IControladorCargo {
      * @param codigo
      * @param mayEnter
      * @param gerencial
-     * @return Cargo Instancia um Cargo com codigo unico Adiciona o Cargo e
-     * retorna o Cargo
      */
     @Override
     public void incluiCargo(String nome, int codigo, boolean mayEnter, boolean gerencial) {
@@ -187,7 +196,7 @@ public class ControladorCargo implements IControladorCargo {
         }
         this.iniciaTelaCargo();
     }
-    
+
     public void alteraCargoByCodigo(String nome, int codigo, boolean mayEnter, boolean gerencial) {
         Cargo cargo = this.getCargoByCodigo(codigo);
         cargo.setNome(nome);
@@ -228,7 +237,23 @@ public class ControladorCargo implements IControladorCargo {
         return cargo.getIntervalos();
     }
 
+    @Override
     public int parseInt(Object object) {
         return Integer.parseInt(object.toString());
     }
+
+    @Override
+    public ArrayList<String> getIntervalos(ArrayList<IntervaloDeAcesso> intervalosDeAcesso) {
+        ArrayList<String> intervalos = new ArrayList<>();
+        DateFormat formatador = new SimpleDateFormat("HH:mm");
+        if (intervalosDeAcesso != null) {
+            for (IntervaloDeAcesso intervalo : intervalosDeAcesso) {
+                String horaInicial = formatador.format(intervalo.getHorarioInicial());
+                String horaFinal = formatador.format(intervalo.getHorarioFinal());
+                intervalos.add(horaInicial + " a " + horaFinal);
+            }
+        }
+        return intervalos;
+    }
+
 }

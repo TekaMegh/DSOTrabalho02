@@ -50,7 +50,7 @@ public class TelaCadastroCargo extends JFrame {
     private GerenciadorTelaCadastroCargo gerenciadorTelaCadastroCargo;
 
     public TelaCadastroCargo() {
-        super("Cargo");
+        super("Cadastro Cargo");
         this.gerenciadorTelaCadastroCargo = new GerenciadorTelaCadastroCargo();
         this.configuraTelaCadastroCargo();
     }
@@ -101,7 +101,7 @@ public class TelaCadastroCargo extends JFrame {
         cbAcesso = new JComboBox(acesso);
         cbAcesso.addActionListener(gerenciadorTelaCadastroCargo);
         container.add(cbAcesso, constraint);
-        
+
         // Configuracao JTable Intervalo
         tbIntervalo = new JTable();
         tbIntervalo.setPreferredScrollableViewportSize(new Dimension(200, 50));
@@ -113,7 +113,7 @@ public class TelaCadastroCargo extends JFrame {
         spItens = new JScrollPane(tbIntervalo);
         container.add(spItens, constraint);
         spItens.setVisible(false);
-        
+
         // Configuracao JButton Salvar
         constraint.gridheight = 1;
         constraint.gridwidth = 3;
@@ -150,14 +150,10 @@ public class TelaCadastroCargo extends JFrame {
         this.repaint();
     }
 
-    public void novoCadastro(String numCodigo) {
-        tbIntervalo.repaint();
-        tfNome.repaint();
-        cbAcesso.repaint();
+    public void novoCodigo(String numCodigo) {
         lbCodigoCadastro.setText(numCodigo);
-        
     }
-   
+
     private class GerenciadorTelaCadastroCargo implements ActionListener {
 
         @Override
@@ -167,33 +163,40 @@ public class TelaCadastroCargo extends JFrame {
             }
             if (e.getSource().equals(cbAcesso)) {
                 if (cbAcesso.getSelectedItem().toString().equals("Especial")) {
-                    this.openCadastroIntervalos(cbAcesso.getSelectedItem());
-                } 
+                    ControladorCargo.getInstance().iniciaTelaCadastroIntervalosDeAcesso();
+                }
+            }
+            if (e.getSource().equals(cbAcesso)) {
+                if (cbAcesso.getSelectedItem().toString().equals("Sem acesso") ||
+                        cbAcesso.getSelectedItem().toString().equals("Gerencial") ||
+                                cbAcesso.getSelectedItem().toString().equals("Comercial")) {
+                spItens.setVisible(false);
+                }
             }
 
             if (e.getSource().equals(btSalvar)) {
                 String nome = tfNome.getText();
                 String Acesso = cbAcesso.getSelectedItem().toString();
-                if (nome != null) {
+                if (!nome.isEmpty()) {
                     if (Acesso.equals("Comercial")) {
-                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, false);
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigoCadastro.getText()), true, false);
                         try {
-                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()), "08:00",
+                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigoCadastro.getText()), "08:00",
                                     "12:00");
-                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()), "14:00",
+                            ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigoCadastro.getText()), "14:00",
                                     "18:00");
                         } catch (Exception ex) {
                             System.out.println(ex);
                         }
-                    } else if (Acesso.equals("Sem Acesso")) {
-                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), false, false);
+                    } else if (Acesso.equals("Sem acesso")) {
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigoCadastro.getText()), false, false);
                     } else if (Acesso.equals("Gerencial")) {
-                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, true);
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigoCadastro.getText()), true, true);
                     } else if (Acesso.equals("Especial")) {
 
                         String HoraInicial = null;
                         String HoraFinal = null;
-                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigo.getText()), true, false);
+                        ControladorCargo.getInstance().incluiCargo(nome, Integer.parseInt(lbCodigoCadastro.getText()), true, false);
                         for (int index = 0; index < tbIntervalo.getRowCount(); index++) {
                             try {
                                 HoraInicial = this.formatToHour(formatadorHora
@@ -204,9 +207,9 @@ public class TelaCadastroCargo extends JFrame {
                                 e1.printStackTrace();
                             }
                             try {
-                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()),
+                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigoCadastro.getText()),
                                         HoraInicial, HoraFinal);
-                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigo.getText()),
+                                ControladorCargo.getInstance().setIntervaloInCargoByCodigo(Integer.parseInt(lbCodigoCadastro.getText()),
                                         HoraInicial, HoraFinal);
                             } catch (NumberFormatException e1) {
                                 // TODO Auto-generated catch block
@@ -219,12 +222,11 @@ public class TelaCadastroCargo extends JFrame {
 
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Cargo", 1);
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Cadastro Cargo", 1);
                 }
-
-                ControladorCargo.getInstance().iniciaTelaCargo();
-                JOptionPane.showMessageDialog(null, "Cargo salvo!", "Cargo", 1);
-
+                if (!nome.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Cargo Cadastrado!", "Cargo", 1);
+                }
             }
         }
 
@@ -234,10 +236,5 @@ public class TelaCadastroCargo extends JFrame {
 
         }
 
-        private void openCadastroIntervalos(Object selectedItem) {
-
-            ControladorCargo.getInstance().iniciaTelaCadastroIntervalosDeAcesso();
-
-        }
     }
 }

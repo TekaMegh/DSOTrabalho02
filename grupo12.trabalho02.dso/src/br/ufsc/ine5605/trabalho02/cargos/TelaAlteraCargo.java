@@ -147,10 +147,14 @@ public class TelaAlteraCargo extends JFrame {
         this.repaint();
     }
 
-    public void updateData(Cargo cargo) {
-        tfNome.setText(cargo.getNome());
-        lbCodigoCadastro.setText(String.valueOf(cargo.getCodigo()));
-        cbAcesso.repaint();
+    public void updateData(String nome, int codigo, int index, ArrayList<String> intervalos) {
+        tfNome.setText(nome);
+        lbCodigoCadastro.setText(String.valueOf(codigo));
+        cbAcesso.setSelectedIndex(index);
+        ControladorCargo.getInstance().configuraTelaAlteraCargo(intervalos);
+        if(index == 3) {
+            this.updateData(intervalos);
+        }
     }
 
     private class GerenciadorTelaAlteraCargo implements ActionListener {

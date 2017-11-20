@@ -131,13 +131,7 @@ public class TelaCargo extends JFrame {
 
 		this.repaint();
 	}
-
-	private String formatToHour(Date horarioInicial) {
-		SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
-		return formatadorHora.format(horarioInicial);
-
-	}
-
+	
 	private class GerenciadorTelaCargo implements ActionListener {
 
 		@Override
