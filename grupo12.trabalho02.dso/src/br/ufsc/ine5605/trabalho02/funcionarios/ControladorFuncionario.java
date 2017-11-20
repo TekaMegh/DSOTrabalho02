@@ -78,6 +78,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		}
 		 try {
 		 mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
+		 ControladorPrincipal.getInstance().removeAcessoByMatricula(matricula);
 
 		 } catch (Exception e) {
 

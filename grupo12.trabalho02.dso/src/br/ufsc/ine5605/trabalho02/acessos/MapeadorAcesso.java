@@ -27,12 +27,19 @@ public class MapeadorAcesso {
 	}
 
 	public void put(Acesso acesso) {
-		int idAcesso = 0;
+		int maiorId=0;
 		if (cacheAcessos.size() > 0) {
-			Object key = cacheAcessos.size() - 1;
-			idAcesso = cacheAcessos.get(key).getIdAcesso();
+			
+			for (Object id : cacheAcessos.keySet().toArray()) {
+
+				if(ControladorAcesso.getInstance().parseInt(id.toString()) > maiorId) {
+					maiorId = ControladorAcesso.getInstance().parseInt(id.toString());
+				}
+				
+			}
+			
 		}
-		acesso.setIdAcesso(idAcesso + 1);
+		acesso.setIdAcesso(maiorId + 1);
 		cacheAcessos.put(acesso.getIdAcesso(), acesso);
 		persist();
 	}
