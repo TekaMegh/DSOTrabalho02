@@ -151,7 +151,6 @@ public class TelaAlteraCargo extends JFrame {
         tfNome.setText(nome);
         lbCodigoCadastro.setText(String.valueOf(codigo));
         cbAcesso.setSelectedIndex(index);
-        ControladorCargo.getInstance().configuraTelaAlteraCargo(intervalos);
         if(index == 3) {
             this.updateData(intervalos);
         }
