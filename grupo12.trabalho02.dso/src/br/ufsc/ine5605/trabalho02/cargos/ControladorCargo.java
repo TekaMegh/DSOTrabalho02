@@ -78,8 +78,8 @@ public class ControladorCargo implements IControladorCargo {
     }
 
     public Cargo getCargoByNome(String nome) {
-        for(Cargo cargo : this.mapCargo.getList()) {
-            if(cargo.getNome().equals(nome)) {
+        for (Cargo cargo : this.mapCargo.getList()) {
+            if (cargo.getNome().equals(nome)) {
                 return cargo;
             }
         }
@@ -89,32 +89,22 @@ public class ControladorCargo implements IControladorCargo {
     /**
      *
      * @param nome
+     * @param codigo
      * @param mayEnter
      * @param gerencial
      * @return Cargo Instancia um Cargo com codigo unico Adiciona o Cargo e
      * retorna o Cargo
      */
-    public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
-        boolean codigoExiste;
-        do {
-            codigoExiste = this.hasCodigo(numCodigo);
-            if (codigoExiste) {
-                this.numCodigo += 1;
-            }
-        } while (codigoExiste);
-        Cargo cargo = new Cargo(this.numCodigo, nome, mayEnter, gerencial);
-        this.numCodigo += 1;
-        this.mapCargo.putCargo(cargo);
-        return cargo;
-    }
-
     @Override
-    public void removeCargoByCodigo(int codigo) {
-        int identificador = this.getIdentificadorByCodigo(codigo);
-        Cargo cargo = this.getCargoByCodigo(codigo);
-        boolean hasFuncionario = ControladorPrincipal.getInstance().hasFuncionarioByCargo(cargo);
-        if (!hasFuncionario) {
-            this.mapCargo.removeCargo(identificador);
+    public void incluiCargo(String nome, int codigo, boolean mayEnter, boolean gerencial) {
+        boolean codigoExiste;
+
+        codigoExiste = this.hasCodigo(codigo);
+
+        if (!codigoExiste) {
+            Cargo cargo = new Cargo(this.numCodigo, nome, mayEnter, gerencial);
+            this.numCodigo += 1;
+            this.mapCargo.putCargo(cargo);
         }
     }
 
@@ -143,14 +133,34 @@ public class ControladorCargo implements IControladorCargo {
     }
 
     @Override
-    public int getIdentificadorByCodigo(int codigo) {
+    public void removeCargo(int codigo) {
         Cargo cargo = this.getCargoByCodigo(codigo);
-        
+        boolean hasFuncionario = ControladorPrincipal.getInstance().hasFuncionarioByCargo(cargo);
+        if (!hasFuncionario) {
+            this.mapCargo.removeCargo(codigo);
+        }
     }
 
+    /**
+     *
+     * @param codigo
+     * @param deHora
+     * @param ateHora
+     * @throws Exception
+     */
     @Override
-    public void removeCargo(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setIntervaloInCargoByCodigo(int codigo, String deHora, String ateHora) throws Exception {
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        cargo.addIntervalo(deHora, ateHora);
     }
 
+    public void removeIntervalosByCodigo(int codigo, IntervaloDeAcesso intervalo) throws Exception {
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        cargo.removeIntervalo(intervalo);
+    }
+
+    public ArrayList<IntervaloDeAcesso> getIntervalosByCodigo(int codigo) throws Exception {
+        Cargo cargo = this.getCargoByCodigo(codigo);
+        return cargo.getIntervalos();
+    }
 }

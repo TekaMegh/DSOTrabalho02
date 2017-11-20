@@ -22,16 +22,18 @@ public interface IControladorCargo {
     public Iterable<Cargo> getListaCargos();
     
     public ArrayList<String> getNomeCargos();
-    
-    public Cargo getCargo(String nome);
-
-    public int getIdentificadorByCodigo(int codigo);
-
-    public void removeCargoByCodigo(int parseInt);
-
+        
     public void removeCargo(int parseInt);
 
     public Cargo getCargoByNome(String nome);
+
+    public void incluiCargo(String nome, int codigo, boolean b, boolean b0);
+
+    public void setIntervaloInCargoByCodigo(int parseInt, String string, String string0) throws Exception;
+
+    
+
+    
 
     
 }
