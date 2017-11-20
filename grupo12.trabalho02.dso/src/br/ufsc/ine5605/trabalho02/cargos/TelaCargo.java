@@ -109,6 +109,16 @@ public class TelaCargo extends JFrame{
         modelTbCargos.addColumn("Intervalos de Acesso");
           
         for(Cargo cargo : ControladorCargo.getInstance().getListaCargos()) {
+            if(cargo.getIntervalos()==null && !cargo.isGerencial()) {
+                modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(),"Sem Acesso"});
+            } else if(cargo.getIntervalos()==null && cargo.isGerencial()) {
+                modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(),"Acesso livre"});
+            } else {
+                for(IntervaloDeAcesso intervalo : cargo.getIntervalos()) {
+                    String incial = intervalo.getHorarioInicial();
+                    String Final = intervalo.getHorarioFinal();
+                }
+            }
             modelTbCargos.addRow(new Object[]{cargo.getCodigo(), cargo.getNome(), cargo.getIntervalos()});
         }
         
