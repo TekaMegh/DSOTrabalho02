@@ -35,7 +35,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Abre a tela de Funcion√°rios e encaminha op√ß√£o selecionada para o metodo de
+	 * Abre a tela de Funcion·rios e encaminha opÁ„o selecionada para o metodo de
 	 * switch.
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * O m√©todo inclui o novo funcion√°rio na lista(arraylist) de funcionarios.
+	 * O mÈtodo inclui o novo funcion·rio na lista(arraylist) de funcionarios.
 	 *
 	 * @param nome
 	 * @param nascimento
@@ -57,7 +57,8 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	 * @throws Exception
 	 */
 	@Override
-	public void incluiFuncionario(String nome, Date nascimento, String telefone, Double salario, Cargo cargo) throws Exception {
+	public void incluiFuncionario(String nome, Date nascimento, String telefone, Double salario, Cargo cargo)
+			throws Exception {
 		Funcionario funcionario1 = new Funcionario(numMatricula, nome, nascimento, telefone, salario, cargo);
 		mapeadorFuncionario.put(funcionario1);
 		numMatricula += 1;
@@ -65,7 +66,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Exclui um funcion√°rio atrav√©s da matr√≠cula.
+	 * Exclui um funcion·rio atravÈs da matrÌcula.
 	 *
 	 * @param matricula
 	 * @throws Exception
@@ -73,7 +74,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	@Override
 	public void removeFuncionario(int matricula) throws Exception {
 		if (matricula <= 0) {
-			throw new IllegalArgumentException("Matr√≠cula n√£o pode ter valor inferior a zero!");
+			throw new IllegalArgumentException("MatrÌcula n„o pode ter valor inferior a zero!");
 		}
 		 try {
 		 mapeadorFuncionario.remove(findFuncionarioByMatricula(matricula));
@@ -85,7 +86,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Modifica os dados do funcion√°rio.
+	 * Modifica os dados do funcion·rio.
 	 *
 	 * @param matricula
 	 * @param nome
@@ -99,19 +100,19 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	public void modificaFuncionario(int matricula, String nome, Date nascimento, String telefone, Double salario,
 			Cargo cargo) throws Exception {
 		if (matricula <= 0) {
-			throw new IllegalArgumentException("Matr√≠cula n√£o pode ter valor inferior a zero!");
+			throw new IllegalArgumentException("MatrÌcula n„o pode ter valor inferior a zero!");
 		}
 		if (nome == null) {
-			throw new NullPointerException("Nome n√£o pode ter valor nulo!");
+			throw new NullPointerException("Nome n„o pode ter valor nulo!");
 		}
 		if (nascimento == null) {
-			throw new NullPointerException("Data de nascimento n√£o pode ter valor nulo!");
+			throw new NullPointerException("Data de nascimento n„o pode ter valor nulo!");
 		}
 		if (telefone == null) {
-			throw new NullPointerException("Telefone n√£o pode ter valor nulo!");
+			throw new NullPointerException("Telefone n„o pode ter valor nulo!");
 		}
 		if (cargo == null) {
-			throw new NullPointerException("Cargo n√£o pode ter valor nulo!");
+			throw new NullPointerException("Cargo n„o pode ter valor nulo!");
 		}
 
 		try {
@@ -129,10 +130,10 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Procura e retorna o funcion√°rio associado √† matricula informada.
+	 * Procura e retorna o funcion·rio associado ‡ matricula informada.
 	 *
 	 * @param matricula
-	 * @return Funcion√°rio associado √† matricula informada.
+	 * @return Funcion·rio associado ‡ matricula informada.
 	 * @throws Exception
 	 */
 	public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception {
@@ -140,7 +141,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		if (funcionario != null) {
 			return funcionario;
 		}
-		throw new RuntimeException("N√£o existe o funcion√°rio com a matr√≠cula informada");
+		throw new RuntimeException("N„o existe o funcion·rio com a matrÌcula informada");
 	}
 
 	@Override
@@ -149,7 +150,7 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Retorna a instancia do controlador Funcion√°rio.
+	 * Retorna a instancia do controlador Funcion·rio.
 	 *
 	 * @return Controlador Funcionario
 	 */
@@ -161,11 +162,11 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Percorre lista de funcion√°rios checando a presen√ßa de funcion√°rios com o
+	 * Percorre lista de funcion·rios checando a presenÁa de funcion·rios com o
 	 * cargo informado.
 	 *
 	 * @param cargo
-	 * @return boolean indicando a presen√ßa ou n√£o de funcion√°rios com o cargo
+	 * @return boolean indicando a presenÁa ou n„o de funcion·rios com o cargo
 	 *         informado.
 	 */
 	@Override
@@ -179,8 +180,8 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	/**
-	 * Procura por funcion√°rios associados ao cargo passado como par√¢metro
-	 * adiciona numa lista, a qual ser√° impressa na tela posteriormente.
+	 * Procura por funcion·rios associados ao cargo passado como par‚metro
+	 * adiciona numa lista, a qual ser· impressa na tela posteriormente.
 	 *
 	 * @param cargo
 	 */
@@ -203,7 +204,8 @@ public class ControladorFuncionario implements IControladorFuncionario {
 	}
 
 	@Override
-	public void iniciaTelaAlteraFuncionario() {
+	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values) {
+		telaAlteraFuncionario.setValues(values);
 		telaFuncionario.setVisible(false);
 		telaCadastroFuncionario.setVisible(false);
 		telaAlteraFuncionario.setVisible(true);
@@ -222,6 +224,11 @@ public class ControladorFuncionario implements IControladorFuncionario {
 		listaCargos = arrayCargos.toArray(listaCargos);
 		return listaCargos;
 		
+	}
+	
+	public Cargo getCargoByNome(String nome) {
+		Cargo cargo = ControladorPrincipal.getInstance().getCargoByNome(nome);
+		return cargo;
 	}
 	
 	public Integer atualizaMatricula() {

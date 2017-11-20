@@ -31,8 +31,6 @@ public interface IControladorCargo {
     public void incluiCargo(String nome, int codigo, boolean b, boolean b0);
 
     public void setIntervaloInCargoByCodigo(int parseInt, String string, String string0) throws Exception;
-
-    public Cargo getCargoByNome(String nome);
     
     public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial);
 

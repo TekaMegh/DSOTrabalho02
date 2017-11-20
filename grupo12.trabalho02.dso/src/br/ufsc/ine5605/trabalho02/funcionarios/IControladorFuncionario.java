@@ -10,6 +10,8 @@ package br.ufsc.ine5605.trabalho02.funcionarios;
  * @author carcaroff
  */
 import br.ufsc.ine5605.trabalho02.cargos.Cargo;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -76,12 +78,15 @@ public interface IControladorFuncionario {
 
 	public void iniciaTelaCadastroFuncionario();
 
-	public void iniciaTelaAlteraFuncionario();
+	public void iniciaTelaAlteraFuncionario(ArrayList<Object> values);
 
 	public void iniciaTelaPrincipal();
 
 	public Funcionario findFuncionarioByMatricula(Integer matricula) throws Exception;
 
 	public String[] listaCargos();
+	
+	public Cargo getCargoByNome(String nome);
+
 
 }

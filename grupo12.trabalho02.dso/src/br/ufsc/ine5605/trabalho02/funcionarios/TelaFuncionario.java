@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -125,9 +127,10 @@ public class TelaFuncionario extends JFrame {
 			if (e.getSource().equals(btCadastroFuncionario)) {
 				ControladorFuncionario.getInstance().iniciaTelaCadastroFuncionario();
 			} else if (e.getSource().equals(btAlterarFuncionario)) {
-				ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario();
+				ArrayList<Object> values = valuesAtSelectedRow();
+				ControladorFuncionario.getInstance().iniciaTelaAlteraFuncionario(values);
 			} else if (e.getSource().equals(btRemoverFuncionario)) {
-				Integer matricula = getSelectedRow();
+				Integer matricula = getSelectedMatricula();
 				try {
 					ControladorFuncionario.getInstance().removeFuncionario(matricula);
 				} catch (Exception exc) {
@@ -138,11 +141,19 @@ public class TelaFuncionario extends JFrame {
 			}
 		}
 
-		private Integer getSelectedRow() {
+		private Integer getSelectedMatricula() {
 			int selectedRow = tbFuncionarios.getSelectedRow();
 			Integer matricula = (Integer)tbFuncionarios.getValueAt(selectedRow, 0);
 			return matricula;
 		}
-
+		
+		private ArrayList<Object> valuesAtSelectedRow(){
+			ArrayList<Object> values = new ArrayList<>();
+			int selectedRow = tbFuncionarios.getSelectedRow();
+			for (int i = 0; i < 6; i++) {
+				values.add(tbFuncionarios.getValueAt(selectedRow, i));
+			}
+			return values;
+		}
 	}
 }

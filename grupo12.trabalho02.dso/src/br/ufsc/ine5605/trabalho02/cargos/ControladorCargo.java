@@ -164,4 +164,10 @@ public class ControladorCargo implements IControladorCargo {
         Cargo cargo = this.getCargoByCodigo(codigo);
         return cargo.getIntervalos();
     }
+
+	@Override
+	public Cargo incluiCargo(String nome, boolean mayEnter, boolean gerencial) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

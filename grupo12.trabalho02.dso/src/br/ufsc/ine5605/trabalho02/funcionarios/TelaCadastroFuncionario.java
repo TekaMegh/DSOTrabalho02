@@ -14,19 +14,16 @@ import java.awt.event.ActionListener;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import br.ufsc.ine5605.trabalho02.ControladorPrincipal;
+import br.ufsc.ine5605.trabalho02.cargos.Cargo;
 
 /**
  *
@@ -42,23 +39,15 @@ public class TelaCadastroFuncionario extends JFrame {
 
 	private JTextField tfNome;
 	private JFormattedTextField tfDataNascimento;
-	private JTextField tfCargo;
 	private JFormattedTextField tfSalario;
 	private JFormattedTextField tfTelefone;
-	private JFormattedTextField tfAno;
-	private JFormattedTextField tfDia;
 
 	private JButton btSave;
 	private JButton btCancel;
 
 	private JComboBox<String> cbCargos;
-	private JComboBox<String> cbMes;
-
-	private String[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro",
-			"Outrubro", "Novembro", "Dezembro" };
 
 	private NumberFormat numberFormat;
-	private NumberFormat currencyFormat;
 	private SimpleDateFormat dateFormat;
 
 	private GerenciadorBotoes btManager;
@@ -132,8 +121,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		constraints.gridwidth = 5;
 		constraints.gridx = 2;
 		constraints.gridy = 3;
-		String[] cargos = { "aa", "a" };
-		// ControladorFuncionario.getInstance().listaCargos();
+		String[] cargos = ControladorFuncionario.getInstance().listaCargos();
 		cbCargos = new JComboBox<String>(cargos);
 		container.add(cbCargos, constraints);
 
@@ -179,10 +167,15 @@ public class TelaCadastroFuncionario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(btSave)) {
-				// ControladorFuncionario.getInstance().incluiFuncionario(tfNome.getText(),
-				// (Date)tfDataNascimento.getValue(),
-				// tfTelefone.getValue(), (Integer)tfSalario.getValue(),
-				// cbCargos.getSelectedItem());
+				String cargoSelecionado = (String) cbCargos.getSelectedItem();
+				Cargo cargo = ControladorFuncionario.getInstance().getCargoByNome(cargoSelecionado);
+				try {
+					ControladorFuncionario.getInstance().incluiFuncionario(tfNome.getText(),
+							(Date) tfDataNascimento.getValue(), (String) tfTelefone.getValue(),
+							(Double) tfSalario.getValue(), cargo);
+				} catch (Exception exc) {
+
+				}
 				ControladorFuncionario.getInstance().inicia();
 			} else if (e.getSource().equals(btCancel)) {
 				ControladorFuncionario.getInstance().inicia();
